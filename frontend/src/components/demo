@@ -1,0 +1,75 @@
+
+  useEffect(() => {
+    const container = containerRef.current;
+    const descriptions = container.querySelectorAll('.description');
+    const videos = container.querySelectorAll('video');
+    const svgs = container.querySelectorAll('svg');
+
+    if (descriptions.length && videos.length && svgs.length) {
+      svgs.forEach((svg, index) => {
+        gsap.set(svg, {
+          opacity: 0,
+          scale: 0,
+          position: 'fixed',
+          top: '50%',
+          right: '10%',
+          width: '20%',
+          height: '40%',
+          zIndex: 10,
+        });
+      });
+
+      descriptions.forEach((desc, index) => {
+        // ScrollTrigger for video playback
+        ScrollTrigger.create({
+          trigger: desc,
+          start: 'top top', // Trigger when the top of the description reaches the top of the viewport
+          end: () => `+=${desc.scrollHeight}`,
+          pinSpacing: false,
+          scrub: true,
+          onEnter: () => playVideo(index, videos),
+          onLeave: () => pauseVideo(index, videos),
+          onEnterBack: () => playVideo(index, videos),
+          onLeaveBack: () => pauseVideo(index, videos),
+          markers: true,
+        });
+
+        // ScrollTrigger for SVG animation
+        ScrollTrigger.create({
+          trigger: desc,
+          start: 'center center', // Trigger when the middle of the description reaches the center of the viewport
+          end: () => `+=${desc.scrollHeight}`,
+          pinSpacing: false,
+          scrub: true,
+          onEnter: () => animateSvg(index, svgs[index]),
+          onEnterBack: () => animateSvg(index, svgs[index]),
+          markers: true,
+        });
+
+
+      });
+
+      videos.forEach((video, index) => {
+        gsap.set(video, {
+          position: 'fixed',
+          top: '45%',
+          right: '10%',
+          width: '25%',
+          height: '50%',
+          zIndex: 10,
+          objectFit: 'cover',
+          opacity: 0,
+        });
+      });
+
+      svgs.forEach((svg, index) => {
+        gsap.set(svg, { opacity: 0, scale: 0, position: 'fixed',   top: '50%',
+          right: '10%',
+          width: '20%',
+          height: '40%',
+          zIndex: 10, });
+      });
+    } else {
+      console.error('Description, video, or SVG elements not found.');
+    }
+  }, []);

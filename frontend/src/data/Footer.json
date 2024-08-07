@@ -1,0 +1,23 @@
+{
+    "logo": "../images/rndlogo.webp",
+    "description": "We help businesses grow by offering unlimited design and website packages for a single flat monthly fee.",
+    "followLinks": [
+      {"name": "Linkedin", "url": "https://www.linkedin.com/company/kolmdesign"},
+      {"name": "Instagram", "url": "https://www.instagram.com/kolmdesign"},
+      {"name": "Tiktok", "url": "https://www.tiktok.com/@kolmdesign"},
+      {"name": "Behance", "url": "https://www.behance.net/kolmdesign"}
+    ],
+    "aboutLinks": [
+      {"name": "About Kolm", "url": "https://kolmdesign.com/about/"},
+      {"name": "Collaboration", "url": "https://kolmdesign.com/contact/"},
+      {"name": "Contact us", "url": "https://kolmdesign.com/sales/"},
+      {"name": "FAQ", "url": "https://kolmdesign.com/helpcenter"}
+    ],
+    "legalLinks": [
+      {"name": "Terms & Conditions", "url": "https://kolmdesign.com/terms-conditions/"},
+      {"name": "Privacy Policy", "url": "https://kolmdesign.com/privacy-policy/"},
+      {"name": "Cookies Policy", "url": "https://kolmdesign.com/cookies-policy/"},
+      {"name": "Templates", "url": "https://kolmdesign.com/templates-policy"}
+    ]
+  }
+  
