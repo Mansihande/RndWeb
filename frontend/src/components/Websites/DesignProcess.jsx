@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef } from "react";
+import React, { useLayoutEffect, useRef,useState,useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import DesignProcess1 from "../../images/DesignProcess/DesignProcess1.webp";
@@ -6,12 +6,31 @@ import DesignProcess2 from "../../images/DesignProcess/DesignProcess2.webp";
 import DesignProcess3 from "../../images/DesignProcess/DesignProcess3.webp";
 import DesignProcess4 from "../../images/DesignProcess/DesignProcess4.webp";
 import DesignProcess5 from "../../images/DesignProcess/DesignProcess5.webp";
-
+import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 gsap.registerPlugin(ScrollTrigger);
 
 export default function DesignProcess() {
   const containerRef = useRef(null);
+  const [service, setService] = useState(null);
+  const location = useLocation();
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const slug = location.pathname.split('/').filter(Boolean).pop();
+        const response = await axios.get(`http://localhost:3006/api/designProcessssss/front/${slug}`, { withCredentials: true });
+        const data = response.data.data[1]; // Access the first item in the data array
+        setService(data);
+      } catch (error) {
+        console.error("Error fetching service data:", error);
+      }
+    };
+
+    fetchData();
+  }, [location.pathname]);
+
+  
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const teamMembers = containerRef.current.querySelectorAll('.team-members');

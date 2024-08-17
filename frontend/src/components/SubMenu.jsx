@@ -1,41 +1,36 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import rndmenu from '../images/rndmenu.svg';
-import rndlogo from '../images/rndlogo.webp';
-import flames from '../images/flames.png';
 
-const Submenu = ({ submenu, onMouseLeave, setShowMenu }) => { // Add setShowMenu prop
+const Submenu = ({ submenu, onMouseLeave, setShowMenu }) => {
+  const navigate = useNavigate();
   const defaultImage = submenu[0].image;
   const [currentImage, setCurrentImage] = useState(defaultImage);
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseEnter = (index) => {
     if (!isHovered) {
-      console.log(`Mouse enter on item ${index}`);
+      console.log("Submenu item hovered, changing image:", submenu[index].image);
       setIsHovered(true);
-      if (index === 0) {
-        setCurrentImage(rndmenu);
-      } else if (index === 1) {
-        setCurrentImage(rndlogo);
-      } else if (index === 2 || index === 3) {
-        setCurrentImage(flames);
-      }
+      setCurrentImage(submenu[index].image);
     }
   };
 
   const handleMouseLeaveItem = () => {
-    console.log('Mouse leave');
+    console.log("Mouse left submenu item, resetting image.");
     setIsHovered(false);
     setCurrentImage(defaultImage);
   };
 
-  const handleClick = (path) => {
-    console.log(`Navigating to ${path}`);
-    setShowMenu(false); // Close the menu on item click
+  const handleClick = (e, path) => {
+    setShowMenu(false)
+    navigate(path);      // Navigates to the path
+   
   };
+  
 
   return (
-    <div className="flex" onMouseLeave={onMouseLeave}>
+    <div className="flex " onMouseLeave={onMouseLeave}>
       <div className="flex-none w-1/3 p-4 bg-[#E7DECB]">
         <div className="px-4 py-6">
           <span className="font-bold text-2xl py-4">{submenu[submenu.length - 1].label}</span>
@@ -44,7 +39,7 @@ const Submenu = ({ submenu, onMouseLeave, setShowMenu }) => { // Add setShowMenu
             <NavLink 
               to={submenu[submenu.length - 1].path} 
               className="text-green-600 font-semibold underline hover:underline cursor-pointer" 
-              onClick={() => handleClick(submenu[submenu.length - 1].path)} // Close menu
+              onClick={(e) => handleClick(e, submenu[submenu.length - 1].path)}
             >
               Learn More
             </NavLink>
@@ -62,7 +57,7 @@ const Submenu = ({ submenu, onMouseLeave, setShowMenu }) => { // Add setShowMenu
           >
             <NavLink 
               to={item.path} 
-              onClick={() => handleClick(item.path)} // Close menu on click
+              onClick={(e) => handleClick(e, item.path)}
             >
               <span className="font-bold group-hover:text-orange-600">{item.label}</span>
               <p className="text-gray-500 text-sm group-hover:text-orange-600">{item.subtext}</p>
@@ -71,9 +66,7 @@ const Submenu = ({ submenu, onMouseLeave, setShowMenu }) => { // Add setShowMenu
           </div>
         ))}
       </div>
-      <div className="flex-none w-1/3 p-4">
-        <img src={currentImage} alt="Hovered Image" className="h-32 w-auto" />
-      </div>
+      <div className="flex-none w-1/3 bg-cover" style={{ backgroundImage: `url(${currentImage})` }} />
     </div>
   );
 };

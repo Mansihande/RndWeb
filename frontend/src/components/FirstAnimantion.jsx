@@ -228,7 +228,7 @@ const ScrollSection = () => {
       case 2:
         return "10%";
       case 3:
-        return "200%";
+        return "100%";
       default:
         return "0%";
     }
@@ -243,7 +243,7 @@ const ScrollSection = () => {
       case 2:
         return "0%";
       case 3:
-        return "-200%";
+        return "-100%";
       default:
         return "0%";
     }

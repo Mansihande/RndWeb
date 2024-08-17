@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef }  from 'react'
 import HeroSection from '../components/WhatWeDo/HeroSection'
 import Review from '../components/WhatWeDo/Review'
 import Challenges from '../components/WhatWeDo/Challenges'
@@ -11,9 +11,10 @@ import GlobalSolution from '../components/GlobalSolution'
 import Footer from '../components/Footer'
 
 export default function WhatWeDo() {
+  const serviceGridRef = useRef(null);
   return (
- <>
- <HeroSection/>
+ <div>
+ <HeroSection serviceGridRef={serviceGridRef} />
  <Review/>
  <WhyRnd/>
 
@@ -21,9 +22,11 @@ export default function WhatWeDo() {
  <ExpertiseComponent/>
  <HowRndHelp/>
  <BookAcall/>
- <ServiceGrid/>
+ <div ref={serviceGridRef}>
+        <ServiceGrid />
+      </div>
  <GlobalSolution/>
  <Footer/>
- </>
+ </div>
   )
 }

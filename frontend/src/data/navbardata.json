@@ -4,11 +4,11 @@
   "latestNews": "Latest News – Slots are filling up fast! Book yours now.",
   "navLinks": [
     {
-      "path": "",
+      "path": "/",
       "label": "Services",
       "submenu": [
         { 
-          "path": "/website", 
+          "path": "/websites", 
           "label": "Websites", 
           "subtext": "Custom websites made in CMS.", 
           "image": "/images/rndmenuWebsites.svg" 

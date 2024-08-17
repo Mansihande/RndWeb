@@ -17,7 +17,8 @@
               ],
               "donoget": [
                 "No additional features"
-              ]
+              ],
+              "slot":"2 Slots left for Q3"
             },
             "Standard": {
               "price": "$200/month",
@@ -32,7 +33,8 @@
               ],
               "donoget": [
                 "No additional features"
-              ]
+              ], 
+              "slot":"2 Slots left for Q3"
             },
             "Premium": {
               "price": "$300/month",
@@ -47,7 +49,7 @@
               ],
               "donoget": [
                 "No additional features"
-              ]
+              ], "slot":"2 Slots left for Q3"
             }
           },
           "5-9": {
@@ -67,7 +69,7 @@
               ],
               "donoget": [
                 "No additional features"
-              ]
+              ], "slot":"2 Slots left for Q3"
             },
             "Standard": {
               "price": "$250/month",
@@ -82,7 +84,7 @@
               ],
               "donoget": [
                 "No additional features"
-              ]
+              ], "slot":"2 Slots left for Q3"
             },
             "Premium": {
               "price": "$350/month",
@@ -97,7 +99,7 @@
               ],
               "donoget": [
                 "No additional features"
-              ]
+              ], "slot":"2 Slots left for Q3"
             }
           },
           "10-15": {
@@ -113,7 +115,7 @@
               ],
               "donoget": [
                 "No additional features"
-              ]
+              ], "slot":"2 Slots left for Q3"
             },
             "Standard": {
               "price": "$300/month",
@@ -128,7 +130,7 @@
               ],
               "donoget": [
                 "No additional features"
-              ]
+              ], "slot":"2 Slots left for Q3"
             },
             "Premium": {
               "price": "$400/month",
@@ -143,7 +145,7 @@
               ],
               "donoget": [
                 "No additional features"
-              ]
+              ], "slot":"2 Slots left for Q3"
             }
           },
           "16-25": {
@@ -161,7 +163,7 @@
               ],
               "donoget": [
                 "No additional features"
-              ]
+              ], "slot":"2 Slots left for Q3"
             },
             "Standard": {
               "price": "$350/month",
@@ -176,7 +178,7 @@
               ],
               "donoget": [
                 "No additional features"
-              ]
+              ], "slot":"2 Slots left for Q3"
             },
             "Premium": {
               "price": "$450/month",
@@ -191,7 +193,7 @@
               ],
               "donoget": [
                 "No additional features"
-              ]
+              ], "slot":"2 Slots left for Q3"
             }
           }
         }
@@ -213,7 +215,7 @@
         ],
         "donoget": [
           "No additional features"
-        ]
+        ], "slot":"2 Slots left for Q3"
       },
       {
         "plan": "Standard",
@@ -229,7 +231,7 @@
         ],
         "donoget": [
           "No additional features"
-        ]
+        ], "slot":"2 Slots left for Q3"
       },
       {
         "plan": "Premium",
@@ -245,7 +247,7 @@
         ],
         "donoget": [
           "No additional features"
-        ]
+        ], "slot":"2 Slots left for Q3"
       }
     ],
     "E-commerce": [
@@ -263,7 +265,7 @@
         ],
         "donoget": [
           "No additional features"
-        ]
+        ], "slot":"2 Slots left for Q3"
       },
       {
         "plan": "Standard",
@@ -279,7 +281,7 @@
         ],
         "donoget": [
           "No additional features"
-        ]
+        ], "slot":"2 Slots left for Q3"
       },
       {
         "plan": "Premium",
@@ -295,7 +297,7 @@
         ],
         "donoget": [
           "No additional features"
-        ]
+        ], "slot":"2 Slots left for Q3"
       }
     ],
     "Social Media": [
@@ -312,7 +314,7 @@
         ],
         "donoget": [
           "No additional features"
-        ]
+        ], "slot":"2 Slots left for Q3"
       },
       {
         "plan": "Standard",
@@ -328,7 +330,7 @@
         ],
         "donoget": [
           "No additional features"
-        ]
+        ], "slot":"2 Slots left for Q3"
       },
       {
         "plan": "Premium",
@@ -350,7 +352,7 @@
           "Weekly backups",
           "SEO updates",
           "Performance optimization"
-        ]
+        ], "slot":"2 Slots left for Q3"
       }
     ],
     "Websites Management": [
@@ -367,7 +369,7 @@
         ],
         "donoget": [
           "No additional features"
-        ]
+        ], "slot":"2 Slots left for Q3"
       },
       {
         "plan": "Standard",
@@ -383,7 +385,7 @@
         ],
         "donoget": [
           "No additional features"
-        ]
+        ], "slot":"2 Slots left for Q3"
       },
       {
         "plan": "Premium",
@@ -399,7 +401,7 @@
         ],
         "donoget": [
           "No additional features"
-        ]
+        ], "slot":"2 Slots left for Q3"
       }
     ]
   }

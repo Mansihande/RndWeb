@@ -1,11 +1,55 @@
-import React from 'react';
-import globalSolutionData from "../data/GlobalSolution.json"; // Adjust the path as needed
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const GlobalSolution = () => {
+  const [globalSolution, setGlobalSolution] = useState(null);
+
+  useEffect(() => {
+    const fetchGlobalSolution = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3006/api/content/type/globalsolution`, { withCredentials: true });
+        const solutionData = response.data[0];
+
+        if (solutionData) {
+          const subsections = solutionData.subsections;
+
+          // Fetch images for each language in the subsections
+          const languagesWithImages = await Promise.all(
+            subsections.map(async (language) => {
+              try {
+                const imageResponse = await axios.get(
+                  `http://localhost:3006/api/image/download/${language.photo}`,
+                  { responseType: 'blob' }
+                );
+                const imageUrl = URL.createObjectURL(imageResponse.data);
+                return { ...language, imageUrl };
+              } catch (error) {
+                console.error("Error fetching image:", error);
+                return { ...language, imageUrl: null };
+              }
+            })
+          );
+
+          // Set the state with the fetched and processed data
+          setGlobalSolution({
+            ...solutionData,
+            subsections: languagesWithImages
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching global solution data:", error);
+      }
+    };
+
+    fetchGlobalSolution();
+  }, []);
+
+  if (!globalSolution) return null; // Return null or a loader while the data is being fetched
+
   return (
-    <section className="relative bg-[#114038] overflow-hidden">
+    <section className="relative bg-[#114038] overflow-hidden mt-5 ">
       {/* Shape Divider */}
-      <div className="absolute inset-x-0 top-0">
+      <div className="absolute inset-x-0 top-0 py-0">
         <svg
           className="w-full"
           xmlns="http://www.w3.org/2000/svg"
@@ -20,28 +64,34 @@ const GlobalSolution = () => {
       </div>
 
       {/* Content Section */}
-      <div className="relative sm:pt-32 pt-24"> {/* Adjust padding-top to provide space for the SVG */}
-        <div className="container mx-auto  py-12 sm:px-4 px-2 w-full sm:w-[67%]">
+      <div className="relative sm:pt-32 pt-24">
+        <div className="container mx-auto py-12 sm:px-4 px-2 w-full sm:w-[67%]">
           <div className="text-center">
-            <h2 className="sm:text-5xl  text-3xl font-semibold mb-4 font-serif text-white">
-              {globalSolutionData.title} <span className="text-[#F55F42]">{globalSolutionData.highlight}</span>
+            <h2 className="sm:text-5xl text-3xl font-semibold mb-4 font-serif text-white">
+              <span dangerouslySetInnerHTML={{ __html: globalSolution.heading }} />
             </h2>
             <p className="sm:text-lg text-base mb-8 text-white font-inter sm:pt-10 pt-7">
-              {globalSolutionData.description}
+              <span dangerouslySetInnerHTML={{ __html: globalSolution.description }} />
             </p>
           </div>
 
           <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 sm:mt-32 mt-24">
-            {globalSolutionData.languages.map((language, index) => (
+            {globalSolution.subsections.map((language, index) => (
               <div key={index} className="text-center space-y-6">
-                <img
-                  loading="lazy"
-                  decoding="async"
-                  src={language.imgSrc}
-                  alt={language.alt}
-                  className="md:w-28 md:h-28 w-24 h-24 mx-auto mb-2"
-                />
-                <h3 className="md:text-xl text-md text-base font-semibold font-inter text-white">{language.name}</h3>
+                {language.imageUrl ? (
+                  <img
+                    loading="lazy"
+                    decoding="async"
+                    src={language.imageUrl}
+                    alt={language.photoAlt}
+                    className="md:w-28 md:h-28 w-24 h-24 mx-auto mb-2"
+                  />
+                ) : (
+                  <div className="md:w-28 md:h-28 w-24 h-24 mx-auto mb-2 bg-gray-200" />
+                )}
+                <h3 className="md:text-xl text-md text-base font-semibold font-inter text-white">
+                  {language.title}
+                </h3>
               </div>
             ))}
           </section>

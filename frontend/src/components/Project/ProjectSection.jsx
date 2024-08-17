@@ -165,24 +165,26 @@ const ProjectsSection = () => {
         </div>
       )}
 
-      {/* Fullscreen image view */}
-      {fullscreenImage && (
-        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
-          <div className="relative">
-            <img
-              src={fullscreenImage}
-              alt="Fullscreen view"
-              className="max-w-full max-h-full object-contain"
-            />
-            <button
-              className="absolute top-4 right-4 text-white text-3xl"
-              onClick={closeFullscreen}
-            >
-              <IoMdClose />
-            </button>
-          </div>
-        </div>
-      )}
+{fullscreenImage && (
+  <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+    <div className="relative max-w-full max-h-full flex items-center justify-center">
+      <img
+        src={fullscreenImage}
+        alt="Fullscreen view"
+        className="w-auto h-auto max-w-[90%] max-h-[90%] object-contain"
+      />
+      <button
+        className="absolute top-4 right-4 text-white text-3xl md:text-4xl p-2 bg-black bg-opacity-50 rounded-full hover:bg-opacity-75 transition-opacity"
+        onClick={closeFullscreen}
+        style={{ marginTop: '-16px', marginRight: '-16px' }} // To ensure it doesn't get hidden on smaller screens
+      >
+        <IoMdClose />
+      </button>
+    </div>
+  </div>
+)}
+
+
     </div>
   );
 };

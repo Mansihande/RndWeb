@@ -33,7 +33,7 @@ const Gallery = () => {
 
     return (
         <div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:grid-cols-3 lg:px-20 px-12 sm:px-12 mt-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:grid-cols-3 lg:px-20 px-12 sm:px-12 mt-40">
 
            
                 {[0, 1, 2].map((colIndex) => (

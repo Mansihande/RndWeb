@@ -1,24 +1,24 @@
 import React from 'react';
 import footerData from "../data/Footer.json"; // Adjust the path as needed
-import rndlogo from "../images/rndlogo.webp";
+import rndlogo from "../images/rndlogo.png";
 
 const Footer = () => {
   return (
     <footer className="bg-[#F7F4EE] text-black md:px-36 px-10 py-10">
       <section className="container mx-auto py-10">
         <div className="grid grid-cols-3 lg:grid-cols-5 gap-8">
-          <div className="lg:col-span-1 col-span-3">
+          <div className="lg:col-span-1 col-span-3 ">
             <img
               src={rndlogo}
               alt="kolm-footer-logo"
-              className="mb-4 rounded-full w-28 h-28"
+              className="mb-4 h-16"
             />
-            <p className='text-lg text-justify'>
+            <p className='text-lg text-left'>
               {footerData.description}
             </p>
           </div>
-          <div className="lg:col-span-1">
-            <h4 className="font-bold text-md mb-16">Follow</h4>
+          <div className="lg:col-span-1  ">
+            <h4 className="font-bold text-md mb-16 ">Follow</h4>
             <ul>
               {footerData.followLinks.map((link, index) => (
                 <li key={index}>

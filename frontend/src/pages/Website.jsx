@@ -14,9 +14,10 @@ import BookAcall from '../components/BookAcall'
 import Footer from '../components/Footer'
 import HowRndHelp from '../components/WhatWeDo/HowRndHelp'
 import De from '../components/Websites/De'
+import PricingSection from '../components/Websites/Packages'
 export default function Website() {
   return (
-    <>
+    <div>
     <HeroSection/>
     <Review/>
     <CraftRight/>
@@ -24,13 +25,13 @@ export default function Website() {
      <LatestProduct/>
      <Companies/>
      <WhyPartnerWithUs/> 
-    
+    <PricingSection/>
      <De/>
     {/* <DesignProcess/> */}
     <FAQ/>
     <BookAcall/>
     <Footer/>
-    </>
+    </div>
   )
 }
 

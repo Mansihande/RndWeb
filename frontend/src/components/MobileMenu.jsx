@@ -16,7 +16,7 @@ const MobileMenu = ({ isMobileMenuOpen, toggleMobileMenu }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed left-0 right-0 top-[6.5rem] p-5 pt-3 bg-[#114038] border-b border-b-white/20 max-h-[calc(100vh-6.5rem)] overflow-y-auto" // Added max height and overflow
+            className="fixed left-0 right-0 top-[5.5rem] p-5 pt-0 bg-[#114038] border-b border-b-white/20 max-h-[calc(100vh-6.5rem)] overflow-y-auto" // Added max height and overflow
           >
             <ul className="grid gap-2 overflow-y-scroll">
               {navData.navLinks.map((link, idx) => (

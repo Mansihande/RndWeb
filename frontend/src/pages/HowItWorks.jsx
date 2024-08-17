@@ -15,7 +15,7 @@ import Faq from '../components/Faq'
 
 export default function HowItWorks() {
   return (
-    <>
+    <div>
     <HeroSection/>
     <ChooseSubscriptions/>
     <FastOnBording/>
@@ -26,6 +26,6 @@ export default function HowItWorks() {
    <BookAcall/>
    <GlobalSolution/>
    <Footer/>
-    </>
+    </div>
   )
 }

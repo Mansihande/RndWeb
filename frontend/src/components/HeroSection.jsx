@@ -1,75 +1,115 @@
-import React, { useEffect, useRef } from 'react';
-import {ReactTyped as Typed} from 'react-typed';
+import React, { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
+import { ReactTyped as Typed } from 'react-typed';
 import gsap from 'gsap';
-import rightimage from "../images/Bubblesrighthome.webp";
-import leftimage from "../images/BubbleslefthomeScreen.webp";
-import wave from "../images/wave.svg"
-const HeroSection = () => {
+import wave from "../images/wave.svg";
+import ImageBubble from './ImageBubble';
+import ImageBubbleright from "../components/ImageBubbleright";
+
+const HeroSection = ({ serviceGridRef }) => {
+  const [homeHero, setHomeHero] = useState(null);
+  const [photos, setPhotos] = useState([]);
+  const [dataFetched, setDataFetched] = useState(false); // State for tracking data fetch status
+
   const leftImageRef = useRef(null);
   const rightImageRef = useRef(null);
   const textSectionRef = useRef(null);
 
+  const scrollToServices = () => {
+    if (serviceGridRef.current) {
+      serviceGridRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   useEffect(() => {
-    gsap.fromTo(
-      leftImageRef.current,
-      { x: -200, opacity: 0 },
-      { x: 0, opacity: 1, duration: 1 }
-    );
-    gsap.fromTo(
-      rightImageRef.current,
-      { x: 200, opacity: 0 },
-      { x: 0, opacity: 1, duration: 1 }
-    );
-    gsap.fromTo(
-      textSectionRef.current,
-      { y: 200, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1, delay: 0.5 }
-    );
+    // Fetch homeHero and photos data
+    const fetchData = async () => {
+      try {
+        const homeHeroResponse = await axios.get('http://localhost:3006/api/homehero', { withCredentials: true });
+
+        setHomeHero(homeHeroResponse.data[0]);  // Assuming you get an array, take the first item
+
+        // Set dataFetched to true after all data is fetched
+        setDataFetched(true);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
   }, []);
 
+  useEffect(() => {
+    if (dataFetched) {
+      // Run animations only after data is fetched
+      gsap.fromTo(
+        leftImageRef.current,
+        { x: -200, opacity: 0 },
+        { x: 0, opacity: 1, duration: 1 }
+      );
+      gsap.fromTo(
+        textSectionRef.current,
+        { y: 200, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, delay: 0.5 }
+      );
+      gsap.fromTo(
+        rightImageRef.current,
+        { x: 200, opacity: 0 },
+        { x: 0, opacity: 1, duration: 1 }
+      );
+    }
+  }, [dataFetched]); // Trigger animations when dataFetched changes
+
+  // Ensure homeHero and its nested objects are available before rendering
+  if (!homeHero || !homeHero.heading || !homeHero.paragraph) {
+    return <div>Loading...</div>;
+  }
+
   return (
-   <div className='w-full pt-20 bg-[#F7F4EE]'>
-    <div className="flex justify-center items-center lg:py-5  text-center  relative ">
-      {/* Left Side Animated Photos */}
-      <div className="xl:flex flex-col justify-center items-center flex-1 hidden " ref={leftImageRef}>
-        <img src={rightimage} alt="left floating bubbles" />
-      </div>
+    <div className="h-100vh pt-20 bg-[#F7F4EE]">
+      <div className="flex flex-col xl:flex-row justify-center text-center lg:py-5 relative">
+        {/* Left Side Animated Photos */}
+        <div className="xl:flex flex-col flex-1 hidden" ref={leftImageRef}>
+          <ImageBubble photos={photos} homeHero={homeHero} />
+        </div>
 
-      {/* Middle Text Section */}
-      <div className="flex-2 max-w-2xl pb-5" ref={textSectionRef}>
-        <h1 className="lg:text-6xl text-4xl xl:pt-0 pt-10  font-serif mb-5 font-bold leading-tight">
-          We create
-          <Typed
-            strings={[' Websites', ' Assets', ' Designs']}
-            typeSpeed={100}
-            backSpeed={60}
-            loop
-            className="pl-2 text-[#F55F42] font-bold"
+        {/* Middle Text Section */}
+        <div className="flex-2 flex flex-col items-center justify-center max-w-2xl pb-5 pt-10 xl:pt-32 mx-auto" ref={textSectionRef}>
+          <h1 className="lg:text-6xl 2xl:text-9xl text-4xl font-serif mb-5 text-center font-bold leading-tight">
+            {homeHero.heading.beforeHighlight}{' '}
+            <Typed
+              strings={homeHero.heading.highlightedWords}
+              typeSpeed={100}
+              backSpeed={60}
+              loop
+              className="pl-2 text-[#F55F42] font-bold"
+            />{' '}
+            <br />
+            {homeHero.heading.afterHighlight}
+            <span className="text-red-500">.</span>
+          </h1>
+          <p
+            className="text-lg lg:text-xl text-black-600 pt-4 z-0 text-center"
+            dangerouslySetInnerHTML={{ __html: homeHero.paragraph.text }}
           />
-          <br />
-          for Businesses that want results<span className="text-red-500">.</span>
-        </h1>
-        <p className="text-xl  text-black-600 pt-4 z-0">
-          If you can imagine it, we can create it. We offer web development
-          and design services through <span className="text-red-500 ">subscription-based plans </span> 
-          and <span className="text-red-500">packages</span>.
-        </p>
-        <button className="relative mt-6 py-2 px-7 text-lg font-bold bg-red-500 text-white rounded-3xl overflow-hidden group">
-  <span className="absolute inset-0 bg-gradient-to-r from-[#003b31] to-yellow-800 transform origin-left scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100" />
-  <span className="relative z-10">See our services</span>
-</button>
+          <button
+            className="relative mt-6 py-2 px-7 text-lg font-bold bg-red-500 text-white rounded-3xl overflow-hidden group"
+            onClick={scrollToServices}
+          >
+            <span className="absolute inset-0 bg-gradient-to-r from-[#003b31] to-yellow-800 transform origin-left scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100" />
+            <span className="relative z-10">See our services</span>
+          </button>
+        </div>
 
+        {/* Right Side Animated Photos */}
+        <div className="xl:flex flex-col flex-1 hidden" ref={rightImageRef}>
+          <ImageBubbleright photos={photos} homeHero={homeHero} />
+        </div>
+
+        {/* Wave Image - visible only on smaller screens */}
+        <img src={wave} alt="wave img" className='object-cover xl:hidden absolute bottom-0 w-full -z-10' />
       </div>
-
-      {/* Right Side Animated Photos */}
-      <div className="xl:flex flex-col justify-center items-center flex-1 hidden" ref={rightImageRef}>
-        <img src={leftimage} alt="right floating bubbles" />
-      </div>
-      <img src={wave} alt="wave img" className='object-cover xl:hidden absolute bottom-0 w-full -z-10' /> {/* Show only below xl screens */}
-
     </div>
-
-   </div>
   );
 };
 
