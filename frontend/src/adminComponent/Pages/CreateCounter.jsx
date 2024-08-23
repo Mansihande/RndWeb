@@ -33,7 +33,7 @@ const NewCounterForm = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:3006/api/counter/insertCounter', formData, { withCredentials: true });
+      const response = await axios.post('/api/counter/insertCounter', formData, { withCredentials: true });
       setTitle("");
       setNo("");
       setPhoto(null);

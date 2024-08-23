@@ -22,7 +22,7 @@ const DesignProcessForm = () => {
     // Fetch existing design process data when editing
     const fetchDesignProcess = async () => {
       try {
-        const response = await axios.get(`http://localhost:3006/api/designProcess/getDesignProcessById?processId=${processId}`, {
+        const response = await axios.get(`/api/designProcess/getDesignProcessById?processId=${processId}`, {
           withCredentials: true
         });
 
@@ -66,7 +66,7 @@ const DesignProcessForm = () => {
       formData.append('categoryId', categoryId); // Send categoryId with the request
       formData.append('status', status); // Add status (active or inactive)
 
-      await axios.put(`http://localhost:3006/api/designProcess/updateDesignProcess?processId=${processId}`, formData, {
+      await axios.put(`/api/designProcess/updateDesignProcess?processId=${processId}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

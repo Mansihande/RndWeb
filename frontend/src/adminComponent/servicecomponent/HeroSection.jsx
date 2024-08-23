@@ -20,7 +20,7 @@ const HeroSection = ({ categoryId }) => {
     const fetchHeadings = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`http://localhost:3006/api/herosection/${categoryId}`, { withCredentials: true });
+            const response = await axios.get(`/api/herosection/${categoryId}`, { withCredentials: true });
             const { heading, subheading } = response.data || {};
             setHeading(heading || '');
             setSubheading(subheading || '');
@@ -38,7 +38,7 @@ const HeroSection = ({ categoryId }) => {
     const saveHeadings = async (categoryId) => {
         try {
             setLoading(true);
-            await axios.put(`http://localhost:3006/api/herosection/${categoryId}`, { // Pass categoryId as a URL parameter
+            await axios.put(`/api/herosection/${categoryId}`, { // Pass categoryId as a URL parameter
                 heading,
                 subheading,
             }, { withCredentials: true });

@@ -13,7 +13,7 @@ export default function HeroSection() {
         const slug = location.pathname.split('/').filter(Boolean).pop();
 
         // Fetch data from the API using the slug
-        const response = await axios.get(`http://localhost:3006/api/heroSection/front/${slug}`, { withCredentials: true });
+        const response = await axios.get(`/api/heroSection/front/${slug}`, { withCredentials: true });
         const heroData = response.data;
         setHeroSection(heroData);
       } catch (error) {

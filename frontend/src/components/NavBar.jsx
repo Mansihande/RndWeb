@@ -1,11 +1,36 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import axios from 'axios'; // Import Axios
 import flames from "../images/flames.png";
 import rndlogo from "../images/rndlogo.png";
-import navData from "../data/navbardata.json";
 import Submenu from "./SubMenu";
-import { useClickAway } from "react-use";
 import MobileMenu from "./MobileMenu";
+
+const transformData = (fetchedData) => {
+  const transformSubmenu = (submenu) => ({
+    path: `/${submenu.pagename.toLowerCase().replace(/\s+/g, '-')}`,
+    label: submenu.pagename,
+    subtext: submenu.details,
+    image: submenu.photo
+  });
+
+  const transformNavLink = (item) => ({
+    path: `/${item.pagename.toLowerCase().replace(/\s+/g, '-')}`,
+    label: item.pagename,
+    submenu: item.submenus ? item.submenus.map(transformSubmenu) : []
+  });
+
+  return {
+    latestNews: "Latest News – Slots are filling up fast! Book yours now.",
+    navLinks: fetchedData
+      .filter(item => item.priority <= 5) // Filter to include only the relevant nav links
+      .map(transformNavLink),
+    authLinks: [
+      { path: "/login", label: "Log-in / Sign-up" },
+      { path: "/get-started", label: "Get Started" }
+    ]
+  };
+};
 
 const Navbar = () => {
   const [data, setData] = useState(null);
@@ -16,16 +41,21 @@ const Navbar = () => {
   const ref = useRef(null);
   const navigate = useNavigate();
 
-
-
   useEffect(() => {
-    console.log("Navbar component mounted, setting data from navData.");
-    setData(navData);
+    // Fetch data from the API and transform it
+    axios.get('http://localhost:3006/api/menulisting/fetchMenuWithSubmenus')
+      .then(response => {
+        const transformedData = transformData(response.data);
+        setData(transformedData);
+      })
+      .catch(error => {
+        console.error('Error fetching menu data:', error);
+      });
   }, []);
 
   const handleMouseEnter = useCallback(
     (submenu) => {
-      console.log("Mouse entered on Services, submenu opened:", submenu);
+      console.log("Mouse entered on submenu, submenu opened:", submenu);
       clearTimeout(submenuTimeout);
       setIsSubmenuOpen(true);
       setCurrentSubmenu(submenu);
@@ -34,7 +64,7 @@ const Navbar = () => {
   );
 
   const handleMouseLeave = useCallback(() => {
-    console.log("Mouse left Services, starting timeout to close submenu.");
+    console.log("Mouse left, starting timeout to close submenu.");
     const timeout = setTimeout(() => {
       closeSubmenu();
     }, 300);
@@ -85,7 +115,7 @@ const Navbar = () => {
   return (
     <div className="w-full fixed z-10">
       <nav className="bg-white border-b border-gray-200 xl:mx-12 rounded-b-lg shadow-lg xl:block flex flex-row-reverse">
-        <div className="bg-[#003b31] text-white text-center py-1 flex justify-center font-bold text-md xl:flex hidden">
+        <div className="bg-[#333] text-white text-center py-1 flex justify-center font-bold text-md xl:flex hidden">
           {data.latestNews}{" "}
           <img src={flames} alt="fire" className="h-6 w-auto" />
         </div>
@@ -110,12 +140,12 @@ const Navbar = () => {
                 key={link.path}
                 className="relative group"
                 onMouseEnter={
-                  link.label === "Services"
+                  link.submenu.length
                     ? () => handleMouseEnter(link.submenu)
                     : null
                 }
                 onMouseLeave={
-                  link.label === "Services" ? handleMouseLeave : null
+                  link.submenu.length ? handleMouseLeave : null
                 }
               >
                 <NavLink
@@ -125,32 +155,34 @@ const Navbar = () => {
                 >
                   {link.label}
                 </NavLink>
+        
               </div>
             ))}
           </div>
           <div className="lg:flex items-center space-x-4">
             <NavLink
               to={data.authLinks[0].path}
-              className="text-gray-800 font-bold hover:text-[#F55F42] hidden lg:block "
+              className="text-gray-800 font-bold hover:text-[#f3ca0d] hidden lg:block "
             >
               {data.authLinks[0].label}
             </NavLink>
             <NavLink to={data.authLinks[1].path} className="">
-              <div className="flex lg:flex-row flex-col justify-center bg-[#F55F42] px-4 py-1 mb-2 lg:mb-0 text-white rounded hover:text-black items-center">
+              <div className="flex lg:flex-row flex-col justify-center bg-[#f3ca0d] px-4 py-1 mb-2 lg:mb-0 text-white rounded hover:text-black items-center">
                 <span>{data.authLinks[1].label.split(" ")[0]}</span>
                 <span>{data.authLinks[1].label.split(" ").slice(1).join(" ")}</span>
               </div>
             </NavLink>
           </div>
+  
         </div>
         {isSubmenuOpen && currentSubmenu && (
-          <div
-            onMouseEnter={handleSubmenuMouseEnter}
-            onMouseLeave={handleSubmenuMouseLeave}
-          >
-            <Submenu submenu={currentSubmenu} onMouseLeave={closeSubmenu} setShowMenu={closeSubmenu} />
-          </div>
-        )}
+                  <div
+                    onMouseEnter={handleSubmenuMouseEnter}
+                    onMouseLeave={handleSubmenuMouseLeave}
+                  >
+                    <Submenu submenu={currentSubmenu} onMouseLeave={closeSubmenu} setShowMenu={closeSubmenu} />
+                  </div>
+                )}
       </nav>
     </div>
   );

@@ -1,18 +1,25 @@
 import React, { useState, useEffect } from "react";
 import CountUp from 'react-countup';
-import FastDilivery from "../../images/WhatWeGive/FastDilivery.gif";
-import Scalable from "../../images/WhatWeGive/Scalable.gif";
-import LatestTrends from "../../images/WhatWeGive/latestTrends.gif";
-import TopDesign from "../../images/WhatWeGive/TopDesign.gif";
+import axios from 'axios';
 
 const ExpertiseComponent = () => {
-  const [counters, setCounters] = useState([
-    { number: 563, title: "Assets delivered", image: LatestTrends },
-    { number: 48, title: "Turnaround time", image: FastDilivery },
-    { number: 50, title: "Finished websites", image: Scalable },
-    { number: 5, title: "years driving growth", image: TopDesign }
-  ]);
+  const [heading, setHeading] = useState("");
+  const [counters, setCounters] = useState([]);
   const [isCountingStarted, setIsCountingStarted] = useState(false);
+
+  const fetchHeadings = async () => {
+    try {
+      const response = await axios.get('/api/pageHeading/heading?pageType=counter', { withCredentials: true });
+      const { heading } = response.data;
+      setHeading(heading || '');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchHeadings();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,18 +40,45 @@ const ExpertiseComponent = () => {
     };
   }, [isCountingStarted]);
 
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`/api/counter/getCounter`, { withCredentials: true });
+      const data = response.data;
+
+      // Update the counters state with the fetched data
+      const updatedCounters = data.map(item => ({
+        number: item.no,
+        title: item.title,
+        sign:item.sign,
+        image: `/api/logo/download/${item.photo}`, // Adjust the image path based on your setup
+        alt:item.alt
+      }));
+
+      setCounters(updatedCounters);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div id="expertiseComponent" className="flex flex-col items-center bg-gray-50 p-4 md:p-8">
-      <h2 className="text-3xl md:text-5xl pb-10 font-serif">Driving growth for our clients</h2>
+      <h2 className="text-3xl md:text-5xl pb-10 font-serif">{heading}</h2>
       <div className="flex flex-wrap justify-around w-full">
         {counters.map((counter, index) => (
           <div key={index} className="flex flex-col items-center mb-6 md:mb-0 w-1/2 md:w-1/4 p-4">
-            <img src={counter.image} alt={counter.title} className="w-20 h-20 md:w-28 md:h-28 mb-4" />
+            <img src={counter.image} alt={counter.alt} className="w-20 h-20 md:w-28 md:h-28 mb-4" />
+            <div className="flex  items-center">
             <CountUp start={isCountingStarted ? 0 : null} end={counter.number} duration={3}>
               {({ countUpRef }) => (
                 <div className="text-2xl md:text-4xl font-bold text-gray-800" ref={countUpRef} />
               )}
-            </CountUp>
+            </CountUp><p className="text-2xl md:text-4xl font-bold text-gray-800">{counter.sign}</p>
+            </div>
+           
             <div className="text-gray-600 text-center">{counter.title}</div>
           </div>
         ))}

@@ -65,7 +65,7 @@ const Footer = () => {
                   placeholder="Your Email"
                   required
                 />
-                <button type="submit" className="px-4 py-2 w-52 bg-[#F55F42] text-white rounded-md hover:bg-orange-600">
+                <button type="submit" className="px-4 py-2 w-52 bg-[#f3ca0d] text-white rounded-md hover:bg-orange-600">
                   Subscribe
                 </button>
               </div>

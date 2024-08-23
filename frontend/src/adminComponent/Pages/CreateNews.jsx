@@ -37,7 +37,7 @@ const NewNewsForm = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('http://localhost:3006/api/news/getall', { withCredentials: true });
+      const response = await axios.get('/api/news/getall', { withCredentials: true });
       setCategories(response.data);
     } catch (error) {
       console.error(error);
@@ -88,7 +88,7 @@ const NewNewsForm = () => {
       formData.append('subcategories', subCategoryId);
       formData.append('subSubcategories', subSubCategoryId);
 
-      const response = await axios.post('http://localhost:3006/api/news/insertNews', formData, {
+      const response = await axios.post('/api/news/insertNews', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

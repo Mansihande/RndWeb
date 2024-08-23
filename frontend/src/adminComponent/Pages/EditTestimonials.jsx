@@ -26,7 +26,7 @@ const EditTestimonial = () => {
 
   const fetchTestimonial = async () => {
     try {
-      const response = await axios.get(`http://localhost:3006/api/testimonial/getTestimonialById?id=${id}`, { withCredentials: true });
+      const response = await axios.get(`/api/testimonial/getTestimonialById?id=${id}`, { withCredentials: true });
       const testimonial = response.data.data;
 
       setName(testimonial.name);
@@ -88,7 +88,7 @@ const EditTestimonial = () => {
         formData.append('alt', a);
       });
 
-      const response = await axios.put(`http://localhost:3006/api/testimonial/updateTestimonial?id=${id}`, formData, {
+      const response = await axios.put(`/api/testimonial/updateTestimonial?id=${id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },
@@ -125,7 +125,7 @@ const EditTestimonial = () => {
 
   const handleDeleteInitialPhoto = (e, photoFilename, index) => {
     e.preventDefault();
-    axios.delete(`http://localhost:3006/api/testimonial/${id}/image/${photoFilename}/${index}`, { withCredentials: true })
+    axios.delete(`/api/testimonial/${id}/image/${photoFilename}/${index}`, { withCredentials: true })
       .then(response => {
         const updatedPhotos = initialPhotos.filter(photo => photo !== photoFilename);
         setInitialPhotos(updatedPhotos);
@@ -152,7 +152,7 @@ const EditTestimonial = () => {
     e.preventDefault();
     try {
       const videoFilename = video.name; // Get the current video filename
-      await axios.delete(`http://localhost:3006/api/testimonial/${id}/video/${videoFilename}`, { withCredentials: true });
+      await axios.delete(`/api/testimonial/${id}/video/${videoFilename}`, { withCredentials: true });
       
       // Reset video state
       setVideo(null);
@@ -208,7 +208,7 @@ const EditTestimonial = () => {
           {initialPhotos.map((photo, index) => (
             <div key={index} className="relative w-56">
               <img
-                src={`http://localhost:3006/api/image/download/${photo}`}
+                src={`/api/image/download/${photo}`}
                 alt={`Photo ${index + 1}`}
                 className="w-56 h-32 object-cover"
               />
@@ -285,7 +285,7 @@ const EditTestimonial = () => {
       <label className="block font-semibold mb-2">Current Video</label>
       <div className="relative w-56">
         <video
-          src={`http://localhost:3006/api/video/download/${video}`} // Update this to match your API endpoint for video
+          src={`/api/video/download/${video}`} // Update this to match your API endpoint for video
           controls
           className="w-56 h-32 object-cover"
         />

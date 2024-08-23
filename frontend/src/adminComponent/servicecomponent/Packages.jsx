@@ -90,7 +90,7 @@ const Packages = ({ categoryId }) => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:3006/api/packages/category?categoryId=${categoryId}`,
+        `/api/packages/category?categoryId=${categoryId}`,
         { withCredentials: true }
       );
       const packagesWithIds = response.data.map((item, index) => ({
@@ -108,7 +108,7 @@ const Packages = ({ categoryId }) => {
   const deletePackage = async (id) => {
     try {
       await axios.delete(
-        `http://localhost:3006/api/packages/delete?id=${id}`,
+        `/api/packages/delete?id=${id}`,
         { withCredentials: true }
       );
       fetchData();
@@ -120,7 +120,7 @@ const Packages = ({ categoryId }) => {
 
   const fetchHeadings = async () => {
     try {
-      const response = await axios.get('http://localhost:3006/api/pageHeading/heading?pageType=package', { withCredentials: true });
+      const response = await axios.get('/api/pageHeading/heading?pageType=package', { withCredentials: true });
       const { heading, subheading } = response.data;
       setHeading(heading || '');
       setSubheading(subheading || '');
@@ -131,7 +131,7 @@ const Packages = ({ categoryId }) => {
 
   const saveHeadings = async () => {
     try {
-      await axios.put('http://localhost:3006/api/pageHeading/updateHeading?pageType=package', {
+      await axios.put('/api/pageHeading/updateHeading?pageType=package', {
         pagetype: 'package',
         heading,
         subheading,
@@ -166,7 +166,7 @@ const Packages = ({ categoryId }) => {
   const handleSubheadingChange = (e) => setSubheading(e.target.value);
 
   const exportPackages = () => {
-    axios.get('http://localhost:3006/api/packages/exportPackage', { responseType: 'blob', withCredentials: true })
+    axios.get('/api/packages/exportPackage', { responseType: 'blob', withCredentials: true })
       .then(response => {
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const a = document.createElement('a');
@@ -197,7 +197,7 @@ const Packages = ({ categoryId }) => {
     formData.append('file', file);
 
     try {
-      const response = await axios.post('http://localhost:3006/api/packages/importPackage', formData, {
+      const response = await axios.post('/api/packages/importPackage', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

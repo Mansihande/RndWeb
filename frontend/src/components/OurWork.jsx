@@ -15,11 +15,11 @@ const OurWorkComponent = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await axios.get('http://localhost:3006/api/homepage/ourwork');
+        const response = await axios.get('/api/homepage/ourwork');
         const projectsData = await Promise.all(
           response.data.map(async (project) => {
             try {
-              const imageResponse = await axios.get(`http://localhost:3006/api/logo/download/${project.photo}`, {
+              const imageResponse = await axios.get(`/api/logo/download/${project.photo}`, {
                 responseType: 'blob', // Request the image as a blob
               });
               const imageUrl = URL.createObjectURL(imageResponse.data); // Create a URL for the blob

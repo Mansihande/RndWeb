@@ -36,7 +36,7 @@ const EditServiceForm = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('http://localhost:3006/api/services/getAll', { withCredentials: true });
+      const response = await axios.get('/api/services/getAll', { withCredentials: true });
       setCategories(response.data);
     } catch (error) {
       console.error(error);
@@ -75,7 +75,7 @@ const EditServiceForm = () => {
 
   const fetchService = async () => {
     try {
-      const response = await axios.get(`http://localhost:3006/api/services/singleService?slugs=${slugs}`, { withCredentials: true });
+      const response = await axios.get(`/api/services/singleService?slugs=${slugs}`, { withCredentials: true });
       const service = response.data;
       setTitle(service.title);
       setDetails(service.details);
@@ -95,15 +95,15 @@ const EditServiceForm = () => {
       setChangeFreq(service.changeFreq)
       setPriority(service.priority)
 
-      const categoryResponse = await axios.get(`http://localhost:3006/api/services/getSpecificCategory?categoryId=${service.categories}`, { withCredentials: true });
+      const categoryResponse = await axios.get(`/api/services/getSpecificCategory?categoryId=${service.categories}`, { withCredentials: true });
       const category = categoryResponse.data;
       setParentCategoryId(category._id);
 
-      const subCategoryResponse = await axios.get(`http://localhost:3006/api/services/getSpecificSubcategory?categoryId=${service.categories}&subCategoryId=${service.subcategories}`, { withCredentials: true });
+      const subCategoryResponse = await axios.get(`/api/services/getSpecificSubcategory?categoryId=${service.categories}&subCategoryId=${service.subcategories}`, { withCredentials: true });
       const subCategory = subCategoryResponse.data;
       setSubCategoryId(subCategory._id);
 
-      const subSubCategoryResponse = await axios.get(`http://localhost:3006/api/services/getSpecificSubSubcategory?categoryId=${service.categories}&subCategoryId=${service.subcategories}&subSubCategoryId=${service.subSubcategories}`, { withCredentials: true });
+      const subSubCategoryResponse = await axios.get(`/api/services/getSpecificSubSubcategory?categoryId=${service.categories}&subCategoryId=${service.subcategories}&subSubCategoryId=${service.subSubcategories}`, { withCredentials: true });
       const subSubCategory = subSubCategoryResponse.data;
       setSubSubCategoryId(subSubCategory._id);
     } catch (error) {
@@ -147,7 +147,7 @@ const EditServiceForm = () => {
         formData.append(`alt`, a);
       })
 
-      const response = await axios.put(`http://localhost:3006/api/services/updateService?slugs=${slugs}`, formData, {
+      const response = await axios.put(`/api/services/updateService?slugs=${slugs}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },
@@ -181,7 +181,7 @@ const EditServiceForm = () => {
 
   const handleDeleteInitialPhoto = (e, photoFilename, index) => {
     e.preventDefault();
-    axios.delete(`http://localhost:3006/api/services/${slugs}/image/${photoFilename}/${index}`, { withCredentials: true })
+    axios.delete(`/api/services/${slugs}/image/${photoFilename}/${index}`, { withCredentials: true })
       .then(response => {
         const updatedPhotos = initialPhotos.filter(photo => photo !== photoFilename);
         setInitialPhotos(updatedPhotos);
@@ -374,7 +374,7 @@ const EditServiceForm = () => {
           {initialPhotos.map((photo, index) => (
             <div key={index} className="relative w-56">
               <img
-                src={`http://localhost:3006/api/image/download/${photo}`}
+                src={`/api/image/download/${photo}`}
                 alt={`Photo ${index + 1}`}
                 className="w-56 h-32 object-cover"
               />

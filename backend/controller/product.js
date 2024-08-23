@@ -9,13 +9,13 @@ const ImportedFile = require("../model/importedFiles")
 
 const insertProduct = async (req, res) => {
   try {
-    const { title, details, alt, slug, metatitle, metadescription, metakeywords, metacanonical, metalanguage, metaschema, otherMeta, benefits, categories, subcategories, subSubcategories, url, priority, changeFreq, status } = req.body;
+    const { title, price, alt, slug, metatitle, metadescription, metakeywords, metacanonical, metalanguage, metaschema, otherMeta, benefits, categories, subcategories, subSubcategories, url, priority, changeFreq, status } = req.body;
     const photo = req.files['photo'] ? req.files['photo'].map(file => file.filename) : [];
     const catalogue = req.files['catalogue'] ? req.files['catalogue'][0].filename : '';
 
     const product = new Product({
       title,
-      details,
+      price,
       alt,
       slug,
       benefits,
@@ -261,14 +261,14 @@ const exportProductsToExcel = async (req, res) => {
     const worksheet = workbook.addWorksheet('Products');
 
     // Add headers
-    worksheet.addRow(['ID', 'Title', 'Details', 'Photo', 'Alt', 'Status', 'Categories', 'Subcategories', 'Subsubcategories']);
+    worksheet.addRow(['ID', 'Title', 'Price', 'Photo', 'Alt', 'Status', 'Categories', 'Subcategories', 'Subsubcategories']);
 
     // Add data rows
     products.forEach(product => {
       worksheet.addRow([
         product._id.toString(),
         product.title,
-        product.details,
+        product.price,
         product.photo.join(', '),
         product.alt.join(', '),
         product.status,
@@ -318,7 +318,7 @@ const importProducts = async (req, res) => {
       title: item.Title,
       photo: item.Photo ? item.Photo.split(',').map(photo => photo.trim()) : [],
       alt: item.Alt ? item.Alt.split(',').map(alt => alt.trim()) : [],
-      details: item.Details,
+      price: item.Price,
       status: item.Status,
       categories: item.Categories,
       subcategories: item.Subcategories,
@@ -489,4 +489,64 @@ viewCatalogue = (req, res) => {
   res.sendFile(filePath);
 };
 
-module.exports = {downloadCatalogue,viewCatalogue, insertProduct, updateProduct, deleteProduct, getAllProducts, getSingleProduct, getCategoryProducts, getSubcategoryProducts, getSubSubcategoryProducts, countProducts, deletePhotoAndAltText, exportProductsToExcel, importProducts, fetchUrlPriorityFreq, editUrlPriorityFreq, fetchUrlPriorityFreqById,fetchUrlmeta, editUrlmeta, fetchUrlmetaById } 
+
+const getAllProductsFront = async (req, res) => {
+  try {
+    // Fetch all product categories
+    const categories = await productCategory.find();
+   
+    if (!categories.length) {
+      return res.status(404).json({ message: 'No product categories found' });
+    }
+
+    // Initialize an object to hold the final structure
+    const result = {};
+
+    // Process each category
+    for (const category of categories) {
+      const categoryName = category.category;
+      result[categoryName] = {};
+
+      if (category.subCategories && category.subCategories.length > 0) {
+        // Category has subcategories
+        for (const subCategory of category.subCategories) {
+          const subCategoryName = subCategory.category;
+          console.log(subCategoryName)
+          const products = await Product.find({ subcategories: subCategory._id });
+          
+          if (products.length > 0) {
+            result[categoryName][subCategoryName] = products;
+          }
+        }
+      } else {
+        // Category doesn't have subcategories
+        const products = await Product.find({ category: category._id });
+        
+        if (products.length > 0) {
+          result[categoryName] = products;
+        }
+      }
+    }
+
+    // Count total products
+    const totalProducts = Object.values(result).reduce((total, cat) => {
+      if (Array.isArray(cat)) {
+        return total + cat.length;
+      } else {
+        return total + Object.values(cat).reduce((subTotal, subCat) => subTotal + subCat.length, 0);
+      }
+    }, 0);
+
+    res.status(200).json({
+      data: result,
+      total: totalProducts,
+    });
+
+  } catch (error) {
+    console.error("Error retrieving products:", error);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+
+module.exports = {getAllProductsFront,downloadCatalogue,viewCatalogue, insertProduct, updateProduct, deleteProduct, getAllProducts, getSingleProduct, getCategoryProducts, getSubcategoryProducts, getSubSubcategoryProducts, countProducts, deletePhotoAndAltText, exportProductsToExcel, importProducts, fetchUrlPriorityFreq, editUrlPriorityFreq, fetchUrlPriorityFreqById,fetchUrlmeta, editUrlmeta, fetchUrlmetaById } 

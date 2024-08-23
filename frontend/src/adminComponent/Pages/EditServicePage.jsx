@@ -25,7 +25,7 @@ const EditServiceDetails = () => {
 
   const fetchServiceDetails = async () => {
     try {
-      const response = await axios.get(`http://localhost:3006/api/serviceDetails/getServiceDetailById?id=${categoryId}`, { withCredentials: true });
+      const response = await axios.get(`/api/serviceDetails/getServiceDetailById?id=${categoryId}`, { withCredentials: true });
       const serviceDetails = response.data.data;
 
       setHeading(serviceDetails.heading);
@@ -69,14 +69,14 @@ const EditServiceDetails = () => {
         formData.append('questions', JSON.stringify(q));
       });
 
-      await axios.put(`http://localhost:3006/api/serviceDetails/updateServiceDetail?id=${categoryId}`, formData, {
+      await axios.put(`/api/serviceDetails/updateServiceDetail?id=${categoryId}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },
         withCredentials: true
       });
 
-      navigate('/services');
+      navigate(`/services/edit-service/${categoryId}`);
     } catch (error) {
       console.error(error);
     }
@@ -123,7 +123,7 @@ const EditServiceDetails = () => {
   const handleDeleteInitialPhoto = async (e, photoFilename, index) => {
     e.preventDefault();
     try {
-      await axios.delete(`http://localhost:3006/api/serviceDetails/${categoryId}/image/${photoFilename}/${index}`, { withCredentials: true });
+      await axios.delete(`/api/serviceDetails/${categoryId}/image/${photoFilename}/${index}`, { withCredentials: true });
       const updatedPhotos = initialPhotos.filter((_, i) => i !== index);
       setInitialPhotos(updatedPhotos);
       const updatedPhotoAlts = initialPhotoAlts.filter((_, i) => i !== index);
@@ -145,7 +145,7 @@ const EditServiceDetails = () => {
     e.preventDefault();
     try {
       if (video) {
-        await axios.delete(`http://localhost:3006/api/serviceDetails/serviceDetail/${categoryId}/video/${video}`, { withCredentials: true });
+        await axios.delete(`/api/serviceDetails/serviceDetail/${categoryId}/video/${video}`, { withCredentials: true });
         setVideo(null);
         setVideoAlt(""); // Optionally reset alt text
       }
@@ -157,7 +157,7 @@ const EditServiceDetails = () => {
   const handleDeleteQuestion = async (e, questionId, index) => {
     e.preventDefault();
     try {
-      await axios.delete(`http://localhost:3006/api/serviceDetails/${categoryId}/questions/${questionId}`, { withCredentials: true });
+      await axios.delete(`/api/serviceDetails/${categoryId}/questions/${questionId}`, { withCredentials: true });
       const updatedQuestions = questions.filter((_, i) => i !== index);
       setQuestions(updatedQuestions);
     } catch (error) {
@@ -171,12 +171,11 @@ const EditServiceDetails = () => {
 
       <div className="mb-4">
         <label htmlFor="heading" className="block font-semibold mb-2">Heading</label>
-        <input
-          type="text"
-          id="heading"
+       <div className="mb-4">     
+           <ReactQuill
           value={heading}
-          onChange={(e) => setHeading(e.target.value)}
-          className="w-full p-2 border rounded focus:outline-none"
+          onChange={setHeading}
+          className="quill"
           required
         />
       </div>
@@ -196,7 +195,7 @@ const EditServiceDetails = () => {
           {initialPhotos.map((photo, index) => (
             <div key={index} className="relative w-56">
               <img
-                src={`http://localhost:3006/api/image/download/${photo}`}
+                src={`/api/image/download/${photo}`}
                 alt={`Photo ${index + 1}`}
                 className="w-56 h-32 object-cover"
               />
@@ -259,12 +258,12 @@ const EditServiceDetails = () => {
         </div>
       </div>
 
-      <div className="mb-4">
+
         <label className="block font-semibold mb-2">Video</label>
         {video && (
           <div className="relative mb-2">
             <video
-          src={`http://localhost:3006/api/video/download/${video}`} // Update this to match your API endpoint for video
+          src={`/api/video/download/${video}`} // Update this to match your API endpoint for video
           controls
           className="w-56 h-32 object-cover"
         />

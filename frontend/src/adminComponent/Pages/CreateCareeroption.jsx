@@ -66,7 +66,7 @@ const NewCareerForm = () => {
       });
       formData.append('status', status);
 
-      const response = await axios.post('http://localhost:3006/api/careeroption/CreateCareeroption', formData, {
+      const response = await axios.post('/api/careeroption/CreateCareeroption', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

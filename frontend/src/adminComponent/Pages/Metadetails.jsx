@@ -134,13 +134,13 @@ const MetaDetailsTable = () => {
         newsResponse,
         newsCategoryResponse,
       ] = await Promise.all([
-        axios.get(`http://localhost:3006/api/sitemap/fetchSitemaps`, { withCredentials: true }),
-        axios.get(`http://localhost:3006/api/product/fetchUrlmeta`, { withCredentials: true }),
-        axios.get(`http://localhost:3006/api/product/fetchCategoryUrlmeta`, { withCredentials: true }),
-        axios.get(`http://localhost:3006/api/services/fetchUrlmeta`, { withCredentials: true }),
-        axios.get(`http://localhost:3006/api/services/fetchCategoryUrlmeta`, { withCredentials: true }),
-        axios.get(`http://localhost:3006/api/news/fetchUrlmeta`, { withCredentials: true }),
-        axios.get(`http://localhost:3006/api/news/fetchCategoryUrlmeta`, { withCredentials: true }),
+        axios.get(`/api/sitemap/fetchSitemaps`, { withCredentials: true }),
+        axios.get(`/api/product/fetchUrlmeta`, { withCredentials: true }),
+        axios.get(`/api/product/fetchCategoryUrlmeta`, { withCredentials: true }),
+        axios.get(`/api/services/fetchUrlmeta`, { withCredentials: true }),
+        axios.get(`/api/services/fetchCategoryUrlmeta`, { withCredentials: true }),
+        axios.get(`/api/news/fetchUrlmeta`, { withCredentials: true }),
+        axios.get(`/api/news/fetchCategoryUrlmeta`, { withCredentials: true }),
       ]);
 
       const combinedMetaDetails = [

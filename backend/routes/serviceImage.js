@@ -26,4 +26,7 @@ router.put('/updateGallery', requireAuth, uploadImage, galleryController.updateI
 router.get('/gallery/:id', requireAuth, galleryController.getGalleryById);
  
 router.get('/front/:slug/:photoType',galleryController.getAllImagesSlug)
+router.get('/getAllPackagesFront',galleryController.getAllPackagesFront)
+router.get('/companyImages', galleryController.getAllCompanyImages);
+
 module.exports = router;

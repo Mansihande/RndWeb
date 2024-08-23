@@ -9,7 +9,7 @@ const homepage = require('../controller/homepage');
 router.get('/marquee', homepage.getAll);
 router.get("/ourwork",homepage.getwork)
 
-
+router.get("/getImage/:slug",homepage.getImage)
 
 
 module.exports = router;

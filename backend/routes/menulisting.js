@@ -18,4 +18,7 @@ router.put('/updateMenulisting',requireAuth,uploadLogo, menuListingController.up
 // Delete a menu listing by ID
 router.delete('/deleteMenulisting',requireAuth, menuListingController.deleteMenuListing);
 
+
+
+router.get('/fetchMenuWithSubmenus',menuListingController.fetchMenuWithSubmenus)
 module.exports = router;

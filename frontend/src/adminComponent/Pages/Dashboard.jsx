@@ -27,49 +27,49 @@ const AdminDashboard = () => {
 
 
     useEffect(() => {
-        axios.get('http://localhost:3006/api/services/countService', { withCredentials: true }).then(response => {
+        axios.get('/api/services/countService', { withCredentials: true }).then(response => {
             setCountServices(response.data.total);
         }).catch(error => {
             console.log("Error fetching data", error);
         });
 
-        axios.get('http://localhost:3006/api/product/countProduct', { withCredentials: true }).then(response => {
+        axios.get('/api/product/countProduct', { withCredentials: true }).then(response => {
             setCountProducts(response.data.total);
         }).catch(error => {
             console.log("Error fetching data", error);
         });
 
-        axios.get('http://localhost:3006/api/testimonial/countTestimonial', { withCredentials: true }).then(response => {
+        axios.get('/api/testimonial/countTestimonial', { withCredentials: true }).then(response => {
             setTestimonials(response.data.total);
         }).catch(error => {
             console.log("Error fetching data", error);
         });
 
-        axios.get('http://localhost:3006/api/news/countNews', { withCredentials: true }).then(response => {
+        axios.get('/api/news/countNews', { withCredentials: true }).then(response => {
             setCountNews(response.data.total);
         }).catch(error => {
             console.log("Error fetching data", error);
         });
 
-        axios.get('http://localhost:3006/api/faq/countFaq', { withCredentials: true }).then(response => {
+        axios.get('/api/faq/countFaq', { withCredentials: true }).then(response => {
             setCountFaqs(response.data.total);
         }).catch(error => {
             console.log("Error fetching data", error);
         });
 
-        axios.get('http://localhost:3006/api/banner/countBanner', { withCredentials: true }).then(response => {
+        axios.get('/api/banner/countBanner', { withCredentials: true }).then(response => {
             setCountBanners(response.data.total);
         }).catch(error => {
             console.log("Error fetching data", error);
         });
 
-        axios.get('http://localhost:3006/api/staff/countStaff', { withCredentials: true }).then(response => {
+        axios.get('/api/staff/countStaff', { withCredentials: true }).then(response => {
             setCountStaff(response.data.total);
         }).catch(error => {
             console.log("Error fetching data", error);
         });
 
-        axios.get('http://localhost:3006/api/partner/countPartner', { withCredentials: true }).then(response => {
+        axios.get('/api/partner/countPartner', { withCredentials: true }).then(response => {
             setCountPartners(response.data.total);
         }).catch(error => {
             console.log("Error fetching data", error);
@@ -79,7 +79,7 @@ const AdminDashboard = () => {
     const fetchData = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`http://localhost:3006/api/inquiries/getInquiries`, { withCredentials: true });
+            const response = await axios.get(`/api/inquiries/getInquiries`, { withCredentials: true });
             const { totalCount, countWithFields, countWithoutFields } = response.data;
 
             setTotalCount(totalCount);

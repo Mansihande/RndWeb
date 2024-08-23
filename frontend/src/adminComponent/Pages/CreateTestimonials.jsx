@@ -81,7 +81,7 @@ const NewTestimonialForm = () => {
         formData.append('video', video);
       }
 
-      await axios.post('http://localhost:3006/api/testimonial/insertTestinomial', formData, {
+      await axios.post('/api/testimonial/insertTestinomial', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

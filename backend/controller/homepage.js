@@ -32,3 +32,33 @@ exports.getAll = async (req, res) => {
     }
   };
   
+
+  exports.getImage = async (req, res) => {
+    try {
+      // Extract the slug from the request query
+      const { slug } = req.params;
+  
+      if (!slug) {
+        return res.status(400).json({ message: 'Slug is required' });
+      }
+  
+      // Find the category that matches the provided slug
+      const category = await ServiceCategory.findOne({ slug })
+        .select('category photo -_id');
+  
+      if (!category) {
+        return res.status(404).json({ message: 'Category not found' });
+      }
+  
+      // Map to get an object with category name and photo
+      const categoryDetails = {
+        name: category.category,
+        photo: category.photo
+      };
+  
+      res.status(200).json(categoryDetails);
+    } catch (error) {
+      res.status(500).json({ message: 'Server error', error });
+    }
+  };
+  

@@ -89,7 +89,7 @@ const NewServiceForm = () => {
         formData.append('questions', JSON.stringify(qa));
       });
 
-      await axios.post('http://localhost:3006/api/serviceDetails/insertServiceDetail', formData, {
+      await axios.post('/api/serviceDetails/insertServiceDetail', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -105,7 +105,7 @@ const NewServiceForm = () => {
       setStatus(true);
       setPhotoAlts([]);
       setQuestions([{ question: "", answer: "" }]);
-      navigate('/services');
+      navigate(`/services/edit-service/${categoryId}`);
     } catch (error) {
       console.error(error);
       toast.error("Failed to create service.");
@@ -120,13 +120,11 @@ const NewServiceForm = () => {
       {/* Heading Field */}
       <div className="mb-4">
         <label htmlFor="heading" className="block font-semibold mb-2">Heading</label>
-        <input
-          type="text"
-          id="heading"
+          <ReactQuill
           value={heading}
-          onChange={(e) => setHeading(e.target.value)}
-          className="w-full p-2 border rounded focus:outline-none"
-          required
+          onChange={setHeading}
+          modules={modules}
+          className="quill"
         />
       </div>
       
@@ -255,13 +253,13 @@ const NewServiceForm = () => {
               className="w-full p-2 border rounded focus:outline-none"
             />
             <label className="block mb-2 mt-2">Answer:</label>
-            <input
-              type="text"
-              name="answer"
-              value={qa.answer}
-              onChange={(event) => handleQuestionChange(index, event)}
-              className="w-full p-2 border rounded focus:outline-none"
-            />
+            <ReactQuill
+      value={qa.answer}
+      onChange={(content) => handleQuestionChange(index, { target: { name: 'answer', value: content } })}
+      className="w-full p-2 border rounded focus:outline-none"
+      theme="snow"
+    />
+      
             <button
               type="button"
               onClick={() => handleRemoveQuestion(index)}

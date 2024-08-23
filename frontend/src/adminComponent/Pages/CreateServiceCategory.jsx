@@ -38,7 +38,7 @@ const NewCategoryForm = () => {
 
     const fetchCategories = async () => {
         try {
-            const response = await axios.get('http://localhost:3006/api/services/getall', { withCredentials: true });
+            const response = await axios.get('/api/services/getall', { withCredentials: true });
             setCategories(response.data);
         } catch (error) {
             console.error(error);
@@ -70,7 +70,7 @@ const NewCategoryForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            let urls = 'http://localhost:3006/api/services/insertCategory';
+            let urls = '/api/services/insertCategory';
             const formData = new FormData();
             formData.append('category', category);
             if (photo) {
@@ -91,9 +91,9 @@ const NewCategoryForm = () => {
 
 
             if (parentCategoryId && !subCategoryId) {
-                urls = `http://localhost:3006/api/services/insertSubCategory?categoryId=${parentCategoryId}`;
+                urls = `/api/services/insertSubCategory?categoryId=${parentCategoryId}`;
             } else if (parentCategoryId && subCategoryId) {
-                urls = `http://localhost:3006/api/services/insertSubSubCategory?categoryId=${parentCategoryId}&subCategoryId=${subCategoryId}`;
+                urls = `/api/services/insertSubSubCategory?categoryId=${parentCategoryId}&subCategoryId=${subCategoryId}`;
             }
 
             const response = await axios.post(urls, formData, { withCredentials: true });

@@ -124,7 +124,7 @@ const SitemapTable = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const dataResponse = await axios.get(`http://localhost:3006/api/sitemap/fetchUrlPriorityFreq`, { withCredentials: true })
+      const dataResponse = await axios.get(`/api/sitemap/fetchUrlPriorityFreq`, { withCredentials: true })
       const data = dataResponse.data.map((item, index) => ({
         id: index + 1,
         _id: item._id,
@@ -146,8 +146,8 @@ const SitemapTable = () => {
     setLoading(true);
     try {
       const [productResponse, categoryResponse] = await Promise.all([
-        axios.get(`http://localhost:3006/api/product/fetchUrlPriorityFreq`, { withCredentials: true }),
-        axios.get(`http://localhost:3006/api/product/fetchCategoryUrlPriorityFreq`, { withCredentials: true })
+        axios.get(`/api/product/fetchUrlPriorityFreq`, { withCredentials: true }),
+        axios.get(`/api/product/fetchCategoryUrlPriorityFreq`, { withCredentials: true })
       ]);
 
       const productData = productResponse.data.map((item, index) => ({
@@ -175,8 +175,8 @@ const SitemapTable = () => {
     setLoading(true);
     try {
       const [serviceResponse, categoryResponse] = await Promise.all([
-        axios.get(`http://localhost:3006/api/services/fetchUrlPriorityFreq`, { withCredentials: true }),
-        axios.get(`http://localhost:3006/api/services/fetchCategoryUrlPriorityFreq`, { withCredentials: true })
+        axios.get(`/api/services/fetchUrlPriorityFreq`, { withCredentials: true }),
+        axios.get(`/api/services/fetchCategoryUrlPriorityFreq`, { withCredentials: true })
       ]);
       const serviceData = serviceResponse.data.map((item, index) => ({
         id: index + 1,
@@ -201,8 +201,8 @@ const SitemapTable = () => {
     setLoading(true);
     try {
       const [newsResponse, categoryResponse] = await Promise.all([
-        axios.get(`http://localhost:3006/api/news/fetchUrlPriorityFreq`, { withCredentials: true }),
-        axios.get(`http://localhost:3006/api/news/fetchCategoryUrlPriorityFreq`, { withCredentials: true })
+        axios.get(`/api/news/fetchUrlPriorityFreq`, { withCredentials: true }),
+        axios.get(`/api/news/fetchCategoryUrlPriorityFreq`, { withCredentials: true })
       ]);
       const newsData = newsResponse.data.map((item, index) => ({
         id: index + 1,
@@ -226,7 +226,7 @@ const SitemapTable = () => {
   // const deleteSitemap = async (id, type) => {
   //   const endpoint = type === 'product' ? 'deleteUrlPriorityFreq' : 'deleteCategoryUrlPriorityFreq';
   //   try {
-  //     await axios.delete(`http://localhost:3006/api/product/${endpoint}?id=${id}`, { withCredentials: true });
+  //     await axios.delete(`/api/product/${endpoint}?id=${id}`, { withCredentials: true });
   //     fetchProductData();
   //     fetchServiceData();
   //   } catch (error) {
@@ -236,7 +236,7 @@ const SitemapTable = () => {
 
   const generateProductSitemap = async () => {
     try {
-      await axios.post('http://localhost:3006/api/sitemap/generateproductsitemap', { productSitemaps }, { withCredentials: true });
+      await axios.post('/api/sitemap/generateproductsitemap', { productSitemaps }, { withCredentials: true });
       alert("Sitemap generated successfully!");
     } catch (error) {
       console.error(error);
@@ -246,7 +246,7 @@ const SitemapTable = () => {
 
   const generateServiceSitemap = async () => {
     try {
-      await axios.post('http://localhost:3006/api/sitemap/generateservicesitemap', { serviceSitemaps }, { withCredentials: true });
+      await axios.post('/api/sitemap/generateservicesitemap', { serviceSitemaps }, { withCredentials: true });
       alert("Sitemap generated successfully!");
     } catch (error) {
       console.error(error);
@@ -256,7 +256,7 @@ const SitemapTable = () => {
 
   const generateNewsSitemap = async () => {
     try {
-      await axios.post('http://localhost:3006/api/sitemap/generatenewssitemap', { newsSitemaps }, { withCredentials: true });
+      await axios.post('/api/sitemap/generatenewssitemap', { newsSitemaps }, { withCredentials: true });
       alert("Sitemap generated successfully!");
     } catch (error) {
       console.error(error);
@@ -266,7 +266,7 @@ const SitemapTable = () => {
 
   const generateMainSitemap = async () => {
     try {
-      await axios.post('http://localhost:3006/api/sitemap/generatemainssitemap', { dataSitemaps }, { withCredentials: true });
+      await axios.post('/api/sitemap/generatemainssitemap', { dataSitemaps }, { withCredentials: true });
       alert("Sitemap generated successfully!");
     } catch (error) {
       console.error(error);
@@ -276,7 +276,7 @@ const SitemapTable = () => {
 
   const generateSitemapIndex = async () => {
     try {
-      await axios.post('http://localhost:3006/api/sitemap/generateSitemapIndex', { withCredentials: true });
+      await axios.post('/api/sitemap/generateSitemapIndex', { withCredentials: true });
       alert("Sitemap generated successfully!");
     } catch (error) {
       console.error(error);

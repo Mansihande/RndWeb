@@ -39,7 +39,7 @@ const handleDeleteImage = (index) => {
         formData.append(`alt`, photoAlts[index]);
     });
       const response = await axios.post(
-        "http://localhost:3006/api/achievements",
+        "/api/achievements",
         formData,
         {
           headers: {

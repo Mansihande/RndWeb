@@ -9,7 +9,7 @@ const Marquee = ({ speed = 15 }) => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get('http://localhost:3006/api/homepage/marquee');
+        const response = await axios.get('/api/homepage/marquee');
         setServices(response.data);
       } catch (error) {
         console.error('Error fetching services:', error);
@@ -44,11 +44,11 @@ const Marquee = ({ speed = 15 }) => {
   }, [combinedServices, speed]);
 
   return (
-    <div className="bg-[#114038] py-3 relative -z-10 overflow-hidden">
-      <div ref={marqueeRef} className="flex space-x-10 whitespace-nowrap">
+    <div className="bg-[#333] py-3 relative -z-10 overflow-hidden">
+      <div ref={marqueeRef} className="flex space-x-10 whitespace-nowrap pb-2">
         {combinedServices.map((service, index) => (
           <span key={index} className="scrolling-text text-xl font-semibold text-white">
-            {service} <span className="scroll-dot text-[#33776B] text-3xl pl-8">●</span>
+            {service} <span className="scroll-dot text-[#f3ca0d] text-3xl pl-8 ">●</span>
           </span>
         ))}
       </div>

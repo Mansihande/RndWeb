@@ -16,7 +16,7 @@ const NewMenuListingForm = () => {
 
     const fetchPriorityOptions = async () => {
         try {
-            const response = await axios.get('http://localhost:3006/api/menulisting/getMenulisting', { withCredentials: true });
+            const response = await axios.get('/api/menulisting/getMenulisting', { withCredentials: true });
             const count = response.data.count;
             if (count > 0) {
                 const options = Array.from({ length: count+1 }, (_, i) => i + 1);
@@ -48,7 +48,7 @@ const NewMenuListingForm = () => {
             formData.append('photo', photo);
             formData.append('priority', selectedPriority); 
 
-            const response = await axios.post('http://localhost:3006/api/menulisting/createMenulisting', formData, {
+            const response = await axios.post('/api/menulisting/createMenulisting', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

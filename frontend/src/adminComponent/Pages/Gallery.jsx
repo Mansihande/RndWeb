@@ -49,7 +49,7 @@ const GalleryTable = () => {
         Header: "Images",
         accessor: "images",
         Cell: ({ value }) => {
-          return <img src={`http://localhost:3006/api/gallery/download/${value}`} alt="Gallery" className="h-20 w-32 object-cover" />;
+          return <img src={`/api/gallery/download/${value}`} alt="Gallery" className="h-20 w-32 object-cover" />;
         },
         disableSortBy: true,
       },
@@ -92,7 +92,7 @@ const GalleryTable = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3006/api/gallery/getGallery`, { withCredentials: true });
+      const response = await axios.get(`/api/gallery/getGallery`, { withCredentials: true });
       const galleryWithIds = response.data.map((item, index) => ({
         ...item,
         id: index + 1,
@@ -107,7 +107,7 @@ const GalleryTable = () => {
 
   const deleteGallery = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:3006/api/gallery/deleteGallery?id=${id}`, { withCredentials: true });
+      const response = await axios.delete(`/api/gallery/deleteGallery?id=${id}`, { withCredentials: true });
 
       fetchData();
     } catch (error) {
@@ -121,7 +121,7 @@ const GalleryTable = () => {
 
   const fetchHeadings = async () => {
     try {
-      const response = await axios.get('http://localhost:3006/api/pageHeading/heading?pageType=gallery', { withCredentials: true });
+      const response = await axios.get('/api/pageHeading/heading?pageType=gallery', { withCredentials: true });
       const { heading, subheading } = response.data;
       setHeading(heading || '');
       setSubheading(subheading || '');
@@ -132,7 +132,7 @@ const GalleryTable = () => {
 
   const saveHeadings = async () => {
     try {
-      await axios.put('http://localhost:3006/api/pageHeading/updateHeading?pageType=gallery', {
+      await axios.put('/api/pageHeading/updateHeading?pageType=gallery', {
         pagetype: 'gallery',
         heading,
         subheading,

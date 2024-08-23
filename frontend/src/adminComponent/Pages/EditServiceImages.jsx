@@ -21,11 +21,11 @@ const EditServiceCategoryForm = () => {
   // Fetch the current gallery item
   const fetchGallery = async () => {
     try {
-      const response = await axios.get(`http://localhost:3006/api/serviceImages/getGalleryById?id=${id}&categoryId=${categoryIdFromParams}&photoType=${photoType}`, { withCredentials: true });
+      const response = await axios.get(`/api/serviceImages/getGalleryById?id=${id}&categoryId=${categoryIdFromParams}&photoType=${photoType}`, { withCredentials: true });
       const gallery = response.data;
       setAlt(gallery.alt);
       setCategoryId(gallery.categoryId);
-      setPreviewImage(`http://localhost:3006/api/serviceImages/download/${gallery.images}`); // Set the preview image URL
+      setPreviewImage(`/api/serviceImages/download/${gallery.images}`); // Set the preview image URL
     } catch (error) {
       console.error("Error fetching gallery:", error);
     }
@@ -46,7 +46,7 @@ const EditServiceCategoryForm = () => {
         formData.append('images', image);
       }
 
-      await axios.put(`http://localhost:3006/api/serviceImages/updateGallery?id=${id}`, formData, {
+      await axios.put(`/api/serviceImages/updateGallery?id=${id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },

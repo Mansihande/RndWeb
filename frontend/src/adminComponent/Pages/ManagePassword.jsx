@@ -14,7 +14,7 @@ function ResetPassword() {
         e.preventDefault();
         setIsLoading(true);
         try {
-            await axios.post('http://localhost:3006/api/password/managePassword', { email, currentPassword, newPassword });
+            await axios.post('/api/password/managePassword', { email, currentPassword, newPassword });
             toast.success('Password reset successfully!');
         } catch (error) {
             if (error.response && error.response.data && error.response.data.message) {

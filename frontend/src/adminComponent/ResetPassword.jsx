@@ -13,7 +13,7 @@ function ResetPassword() {
         e.preventDefault();
         setIsLoading(true);
         try {
-            await axios.post('http://localhost:3006/api/password/resetPassword', { email, newPassword });
+            await axios.post('/api/password/resetPassword', { email, newPassword });
             alert('Password reset successful');
             navigate("/")
         } catch (error) {

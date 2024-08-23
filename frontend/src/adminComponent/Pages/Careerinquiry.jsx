@@ -40,7 +40,7 @@ const CareerInquiryTable = () => {
         accessor: "resume",
         Cell: ({ value }) => (
           <div className="flex gap-4">
-            <a className="text-green-500 hover:text-green-700 transition" href={`http://localhost:3006/api/careerInquiries/download/${value}`}>
+            <a className="text-green-500 hover:text-green-700 transition" href={`/api/careerInquiries/download/${value}`}>
               <FaDownload size={20} />
             </a>
             <button className="text-blue-500 hover:text-blue-700 transition" onClick={() => viewResume(value)}>
@@ -86,7 +86,7 @@ const CareerInquiryTable = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3006/api/careerInquiries/getCareerInquiries`, { withCredentials: true });
+      const response = await axios.get(`/api/careerInquiries/getCareerInquiries`, { withCredentials: true });
       const inquiriesWithIds = response.data.data.map((inquiryItem, index) => ({
         ...inquiryItem,
         id: index + 1,
@@ -101,7 +101,7 @@ const CareerInquiryTable = () => {
 
   const deleteInquiry = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:3006/careerInquiries/deleteCareerInquiries/${id}`, { withCredentials: true });
+      const response = await axios.delete(`/careerInquiries/deleteCareerInquiries/${id}`, { withCredentials: true });
 
       fetchData();
     } catch (error) {
@@ -112,7 +112,7 @@ const CareerInquiryTable = () => {
 
 
   const viewResume = (filename) => {
-    window.open(`http://localhost:3006/api/careerInquiries/view/${filename}`);
+    window.open(`/api/careerInquiries/view/${filename}`);
   };
 
   useEffect(() => {

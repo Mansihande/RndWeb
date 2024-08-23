@@ -91,12 +91,7 @@ import GoogleSettings from "./adminComponent/Pages/GoogleSettings"
 import Menulisting from "./adminComponent/Pages/Menulisting"
 import CreateMenulisting from "./adminComponent/Pages/CreateMenulisting"
 import EditMenulisting from "./adminComponent/Pages/EditMenulisting"
-import Infrastructure from "./adminComponent/Pages/Infrastructure"
-import CreateInfrastructure from "./adminComponent/Pages/CreateInfrastructure"
-import EditInfrastructure from "./adminComponent/Pages/EditInfrastructure"
-import QualityControl from "./adminComponent/Pages/QualityControl"
-import CreateQualityControl from "./adminComponent/Pages/CreateQualityControl"
-import EditQualityControl from "./adminComponent/Pages/EditQualityControl"
+
 import Sitemap from "./adminComponent/Pages/Sitemap"
 import CreateSitemap from "./adminComponent/Pages/CreateSitemap"
 import EditSitemap from "./adminComponent/Pages/EditSitemap"
@@ -127,6 +122,11 @@ import AllReviews from "./components/WhatWeDo/AllReviews"
 import ErrorBoundary from "./components/ErrorBound";
 import HomeHerosection from "./adminComponent/Pages/HomeHerosection";
 import Design from "./pages/Design"
+
+
+
+
+
 import CreatePackage from "./adminComponent/Pages/CreatePackage"
 import EditPackageForm from "./adminComponent/Pages/EditPackage";
 import DesignProcessForm from "./adminComponent/Pages/CreateDesignProcess"
@@ -134,9 +134,15 @@ import DesignProcessForm from "./adminComponent/Pages/CreateDesignProcess"
 import EditDesignProcess from "./adminComponent/Pages/EditDesignProcess"
 
 import EditWebSolutionDetails from "./adminComponent/Pages/WebSolution"
-
-
-
+import SocialMedia from "./pages/SocialMedia";
+import EditServicePage from "./adminComponent/Pages/EditEachCategory";
+import HowItWorksTable from "./adminComponent/Pages/HowitWorks";
+import AboutUs from "./pages/AboutUs";
+import Collabration from "./pages/Collabration";
+import GetInTouch from "./pages/Contact";
+import Faq from "./pages/Faq";
+import NewSubmenuListingForm from "./adminComponent/Pages/CreateSubMenu";
+import EditSubmenuForm from "./adminComponent/Pages/EditSubMenu";
 
 
 
@@ -145,6 +151,7 @@ function App() {
 
   useEffect(() => {
     const token = Cookies.get('jwt');
+    console.log(token)
     if (token) {
       setIsLoggedIn(true);
     } else {
@@ -169,122 +176,135 @@ function App() {
         <Route path="/design" element={<Design />} />
 
         <Route path="/websites" element={<Website />} />
+        <Route path="/social-media" element={<SocialMedia />} />
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/all-reviews" element={<AllReviews />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/projects" element={<Projects />} />
-        <Route path="templates" element={<Templates />} />
+        <Route path="/templates" element={<Templates />} />
+        <Route path="/aboutus" element={<AboutUs/>}/>
+        <Route path="/collabration" element={<Collabration/>}/>
+        <Route path="/contact" element={<GetInTouch/>}/>
+        <Route path="/helpCenter" element={<Faq/>}/>
       </Route>
 
             </>
+
+
+
           ) : (
+  
             <Route path="/" element={<Sidebar />}>
-              <Route index element={<Dashboard />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/services" element={<ServicesBack />} />
-              <Route path="/services/createServices" element={<CreateService />} />
-              <Route path="/services/editServices/:slugs" element={<EditService />} />
-              <Route path="/ServiceCategory" element={<ServiceCategory />} />
-              <Route path="/ServiceCategory/CreateServiceCategory" element={<CreateServiceCategory />} />
-              <Route path="/ServiceCategory/editServiceCategory/:categoryId/:subCategoryId?/:subSubCategoryId?" element={<EditServiceCategory />} />
-              <Route path="/news" element={<News />} />
-              <Route path="/news/createNews" element={<CreateNews />} />
-              <Route path="/news/editNews/:slugs" element={<EditNews />} />
-              <Route path="/NewsCategory" element={<NewsCategory />} />
-              <Route path="/NewsCategory/CreateNewsCategory" element={<CreateNewsCategory />} />
-              <Route path="/NewsCategory/editNewsCategory/:categoryId/:subCategoryId?/:subSubCategoryId?" element={<EditNewsCategory />} />
-              <Route path="/testimonials" element={<Testimonials />} />
-              <Route path="/testimonials/createTestimonials" element={<CreateTestimonials />} />
-              <Route path="/testimonials/editTestimonials/:id" element={<EditTestimonials />} />
-              <Route path="/faq" element={<FAQ />} />
-              <Route path="/faq/createFAQ" element={<CreateFAQ />} />
-              <Route path="/faq/editFAQ/:id" element={<EditFAQ />} />
-              <Route path="/ourTeam" element={<OurStaff />} />
-              <Route path="/ourTeam/createTeam" element={<CreateStaff />} />
-              <Route path="/ourTeam/editTeam/:id" element={<EditStaff />} />
-              <Route path="/banner" element={<Banner />} />
-              <Route path="/banner/createBanner" element={<CreateBanner />} />
-              <Route path="/banner/editBanner/:id" element={<EditBanner />} />
-              <Route path="/ProductCategory" element={<ProductCategory />} />
-              <Route path="/ProductCategory/CreateProductCategory" element={<CreateProductCategory />} />
-              <Route path="/ProductCategory/editProductCategory/:categoryId/:subCategoryId?/:subSubCategoryId?" element={<EditCategory />} />
-              <Route path="/extrapages" element={<PageContent />} />
-              <Route path="/extrapages/createextrapages" element={<CreatePageContent />} />
-              <Route path="/extrapages/editextrapages/:id" element={<EditPageContent />} />
-              <Route path="/pageContent/createPoints" element={<CreateAboutUsPoints />} />
-              <Route path="/pageContent/editPoints/:id" element={<EditAboutUsPoints />} />
-              <Route path="/product" element={<Product />} />
-              <Route path="/product/createProduct" element={<CreateProduct />} />
-              <Route path="/product/editProduct/:slugs" element={<EditProduct />} />
-              <Route path="/clients" element={<Partner />} />
-              <Route path="/clients/createClients" element={<CreatePartner />} />
-              <Route path="/clients/editClients/:id" element={<EditPartner />} />
-              <Route path="/manageLogo" element={<Logo />} />
-              <Route path="/DatabaseManagement" element={<DatabaseManagement />} />
-              <Route path="/managePassword" element={<ManagePassword />} />
-              <Route path="/manageProfile" element={<ManageProfile />} />
-              <Route path="/certificates" element={<Achievements />} />
-              <Route path="/certificates/createcertificates" element={<CreateAchievements />} />
-              <Route path="/certificates/editcertificates/:id" element={<EditAchievement />} />
-              <Route path="/counter" element={<Counter />} />
-              <Route path="/counter/editCounter/:id" element={<EditCounter />} />
-              <Route path="/counter/createCounter" element={<CreateCounter />} />
-              <Route path="/Inquiry" element={<Inquiry />} />
-              <Route path="/GalleryCategory" element={<GalleryCategory />} />
-              <Route path="/GalleryCategory/editGalleryCategory/:id" element={<EditGalleryCategory />} />
-              <Route path="/GalleryCategory/CreateGalleryCategory" element={<CreateGalleryCategory />} />
-              <Route path="/gallery" element={<Gallery />} />
-              <Route path="/gallery/createGallery" element={<CreateGallery />} />
-              <Route path="/gallery/EditGallery/:id" element={<EditGallery />} />
-              {/* <Route path="/mission" element={<Mission />} />
-            <Route path="/vision" element={<Vision />} />  */}
-              <Route path="/missionandvision" element={<MissionAndVision />} />
-              <Route path="/corevalue" element={<Corevalue />} />
-              <Route path="/corevalue/createCorevalue" element={<CreateCorevalue />} />
-              <Route path="/corevalue/editCorevalue/:id" element={<EditCorevalue />} />
-              <Route path="/aboutcompany" element={<Aboutcompany />} />
-              <Route path="/careeroption" element={<Careeroption />} />
-              <Route path="/careeroption/createCareerOption" element={<CreateCareeroption />} />
-              <Route path="/careeroption/editCareerOption/:id" element={<EditCareeroption />} />
-              <Route path="/careerinquiry" element={<Careerinquiry />} />
-              <Route path="/footer" element={<Footer />} />
-              <Route path="/header" element={<Header />} />
-              <Route path="/globalpresence" element={<Globalpresence />} />
-              <Route path="/whatsappSettings" element={<WhatsappSettings />} />
-              <Route path="/googleSettings" element={<GoogleSettings />} />
-              <Route path="/menulisting" element={<Menulisting />} />
-              <Route path="/menulisting/createMenulisting" element={<CreateMenulisting />} />
-              <Route path="/menulisting/editMenulisting/:id" element={<EditMenulisting />} />
-              <Route path="/infrastructure" element={<Infrastructure />} />
-              <Route path="/infrastructure/createInfrastructure" element={<CreateInfrastructure />} />
-              <Route path="/infrastructure/editInfrastructure/:id" element={<EditInfrastructure />} />
-              <Route path="/qualitycontrol" element={<QualityControl />} />
-              <Route path="/qualitycontrol/createQualitycontrol" element={<CreateQualityControl />} />
-              <Route path="/qualitycontrol/editQualitycontrol/:id" element={<EditQualityControl />} />
-              <Route path="/sitemap" element={<Sitemap />} />
-              <Route path="/sitemap/createSitemap" element={<CreateSitemap />} />
-              <Route path="/sitemap/editSitemap/:id/:type" element={<EditSitemap />} />
-              <Route path="/metadetails" element={<Metadetails />} />
-              <Route path="/metadetails/editmetaDetails/:id/:type" element={<EditMetadetails />} />
-              <Route path="/benefits" element={<Benefits />} />
-              <Route path="/benefits/createBenefits" element={<CreateBenefits />} />
-              <Route path="/benefits/editBenefits/:id" element={<EditBenefits />} />
-              <Route path="/manageTheme" element={<ManageColor />} />
+            <Route index element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/services" element={<ServicesBack />} />
+            <Route path="/services/createServices" element={<CreateService />} />
+            <Route path="/services/editServices/:slugs" element={<EditService />} />
+            <Route path="/ServiceCategory" element={<ServiceCategory />} />
+            <Route path="/ServiceCategory/CreateServiceCategory" element={<CreateServiceCategory />} />
+            <Route path="/ServiceCategory/editServiceCategory/:categoryId/:subCategoryId?/:subSubCategoryId?" element={<EditServiceCategory />} />
+            <Route path="/news" element={<News />} />
+            <Route path="/news/createNews" element={<CreateNews />} />
+            <Route path="/news/editNews/:slugs" element={<EditNews />} />
+            <Route path="/NewsCategory" element={<NewsCategory />} />
+            <Route path="/NewsCategory/CreateNewsCategory" element={<CreateNewsCategory />} />
+            <Route path="/NewsCategory/editNewsCategory/:categoryId/:subCategoryId?/:subSubCategoryId?" element={<EditNewsCategory />} />
+            <Route path="/testimonials" element={<Testimonials />} />
+            <Route path="/testimonials/createTestimonials" element={<CreateTestimonials />} />
+            <Route path="/testimonials/editTestimonials/:id" element={<EditTestimonials />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/faq/createFAQ" element={<CreateFAQ />} />
+            <Route path="/faq/editFAQ/:id" element={<EditFAQ />} />
+            <Route path="/ourTeam" element={<OurStaff />} />
+            <Route path="/ourTeam/createTeam" element={<CreateStaff />} />
+            <Route path="/ourTeam/editTeam/:id" element={<EditStaff />} />
+            <Route path="/banner" element={<Banner />} />
+            <Route path="/banner/createBanner" element={<CreateBanner />} />
+            <Route path="/banner/editBanner/:id" element={<EditBanner />} />
+            <Route path="/ProductCategory" element={<ProductCategory />} />
+            <Route path="/ProductCategory/CreateProductCategory" element={<CreateProductCategory />} />
+            <Route path="/ProductCategory/editProductCategory/:categoryId/:subCategoryId?/:subSubCategoryId?" element={<EditCategory />} />
+            <Route path="/extrapages" element={<PageContent />} />
+            <Route path="/extrapages/createextrapages" element={<CreatePageContent />} />
+            <Route path="/extrapages/editextrapages/:id" element={<EditPageContent />} />
+            <Route path="/pageContent/createPoints" element={<CreateAboutUsPoints />} />
+            <Route path="/pageContent/editPoints/:id" element={<EditAboutUsPoints />} />
+            <Route path="/product" element={<Product />} />
+            <Route path="/product/createProduct" element={<CreateProduct />} />
+            <Route path="/product/editProduct/:slugs" element={<EditProduct />} />
+            <Route path="/clients" element={<Partner />} />
+            <Route path="/clients/createClients" element={<CreatePartner />} />
+            <Route path="/clients/editClients/:id" element={<EditPartner />} />
+            <Route path="/manageLogo" element={<Logo />} />
+            <Route path="/DatabaseManagement" element={<DatabaseManagement />} />
+            <Route path="/managePassword" element={<ManagePassword />} />
+            <Route path="/manageProfile" element={<ManageProfile />} />
+            <Route path="/certificates" element={<Achievements />} />
+            <Route path="/certificates/createcertificates" element={<CreateAchievements />} />
+            <Route path="/certificates/editcertificates/:id" element={<EditAchievement />} />
+            <Route path="/counter" element={<Counter />} />
+            <Route path="/counter/editCounter/:id" element={<EditCounter />} />
+            <Route path="/counter/createCounter" element={<CreateCounter />} />
+            <Route path="/Inquiry" element={<Inquiry />} />
+            <Route path="/GalleryCategory" element={<GalleryCategory />} />
+            <Route path="/GalleryCategory/editGalleryCategory/:id" element={<EditGalleryCategory />} />
+            <Route path="/GalleryCategory/CreateGalleryCategory" element={<CreateGalleryCategory />} />
+            <Route path="/gallery" element={<Gallery />} />
+            <Route path="/gallery/createGallery" element={<CreateGallery />} />
+            <Route path="/gallery/EditGallery/:id" element={<EditGallery />} />
+            {/* <Route path="/mission" element={<Mission />} />
+          <Route path="/vision" element={<Vision />} />  */}
+            <Route path="/missionandvision" element={<MissionAndVision />} />
+            <Route path="/corevalue" element={<Corevalue />} />
+            <Route path="/corevalue/createCorevalue" element={<CreateCorevalue />} />
+            <Route path="/corevalue/editCorevalue/:id" element={<EditCorevalue />} />
+            <Route path="/aboutcompany" element={<Aboutcompany />} />
+            <Route path="/careeroption" element={<Careeroption />} />
+            <Route path="/careeroption/createCareerOption" element={<CreateCareeroption />} />
+            <Route path="/careeroption/editCareerOption/:id" element={<EditCareeroption />} />
+            <Route path="/careerinquiry" element={<Careerinquiry />} />
+            <Route path="/footer" element={<Footer />} />
+            <Route path="/header" element={<Header />} />
+            <Route path="/globalpresence" element={<Globalpresence />} />
+            <Route path="/whatsappSettings" element={<WhatsappSettings />} />
+            <Route path="/googleSettings" element={<GoogleSettings />} />
+            <Route path="/menulisting" element={<Menulisting />} />
+            <Route path="/menulisting/createMenulisting" element={<CreateMenulisting />} />
+            <Route path="/menulisting/editMenulisting/:id" element={<EditMenulisting />} />
+      
+      
+            <Route path="/sitemap" element={<Sitemap />} />
+            <Route path="/sitemap/createSitemap" element={<CreateSitemap />} />
+            <Route path="/sitemap/editSitemap/:id/:type" element={<EditSitemap />} />
+            <Route path="/metadetails" element={<Metadetails />} />
+            <Route path="/metadetails/editmetaDetails/:id/:type" element={<EditMetadetails />} />
+            <Route path="/benefits" element={<Benefits />} />
+            <Route path="/benefits/createBenefits" element={<CreateBenefits />} />
+            <Route path="/benefits/editBenefits/:id" element={<EditBenefits />} />
+            <Route path="/manageTheme" element={<ManageColor />} />
+      
+      
+      {/* made for me  */}
+      
+      <Route path="/homehero" element={<HomeHerosection/>}/>
+      <Route path="/services/createService/:categoryId" element={<CreateServiceDetails/>}/>
+      <Route path="/services/edit-service/:categoryId" element={<EditServicePage/>}/>
+      <Route path="/services/EditService/:categoryId" element={<EditServiceDetails/>}/>
+      <Route path="/services/createImage/:categoryId" element={<CreateServiceImage />} />
+      <Route path="/services/editImages/:categoryId" element={<EditServiceImages/>}/>
+      <Route path="/services/createPackage/:categoryId" element={<CreatePackage/>}/>
+      <Route path="/services/packages/:packageId" element={<EditPackageForm/>}/>
+      <Route path="/services/designProcess/:categoryId" element={<DesignProcessForm/>}/>
+      <Route path="/services/editDesignProcess/:processId" element={<EditDesignProcess />} />
+      <Route path="/extrapages/:contentType" element={<EditWebSolutionDetails/>}/>
+      <Route path="/howworks" element={<HowItWorksTable/>}/>
 
 
-{/* made for me  */}
 
-<Route path="/homehero" element={<HomeHerosection/>}/>
-<Route path="/services/createService/:categoryId" element={<CreateServiceDetails/>}/>
-<Route path="/services/EditService/:categoryId" element={<EditServiceDetails/>}/>
-<Route path="/services/createImage/:categoryId" element={<CreateServiceImage />} />
-<Route path="/services/editImages/:categoryId" element={<EditServiceImages/>}/>
-<Route path="/services/createPackage/:categoryId" element={<CreatePackage/>}/>
-<Route path="/services/packages/:packageId" element={<EditPackageForm/>}/>
-<Route path="/services/designProcess/:categoryId" element={<DesignProcessForm/>}/>
-<Route path="/services/editDesignProcess/:processId" element={<EditDesignProcess />} />
-<Route path="/extrapages/:contentType" element={<EditWebSolutionDetails/>}/>
-            </Route>
+      <Route path="/menulisting/createSubmenu" element={<NewSubmenuListingForm/>}/>
+      <Route path="/menulisting/editSubmenu/:id" element={<EditSubmenuForm/>}/>
+          </Route>
+      
           )}
         </Routes>
       </BrowserRouter>

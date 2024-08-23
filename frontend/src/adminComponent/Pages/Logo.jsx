@@ -21,7 +21,7 @@ const LogoCRUD = () => {
 
   const fetchLogos = async () => {
     try {
-      const response = await axios.get('http://localhost:3006/api/logo', { withCredentials: true });
+      const response = await axios.get('/api/logo', { withCredentials: true });
       const logosData = {};
       response.data.forEach(logo => {
         logosData[logo.type] = logo;
@@ -56,7 +56,7 @@ const LogoCRUD = () => {
       formData.append('alt', altTexts[type]);
       formData.append('type', type);
 
-      await axios.post('http://localhost:3006/api/logo', formData, {
+      await axios.post('/api/logo', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },
@@ -74,7 +74,7 @@ const LogoCRUD = () => {
 
   const handleDelete = async (imageName, type) => {
     try {
-      await axios.delete(`http://localhost:3006/api/logo/${imageName}`, { withCredentials: true });
+      await axios.delete(`/api/logo/${imageName}`, { withCredentials: true });
       fetchLogos();
     } catch (error) {
       console.error(error);
@@ -117,7 +117,7 @@ const LogoCRUD = () => {
             {logos[logoType.type] && (
               <div key={logos[logoType.type]._id} className=" p-4 mt-6">
                 <img
-                  src={`http://localhost:3006/api/logo/download/${logos[logoType.type].photo}`}
+                  src={`/api/logo/download/${logos[logoType.type].photo}`}
                   alt="Logo"
                   className=" "
                 />

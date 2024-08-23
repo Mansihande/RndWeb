@@ -64,7 +64,7 @@ const StaffTable = () => {
         accessor: "photo",
         Cell: ({ value }) => {
           const firstImage = Array.isArray(value) && value.length > 0 ? value[0] : null;
-          return firstImage ? <img src={`http://localhost:3006/api/image/download/${firstImage}`} alt="Service" className="w-32 h-20 object-cover" /> : null;
+          return firstImage ? <img src={`/api/image/download/${firstImage}`} alt="Service" className="w-32 h-20 object-cover" /> : null;
 
         },
         disableSortBy: true,
@@ -122,7 +122,7 @@ const StaffTable = () => {
   const fetchData = async (pageIndex) => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3006/api/staff/getStaff?page=${pageIndex + 1}`, { withCredentials: true });
+      const response = await axios.get(`/api/staff/getStaff?page=${pageIndex + 1}`, { withCredentials: true });
       const staffWithIds = response.data.data.map((staffMember, index) => ({
         ...staffMember,
         id: pageIndex * pageSize + index + 1,
@@ -138,7 +138,7 @@ const StaffTable = () => {
 
   const deleteStaff = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:3006/api/staff/deleteStaff?id=${id}`, { withCredentials: true });
+      const response = await axios.delete(`/api/staff/deleteStaff?id=${id}`, { withCredentials: true });
 
       // Optionally, you can update the UI or perform any other actions after successful deletion
       // For example, refetch the data to update the table
@@ -154,7 +154,7 @@ const StaffTable = () => {
 
   const fetchHeadings = async () => {
     try {
-      const response = await axios.get('http://localhost:3006/api/pageHeading/heading?pageType=ourStaff', { withCredentials: true });
+      const response = await axios.get('/api/pageHeading/heading?pageType=ourStaff', { withCredentials: true });
       const { heading, subheading } = response.data;
       setHeading(heading || '');
       setSubheading(subheading || '');
@@ -165,7 +165,7 @@ const StaffTable = () => {
 
   const saveHeadings = async () => {
     try {
-      await axios.put('http://localhost:3006/api/pageHeading/updateHeading?pageType=ourStaff', {
+      await axios.put('/api/pageHeading/updateHeading?pageType=ourStaff', {
         pagetype: 'ourStaff',
         heading,
         subheading,

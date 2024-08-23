@@ -6,7 +6,7 @@ const {
   getAllPackages,
   getSinglePackage,
   getCategoryPackages,
-  getSubcategoryPackages,getAllPackagesSlug
+  getSubcategoryPackages,getAllPackagesSlug,getAllPackagesFront
 } = require('../controller/plan'); // Adjust the path as necessary
 
 const router = express.Router();
@@ -32,5 +32,8 @@ router.get('/category', getCategoryPackages);
 // Route to get plans by subcategory
 router.get('/subcategory', getSubcategoryPackages);
 router.get('/front/:slug',getAllPackagesSlug)
+
+router.get("/front",getAllPackagesFront)
+
 
 module.exports = router;

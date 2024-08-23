@@ -70,7 +70,7 @@ const CareerOptionTable = () => {
         accessor: "photo",
         Cell: ({ value }) => {
           const firstImage = Array.isArray(value) && value.length > 0 ? value[0] : null;
-          return firstImage ? <img src={`http://localhost:3006/api/image/download/${firstImage}`} alt="Career" className="w-32 h-20 object-cover" /> : null;
+          return firstImage ? <img src={`/api/image/download/${firstImage}`} alt="Career" className="w-32 h-20 object-cover" /> : null;
         },
         disableSortBy: true,
       },
@@ -118,7 +118,7 @@ const CareerOptionTable = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3006/api/careeroption/getCareeroption`, { withCredentials: true });
+      const response = await axios.get(`/api/careeroption/getCareeroption`, { withCredentials: true });
       const careerOptionsWithIds = response.data.map((option, index) => ({
         ...option,
         id: index + 1,
@@ -133,7 +133,7 @@ const CareerOptionTable = () => {
 
   const deleteCareerOption = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:3006/api/careeroption/deleteCareeroption?id=${id}`, { withCredentials: true });
+      const response = await axios.delete(`/api/careeroption/deleteCareeroption?id=${id}`, { withCredentials: true });
 
       fetchData();
     } catch (error) {
@@ -157,7 +157,7 @@ const CareerOptionTable = () => {
 
   const fetchHeadings = async () => {
     try {
-      const response = await axios.get('http://localhost:3006/api/pageHeading/heading?pageType=career', { withCredentials: true });
+      const response = await axios.get('/api/pageHeading/heading?pageType=career', { withCredentials: true });
       const { heading, subheading } = response.data;
       setHeading(heading || '');
       setSubheading(subheading || '');
@@ -168,7 +168,7 @@ const CareerOptionTable = () => {
 
   const saveHeadings = async () => {
     try {
-      await axios.put('http://localhost:3006/api/pageHeading/updateHeading?pageType=career', {
+      await axios.put('/api/pageHeading/updateHeading?pageType=career', {
         pagetype: 'career',
         heading,
         subheading,

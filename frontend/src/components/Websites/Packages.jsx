@@ -14,7 +14,7 @@ const PricingSection = () => {
   const [subHeading,setSubheading]=useState("")
 useEffect(()=>{  const fetchHeadings = async () => {
     try {
-      const response = await axios.get('http://localhost:3006/api/pageHeading/heading?pageType=package', { withCredentials: true });
+      const response = await axios.get('/api/pageHeading/heading?pageType=package', { withCredentials: true });
       const { heading, subheading } = response.data;
       setHeading(heading || '');
       setSubheading(subheading || '');
@@ -31,7 +31,7 @@ useEffect(()=>{  const fetchHeadings = async () => {
     const fetchData = async () => {
       try {
         const slug = location.pathname.split('/').filter(Boolean).pop();
-        const response = await axios.get(`http://localhost:3006/api/packages/front/${slug}`, { withCredentials: true });
+        const response = await axios.get(`/api/packages/front/${slug}`, { withCredentials: true });
         console.log("API Response:", response.data);
 
         // Normalize keys to match pageOptions

@@ -15,7 +15,7 @@ const NewGalleryForm = () => {
 
     const fetchCategories = async () => {
         try {
-            const response = await axios.get('http://localhost:3006/api/gallery/getCategory', { withCredentials: true });
+            const response = await axios.get('/api/gallery/getCategory', { withCredentials: true });
             setAllCategories(response.data);
         } catch (error) {
             console.error(error);
@@ -39,7 +39,7 @@ const NewGalleryForm = () => {
             formData.append('alt', alt);
             formData.append('images', images);
 
-            const response = await axios.post('http://localhost:3006/api/gallery/createGallery', formData, {
+            const response = await axios.post('/api/gallery/createGallery', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

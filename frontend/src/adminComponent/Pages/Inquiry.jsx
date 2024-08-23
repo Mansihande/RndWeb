@@ -21,7 +21,7 @@ const Inquiry = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3006/api/inquiries/getInquiries`, { withCredentials: true });
+      const response = await axios.get(`/api/inquiries/getInquiries`, { withCredentials: true });
       const { totalCount, countWithFields, countWithoutFields, dataWithFields, dataWithoutFields, inquiries } = response.data;
 
       setTotalCount(totalCount);
@@ -114,7 +114,7 @@ const Inquiry = () => {
 
   const deleteInquiry = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:3006/api/inquiries/deleteInquiry?id=${id}`, { withCredentials: true });
+      const response = await axios.delete(`/api/inquiries/deleteInquiry?id=${id}`, { withCredentials: true });
 
       fetchData();
     } catch (error) {

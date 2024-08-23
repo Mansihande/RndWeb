@@ -56,7 +56,7 @@ const PartnersTable = () => {
           const firstImage = Array.isArray(value) && value.length > 0 ? value[0] : null;
 
           return firstImage ? (
-            <img src={`http://localhost:3006/api/image/download/${firstImage}`} alt="logo" className="w-fit h-20" />
+            <img src={`/api/image/download/${firstImage}`} alt="logo" className="w-fit h-20" />
           ) : null;
         },
         disableSortBy: true,
@@ -108,7 +108,7 @@ const PartnersTable = () => {
   const fetchData = async (pageIndex) => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3006/api/partner/getPartners?page=${pageIndex + 1}`, { withCredentials: true });
+      const response = await axios.get(`/api/partner/getPartners?page=${pageIndex + 1}`, { withCredentials: true });
       const partnersWithIds = response.data.data.map((partner, index) => ({
         ...partner,
         id: pageIndex * pageSize + index + 1,
@@ -124,7 +124,7 @@ const PartnersTable = () => {
 
   const deletePartner = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:3006/api/partner/deletePartner?id=${id}`, { withCredentials: true });
+      const response = await axios.delete(`/api/partner/deletePartner?id=${id}`, { withCredentials: true });
 
       // Optionally, you can update the UI or perform any other actions after successful deletion
       // For example, refetch the data to update the table
@@ -140,7 +140,7 @@ const PartnersTable = () => {
 
   const fetchHeadings = async () => {
     try {
-      const response = await axios.get('http://localhost:3006/api/pageHeading/heading?pageType=partner', { withCredentials: true });
+      const response = await axios.get('/api/pageHeading/heading?pageType=partner', { withCredentials: true });
       const { heading, subheading } = response.data;
       setHeading(heading || '');
       setSubheading(subheading || '');
@@ -151,7 +151,7 @@ const PartnersTable = () => {
 
   const saveHeadings = async () => {
     try {
-      await axios.put('http://localhost:3006/api/pageHeading/updateHeading?pageType=partner', {
+      await axios.put('/api/pageHeading/updateHeading?pageType=partner', {
         pagetype: 'partner',
         heading,
         subheading,

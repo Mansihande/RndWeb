@@ -39,7 +39,7 @@ const VisionForm = () => {
     };
 
     const fetchVisionData = () => {
-        axios.get('http://localhost:3006/api/vision/getVision', { withCredentials: true })
+        axios.get('/api/vision/getVision', { withCredentials: true })
             .then(response => {
                 const mission = response.data.data || {};
                 setTitle(mission.title || '');
@@ -73,7 +73,7 @@ const VisionForm = () => {
             formData.append(`alt`, a);
         });
 
-        axios.put('http://localhost:3006/api/vision/updateVision', formData, { withCredentials: true })
+        axios.put('/api/vision/updateVision', formData, { withCredentials: true })
             .then(response => {
                 notify();
                 setPhoto([]);
@@ -114,7 +114,7 @@ const VisionForm = () => {
 
     const handleDeleteInitialPhoto = (e, photoFilename, index) => {
         e.preventDefault();
-        axios.delete(`http://localhost:3006/api/vision/image/${photoFilename}/${index}`, { withCredentials: true })
+        axios.delete(`/api/vision/image/${photoFilename}/${index}`, { withCredentials: true })
             .then(response => {
                 const updatedPhotos = initialPhotos.filter(photo => photo !== photoFilename);
                 setInitialPhotos(updatedPhotos);
@@ -163,7 +163,7 @@ const VisionForm = () => {
                         {initialPhotos.map((photo, index) => (
                             <div key={index} className="relative w-56">
                                 <img
-                                    src={`http://localhost:3006/api/image/download/${photo}`}
+                                    src={`/api/image/download/${photo}`}
                                     alt={`Photo ${index + 1}`}
                                     className="w-56 h-32 object-cover"
                                 />

@@ -7,7 +7,7 @@ export default function WhatYouGet() {
   useEffect(() => {
     const fetchExperts = async () => {
       try {
-        const response = await axios.get(`http://localhost:3006/api/content/type/everyplan`, { withCredentials: true });
+        const response = await axios.get(`/api/content/type/everyplan`, { withCredentials: true });
         const expertData = response.data;
 
         if (expertData.length > 0) {
@@ -18,7 +18,7 @@ export default function WhatYouGet() {
             subsections.map(async (expert) => {
               try {
                 const imageResponse = await axios.get(
-                  `http://localhost:3006/api/image/download/${expert.photo}`,
+                  `/api/image/download/${expert.photo}`,
                   { responseType: 'blob' }
                 );
                 const imageUrl = URL.createObjectURL(imageResponse.data);
@@ -44,7 +44,7 @@ export default function WhatYouGet() {
     <div className="container mx-auto py-40 px-20">
       <div className="text-center mb-40">
         <h2 className="text-5xl font-serif font-bold">
-          What you’ll get with <span className='text-orange-500'>every plan.</span>
+          What you’ll get with <span className='text-[#f3ca0d]'>every plan.</span>
         </h2>
       </div>
       <div>

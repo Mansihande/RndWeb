@@ -2,6 +2,10 @@ import React, { useMemo, useState, useEffect } from "react";
 import { useTable, useSortBy } from "react-table";
 import { FaEdit, FaTrashAlt, FaCheck, FaTimes, FaArrowUp, FaArrowDown, FaPlus, FaFileImport, FaFileExport } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+
 import axios from 'axios';
 import * as FaIcons from "react-icons/fa";
 import UseAnimations from "react-useanimations";
@@ -9,6 +13,8 @@ import loading from "react-useanimations/lib/loading";
 
 
 const CountersTable = () => {
+  const [heading, setHeading] = useState("");
+  const [subheading, setSubheading] = useState("");
   const [counters, setCounters] = useState([]);
   const [loadings, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -19,6 +25,13 @@ const CountersTable = () => {
       counter.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [counters, searchTerm]);
+
+
+  const notify = () => {
+    toast.success("Updated Successfully!");
+  };
+
+
 
   const columns = useMemo(
     () => [
@@ -36,7 +49,7 @@ const CountersTable = () => {
         Header: "Photo",
         accessor: "photo",
         Cell: ({ value }) => {
-          return <img src={`http://localhost:3006/api/logo/download/${value}`} alt="counter" className=" w-fit h-20" />;
+          return <img src={`/api/logo/download/${value}`} alt="counter" className=" w-fit h-20" />;
 
         },
         disableSortBy: true,
@@ -119,7 +132,7 @@ const CountersTable = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3006/api/counter/getCounter`, { withCredentials: true });
+      const response = await axios.get(`/api/counter/getCounter`, { withCredentials: true });
       const countersWithIds = response.data.map((counter, index) => ({
         ...counter,
         icon: counter.icon,
@@ -135,7 +148,7 @@ const CountersTable = () => {
 
   const deleteCounter = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:3006/api/counter/deleteCounter?id=${id}`, { withCredentials: true });
+      const response = await axios.delete(`/api/counter/deleteCounter?id=${id}`, { withCredentials: true });
       fetchData();
     } catch (error) {
       console.error(error);
@@ -154,8 +167,72 @@ const CountersTable = () => {
     return <IconComponent size={25} />;
   };
 
+
+  const fetchHeadings = async () => {
+    try {
+      const response = await axios.get('/api/pageHeading/heading?pageType=counter', { withCredentials: true });
+      const { heading, subheading } = response.data;
+      setHeading(heading || '');
+      setSubheading(subheading || '');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const saveHeadings = async () => {
+    try {
+      await axios.put('/api/pageHeading/updateHeading?pageType=counter', {
+        pagetype: 'testimonial',
+        heading,
+        subheading,
+      }, { withCredentials: true });
+      notify();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchHeadings();
+  }, []);
+
+
+  const handleHeadingChange = (e) => setHeading(e.target.value);
+  const handleSubheadingChange = (e) => setSubheading(e.target.value);
+
+
+
   return (
     <div className="p-4 overflow-x-auto">
+        <ToastContainer />
+        <div className="mb-8 border border-gray-200 shadow-lg p-4 rounded ">
+        <div className="grid md:grid-cols-2 md:gap-2 grid-cols-1">
+          <div className="mb-6">
+            <label className="block text-gray-700 font-bold mb-2 uppercase font-serif">Heading</label>
+            <input
+              type="text"
+              value={heading}
+              onChange={handleHeadingChange}
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500 transition duration-300"
+            />
+          </div>
+          <div className="mb-6">
+            <label className="block text-gray-700 font-bold mb-2 font-serif uppercase">Sub heading</label>
+            <input
+              type="text"
+              value={subheading}
+              onChange={handleSubheadingChange}
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500 transition duration-300"
+            />
+          </div>
+        </div>
+        <button
+          onClick={saveHeadings}
+          className="px-4 py-2 bg-slate-700 text-white rounded hover:bg-slate-900 transition duration-300 font-serif"
+        >
+          Save
+        </button>
+      </div>
       <div className="flex md:flex-row flex-col justify-between md:items-center mb-4">
         <h1 className="text-xl font-bold  text-gray-700 font-serif uppercase">Counters</h1>
         <div className="flex gap-2 md:flex-row flex-col md:mt-0 mt-4">

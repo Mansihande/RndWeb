@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { countProducts, insertProduct, updateProduct, deleteProduct, getAllProducts, getSingleProduct, getCategoryProducts, getSubcategoryProducts, getSubSubcategoryProducts, deletePhotoAndAltText, exportProductsToExcel, importProducts, fetchUrlPriorityFreq, editUrlPriorityFreq, fetchUrlPriorityFreqById, fetchUrlmeta, editUrlmeta, fetchUrlmetaById, downloadCatalogue, viewCatalogue } = require('../controller/product')
+const {getAllProductsFront, countProducts, insertProduct, updateProduct, deleteProduct, getAllProducts, getSingleProduct, getCategoryProducts, getSubcategoryProducts, getSubSubcategoryProducts, deletePhotoAndAltText, exportProductsToExcel, importProducts, fetchUrlPriorityFreq, editUrlPriorityFreq, fetchUrlPriorityFreqById, fetchUrlmeta, editUrlmeta, fetchUrlmetaById, downloadCatalogue, viewCatalogue } = require('../controller/product')
 const { uploadPhoto } = require('../middleware/fileUpload')
 const { insertCategory, insertSubCategory, insertSubSubCategory, updateCategory, updateSubCategory, updatesubsubcategory, deletecategory, deletesubcategory, deletesubsubcategory, getAll, getSpecificCategory, getSpecificSubcategory, getSpecificSubSubcategory, fetchCategoryUrlPriorityFreq, editCategoryUrlPriorityFreq, fetchCategoryUrlPriorityFreqById, fetchCategoryUrlmeta, editCategoryUrlmeta, fetchCategoryUrlmetaById } = require('../controller/productcategory')
 const { requireAuth } = require('../middleware/authmiddleware');
@@ -52,7 +52,7 @@ router.get('/fetchCategoryUrlPriorityFreqById', requireAuth, fetchCategoryUrlPri
 router.get('/fetchCategoryUrlmeta', requireAuth, fetchCategoryUrlmeta)
 router.put('/editCategoryUrlmeta', requireAuth, editCategoryUrlmeta)
 router.get('/fetchCategoryUrlmetaById', requireAuth, fetchCategoryUrlmetaById)
-
+router.get("/front",getAllProductsFront)
 
 
 

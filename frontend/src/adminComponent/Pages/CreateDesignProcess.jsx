@@ -39,7 +39,7 @@ const DesignProcessForm = () => {
       formData.append('categoryId', categoryId); // Send categoryId with the request
       formData.append('status', status); // Add status (active or inactive)
 
-      await axios.post('http://localhost:3006/api/designProcess/insertDesignProcess', formData, {
+      await axios.post('/api/designProcess/insertDesignProcess', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

@@ -46,7 +46,7 @@ const NewStaffForm = () => {
       });
 
 
-      const response = await axios.post('http://localhost:3006/api/staff/insertStaff', formData, {
+      const response = await axios.post('/api/staff/insertStaff', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

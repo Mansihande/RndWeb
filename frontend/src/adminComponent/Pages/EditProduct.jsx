@@ -20,7 +20,6 @@ const EditProductForm = () => {
     const [categories, setCategories] = useState([]);
     const [parentCategoryId, setParentCategoryId] = useState("");
     const [subCategoryId, setSubCategoryId] = useState("");
-    const [subSubCategoryId, setSubSubCategoryId] = useState("");
     const { slugs } = useParams();
     const [initialPhotos, setInitialPhotos] = useState([]);
     const [photoAlts, setPhotoAlts] = useState([]);
@@ -41,7 +40,7 @@ const EditProductForm = () => {
 
     const fetchProduct = async () => {
         try {
-            const productResponse = await axios.get(`http://localhost:3006/api/product/getSingleProduct?slugs=${slugs}`, { withCredentials: true });
+            const productResponse = await axios.get(`/api/product/getSingleProduct?slugs=${slugs}`, { withCredentials: true });
             const product = productResponse.data;
             setTitle(product.title);
             setDetails(product.details);
@@ -63,17 +62,15 @@ const EditProductForm = () => {
             setCatalogue(product.catalogue)
 
 
-            const categoryResponse = await axios.get(`http://localhost:3006/api/product/getSpecificCategory?categoryId=${product.categories}`, { withCredentials: true });
+            const categoryResponse = await axios.get(`/api/product/getSpecificCategory?categoryId=${product.categories}`, { withCredentials: true });
             const category = categoryResponse.data;
             setParentCategoryId(category._id);
 
-            const subCategoryResponse = await axios.get(`http://localhost:3006/api/product/getSpecificSubcategory?categoryId=${product.categories}&subCategoryId=${product.subcategories}`, { withCredentials: true });
+            const subCategoryResponse = await axios.get(`/api/product/getSpecificSubcategory?categoryId=${product.categories}&subCategoryId=${product.subcategories}`, { withCredentials: true });
             const subCategory = subCategoryResponse.data;
             setSubCategoryId(subCategory._id);
 
-            const subSubCategoryResponse = await axios.get(`http://localhost:3006/api/product/getSpecificSubSubcategory?categoryId=${product.categories}&subCategoryId=${product.subcategories}&subSubCategoryId=${product.subSubcategories}`, { withCredentials: true });
-            const subSubCategory = subSubCategoryResponse.data;
-            setSubSubCategoryId(subSubCategory._id);
+
         } catch (error) {
             console.error(error);
         }
@@ -81,7 +78,7 @@ const EditProductForm = () => {
 
     const fetchCategories = async () => {
         try {
-            const response = await axios.get('http://localhost:3006/api/product/getAll', { withCredentials: true });
+            const response = await axios.get('/api/product/getAll', { withCredentials: true });
             setCategories(response.data);
         } catch (error) {
             console.error(error);
@@ -90,7 +87,7 @@ const EditProductForm = () => {
 
     const fetchAllBenefits = async () => {
         try {
-            const response = await axios.get('http://localhost:3006/api/benefits/getBenefits', { withCredentials: true });
+            const response = await axios.get('/api/benefits/getBenefits', { withCredentials: true });
             setAllBenefits(response.data);
         } catch (error) {
             console.error(error);
@@ -102,7 +99,7 @@ const EditProductForm = () => {
         try {
             const formData = new FormData();
             formData.append('title', title);
-            formData.append('details', details);
+            formData.append('price', details);
             formData.append('status', status);
             formData.append('slug', slug);
             formData.append('metatitle', metatitle);
@@ -117,7 +114,6 @@ const EditProductForm = () => {
             formData.append('priority', priority);
             formData.append('categories', parentCategoryId);
             formData.append('subcategories', subCategoryId);
-            formData.append('subSubcategories', subSubCategoryId);
             formData.append('catalogue', catalogue);
 
             // Combine initial and new photo alts into a single array
@@ -137,7 +133,7 @@ const EditProductForm = () => {
                 formData.append('benefits', b);
             });
 
-            const response = await axios.put(`http://localhost:3006/api/product/updateProduct?slugs=${slugs}`, formData, {
+            const response = await axios.put(`/api/product/updateProduct?slugs=${slugs}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 },
@@ -169,7 +165,7 @@ const EditProductForm = () => {
 
     const handleDeleteInitialPhoto = (e, photoFilename, index) => {
         e.preventDefault();
-        axios.delete(`http://localhost:3006/api/product/${slugs}/image/${photoFilename}/${index}`, { withCredentials: true })
+        axios.delete(`/api/product/${slugs}/image/${photoFilename}/${index}`, { withCredentials: true })
             .then(response => {
                 const updatedPhotos = initialPhotos.filter(photo => photo !== photoFilename);
                 setInitialPhotos(updatedPhotos);
@@ -218,25 +214,19 @@ const EditProductForm = () => {
         );
     };
 
-    const renderSubSubCategoryOptions = (subSubCategory) => {
-        return (
-            <option key={subSubCategory._id} value={subSubCategory._id} selected={subSubCategoryId === subSubCategory._id}>
-                {subSubCategory.category}
-            </option>
-        );
-    };
+
 
     const handleParentCategoryChange = (e) => {
         const selectedCategoryId = e.target.value;
         setParentCategoryId(selectedCategoryId);
         setSubCategoryId("");
-        setSubSubCategoryId("");
+     
     };
 
     const handleSubCategoryChange = (e) => {
         const selectedSubCategoryId = e.target.value;
         setSubCategoryId(selectedSubCategoryId);
-        setSubSubCategoryId("");
+     
     };
 
     const modules = {
@@ -306,22 +296,7 @@ const EditProductForm = () => {
                     </select>
                 </div>
             )}
-            {categories.find(category => category._id === parentCategoryId)?.subCategories.find(subCategory => subCategory._id === subCategoryId)?.subSubCategories.length>0 && (
-                <div className="mb-4">
-                    <label htmlFor="subSubCategory" className="block font-semibold mb-2">
-                        Sub Sub Category
-                    </label>
-                    <select
-                        id="subSubCategory"
-                        value={subSubCategoryId}
-                        onChange={(e) => setSubSubCategoryId(e.target.value)}
-                        className="w-full p-2 border rounded focus:outline-none"
-                    >
-                        <option value="">Select Sub Sub Category</option>
-                        {categories.find(category => category._id === parentCategoryId)?.subCategories.find(subCategory => subCategory._id === subCategoryId)?.subSubCategories.map(renderSubSubCategoryOptions)}
-                    </select>
-                </div>
-            )}
+    
             <div className="mb-4">
                 <label htmlFor="title" className="block font-semibold mb-2">
                     Title
@@ -338,12 +313,13 @@ const EditProductForm = () => {
                 <label htmlFor="details" className="block font-semibold mb-2">
                     Description
                 </label>
-                <ReactQuill
+                <input
+                    type="number"
                     id="details"
                     value={details}
-                    onChange={(value) => setDetails(value)}
-                    modules={modules}
-                    className="border rounded focus:outline-none"
+                    onChange={(e) => setDetails(e.target.value)}
+                    className="w-full p-2 border rounded focus:outline-none"
+                    required
                 />
             </div>
             <div className="mb-4">
@@ -352,7 +328,7 @@ const EditProductForm = () => {
                     {initialPhotos.map((photo, index) => (
                         <div key={index} className="relative w-56">
                             <img
-                                src={`http://localhost:3006/api/image/download/${photo}`}
+                                src={`/api/image/download/${photo}`}
                                 alt={`Photo ${index + 1}`}
                                 className="w-56 h-32 object-cover"
                             />

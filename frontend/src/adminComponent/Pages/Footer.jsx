@@ -26,7 +26,7 @@ const EditFooter = () => {
 
   const fetchFooter = async () => {
     try {
-      const response = await axios.get('http://localhost:3006/api/footer/getFooter', { withCredentials: true });
+      const response = await axios.get('/api/footer/getFooter', { withCredentials: true });
       const footer = response.data;
 
       // Ensure fields are initialized as empty string if data is not available
@@ -59,7 +59,7 @@ const EditFooter = () => {
         email_2
       };
 
-      const response = await axios.put('http://localhost:3006/api/footer/updateFooter', footerData, { withCredentials: true });
+      const response = await axios.put('/api/footer/updateFooter', footerData, { withCredentials: true });
       notify();
     } catch (error) {
       console.error(error);

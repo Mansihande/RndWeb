@@ -69,6 +69,79 @@ const getTestimonials = async (req, res) => {
 };
 
 
+const getTestimonialRating = async (req, res) => {
+  try {
+    // Fetch all testimonials
+    const testimonials = await Testimonial.find();
+
+    // Calculate average rating using MongoDB's aggregation pipeline
+    const result = await Testimonial.aggregate([
+      {
+        $group: {
+          _id: null, // Group all documents together
+          averageRating: { $avg: "$rating" }, // Calculate average of the "rating" field
+        },
+      },
+    ]);
+
+    const averageRating = result.length > 0 ? result[0].averageRating : 0;
+
+    res.status(200).json({
+      averageRating: averageRating.toFixed(1), // Return the average rating out of 5
+    });
+  } catch (error) {
+    console.error("Error retrieving testimonials:", error);
+    let errorMessage = 'Error fetching testimonials';
+    if (error.name === 'CastError') {
+      errorMessage = 'Invalid query parameter format';
+    }
+    res.status(500).json({ message: errorMessage });
+  }
+};
+
+const getTestimonialsFront = async (req, res) => {
+  try {
+    const testimonials = await Testimonial.find(); // Fetch all testimonials
+
+    res.status(200).json({
+      data: testimonials,
+      total: testimonials.length, // Total number of testimonials
+    });
+  } catch (error) {
+    console.error("Error retrieving testimonials:", error);
+    let errorMessage = 'Error fetching testimonials';
+    if (error.name === 'CastError') {
+      errorMessage = 'Invalid query parameter format';
+    }
+    res.status(500).json({ message: errorMessage });
+  }
+};
+
+const getTestimonialsHigh = async (req, res) => {
+  try {
+    // Find the testimonial with the highest priority ("high")
+    const testimonial = await Testimonial.findOne({ priority: "high" });
+
+    if (!testimonial) {
+      return res.status(404).json({ message: "No testimonials found with high priority" });
+    }
+
+    // Return the single testimonial
+    res.status(200).json({
+      data: testimonial
+    });
+  } catch (error) {
+    console.error("Error retrieving testimonials:", error);
+    let errorMessage = 'Error fetching testimonial';
+    if (error.name === 'CastError') {
+      errorMessage = 'Invalid query parameter format';
+    }
+    res.status(500).json({ message: errorMessage });
+  }
+};
+
+
+
 const updateTestimonial = async (req, res) => {
   const { id } = req.query;
   const updateFields = req.body;
@@ -224,4 +297,4 @@ const deleteVideoAndAltText = async (req, res) => {
 };
 
 
-module.exports = { insertTestimonial, getTestimonials, updateTestimonial, deleteTestimonial, getTestimonialById, countTestimonial, deletePhotoAndAltText,deleteVideoAndAltText };
+module.exports = { insertTestimonial, getTestimonialRating,getTestimonials, updateTestimonial, deleteTestimonial,getTestimonialsFront, getTestimonialById, countTestimonial, deletePhotoAndAltText,deleteVideoAndAltText ,getTestimonialsHigh};

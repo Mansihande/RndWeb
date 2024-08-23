@@ -17,7 +17,7 @@ function AdminLogin() {
         e.preventDefault();
         try {
             setIsLoading(true);
-            const response = await axios.post('http://localhost:3006/api/admin/login', { email, password });
+            const response = await axios.post('/api/admin/login', { email, password });
             setIsLoading(false);
             const { token } = response.data;
             Cookies.set('jwt', token);

@@ -32,7 +32,7 @@ const CreateAboutUsPoints = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3006/api/aboutusPoints/insertPoints', {
+      const response = await axios.post('/api/aboutusPoints/insertPoints', {
         title,
         description,
         status,

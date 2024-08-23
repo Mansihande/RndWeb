@@ -13,9 +13,9 @@ function EditAdminProfile() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get('http://localhost:3006/api/admin/adminprofile', { withCredentials: true });
+        const response = await axios.get('/api/admin/adminprofile', { withCredentials: true });
         setAdmin(response.data.admin);
-        setPhotoPreview(`http://localhost:3006/api/logo/download/${response.data.admin.photo}`); // Set the existing photo URL
+        setPhotoPreview(`/api/logo/download/${response.data.admin.photo}`); // Set the existing photo URL
       } catch (error) {
         console.error('Error fetching admin profile:', error);
       }
@@ -48,7 +48,7 @@ function EditAdminProfile() {
         formData.append('photo', newPhoto);
       }
 
-      await axios.put('http://localhost:3006/api/admin/updateAdminprofile', formData, {
+      await axios.put('/api/admin/updateAdminprofile', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },

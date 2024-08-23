@@ -42,7 +42,7 @@ const EditCareer = () => {
 
   const fetchCareer = async () => {
     try {
-      const response = await axios.get(`http://localhost:3006/api/careeroption/getCareeroptionById?id=${id}`, { withCredentials: true });
+      const response = await axios.get(`/api/careeroption/getCareeroptionById?id=${id}`, { withCredentials: true });
       const career = response.data;
       setTitle(career.title);
       setRequirement(career.requirement);
@@ -78,7 +78,7 @@ const EditCareer = () => {
         formData.append('alt', a);
       });
 
-      const response = await axios.put(`http://localhost:3006/api/careeroption/updateCareeroption?id=${id}`, formData, {
+      const response = await axios.put(`/api/careeroption/updateCareeroption?id=${id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },
@@ -111,7 +111,7 @@ const EditCareer = () => {
 
   const handleDeleteInitialPhoto = (e, photoFilename, index) => {
     e.preventDefault();
-    axios.delete(`http://localhost:3006/api/careeroption/${id}/image/${photoFilename}/${index}`, { withCredentials: true })
+    axios.delete(`/api/careeroption/${id}/image/${photoFilename}/${index}`, { withCredentials: true })
       .then(response => {
         const updatedPhotos = initialPhotos.filter(photo => photo !== photoFilename);
         setInitialPhotos(updatedPhotos);
@@ -191,7 +191,7 @@ const EditCareer = () => {
           {initialPhotos.map((photo, index) => (
             <div key={index} className="relative w-56">
               <img
-                src={`http://localhost:3006/api/image/download/${photo}`}
+                src={`/api/image/download/${photo}`}
                 alt={`Photo ${index + 1}`}
                 className="w-56 h-32 object-cover"
               />

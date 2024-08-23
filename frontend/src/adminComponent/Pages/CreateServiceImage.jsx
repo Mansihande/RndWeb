@@ -33,7 +33,7 @@ const NewGalleryForm = () => {
             formData.append('images', images);
             formData.append('photoType', photoType); // Use photoType from query params
 
-            await axios.post('http://localhost:3006/api/serviceImages/createGallery', formData, {
+            await axios.post('/api/serviceImages/createGallery', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

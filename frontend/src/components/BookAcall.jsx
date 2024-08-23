@@ -8,7 +8,7 @@ export default function BookAcall() {
   useEffect(() => {
     const fetchExperts = async () => {
       try {
-        const response = await axios.get(`http://localhost:3006/api/content/type/bookcall`, { withCredentials: true });
+        const response = await axios.get(`/api/content/type/bookcall`, { withCredentials: true });
         const expertData = response.data;
 
         if (expertData.length > 0) {
@@ -39,7 +39,7 @@ export default function BookAcall() {
     key={index}
     className={`${
       button.type === 'primary'
-        ? 'bg-red-500 text-white py-2 px-6 rounded-lg mr-4 mb-4 lg:mb-0 font-bold'
+        ? 'bg-[#f3ca0d] text-white py-2 px-6 rounded-lg mr-4 mb-4 lg:mb-0 font-bold'
         : 'border-2 border-white text-white py-2 px-4 rounded-lg font-bold'
     }`}
   >
@@ -51,7 +51,7 @@ export default function BookAcall() {
       
       
       <div className="lg:w-1/2 xl:flex justify-center xl:justify-end relative z-0 hidden lg:block">
-        <img src={`http://localhost:3006/api/image/download/${call.photo[0]}`} alt={call.photoAlt} className="w-full h-auto max-w-[400px] mx-auto" />
+        <img src={`/api/image/download/${call.photo[0]}`} alt={call.photoAlt} className="w-full h-auto max-w-[400px] mx-auto" />
       </div>
     </div>
   );

@@ -19,7 +19,7 @@ const EditPartnerForm = () => {
 
     const fetchPartner = async () => {
         try {
-            const response = await axios.get(`http://localhost:3006/api/partner/singlePartner?id=${id}`, { withCredentials: true });
+            const response = await axios.get(`/api/partner/singlePartner?id=${id}`, { withCredentials: true });
             const { partnerName, photo, url, alt, status } = response.data;
             setPartnerName(partnerName);
             setInitialPhotos(photo);
@@ -34,7 +34,7 @@ const EditPartnerForm = () => {
     const handleDeleteInitialPhoto = (e, photoFilename, index) => {
         e.preventDefault();
         axios
-            .delete(`http://localhost:3006/api/partner/${id}/image/${photoFilename}/${index}`, { withCredentials: true })
+            .delete(`/api/partner/${id}/image/${photoFilename}/${index}`, { withCredentials: true })
             .then(response => {
                 const updatedPhotos = initialPhotos.filter(photo => photo !== photoFilename);
                 setInitialPhotos(updatedPhotos);
@@ -100,7 +100,7 @@ const EditPartnerForm = () => {
             formData.append("status", status);
 
             const response = await axios.put(
-                `http://localhost:3006/api/partner/updatePartner?id=${id}`,
+                `/api/partner/updatePartner?id=${id}`,
                 formData,
                 {
                     headers: {
@@ -145,7 +145,7 @@ const EditPartnerForm = () => {
                     {initialPhotos.map((photo, index) => (
                         <div key={index} className="relative w-56">
                             <img
-                                src={`http://localhost:3006/api/image/download/${photo}`}
+                                src={`/api/image/download/${photo}`}
                                 alt={`Photo ${index + 1}`}
                                 className="w-56 h-32 object-cover"
                             />

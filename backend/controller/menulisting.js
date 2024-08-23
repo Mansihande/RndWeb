@@ -1,6 +1,7 @@
 const MenuListing = require('../model/menulisting');
 const path = require('path');
 const fs = require('fs');
+const SubMenuListing = require('../model/submenu'); // Update with the correct path to your model
 
 
 exports.createMenuListing = async (req, res) => {
@@ -125,5 +126,36 @@ exports.deleteMenuListing = async (req, res) => {
     res.send('Menu listing deleted successfully.');
   } catch (error) {
     res.status(500).send('Failed to delete menu listing.');
+  }
+};
+
+
+exports.fetchMenuWithSubmenus = async (req,res) => {
+  try {
+    // Fetch all menu listings
+    const menuListings = await MenuListing.find().exec();
+
+    // Fetch all submenus and group them by parent menu ID
+    const submenus = await SubMenuListing.find().exec();
+    const submenusByParent = submenus.reduce((acc, submenu) => {
+      if (!acc[submenu.parent]) {
+        acc[submenu.parent] = [];
+      }
+      acc[submenu.parent].push(submenu);
+      return acc;
+    }, {});
+
+    // Attach submenus to their respective parent menus
+    const result = menuListings.map(menu => {
+      return {
+        ...menu.toObject(), // Convert to plain JavaScript object
+        submenus: submenusByParent[menu._id] || [] // Add submenus if they exist
+      };
+    });
+
+    return res.json(result);
+  } catch (error) {
+    console.error('Error fetching menu listings with submenus:', error);
+    throw new Error('Unable to fetch menu listings with submenus');
   }
 };

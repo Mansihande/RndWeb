@@ -55,7 +55,7 @@ const EditNews = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('http://localhost:3006/api/news/getAll', { withCredentials: true });
+      const response = await axios.get('/api/news/getAll', { withCredentials: true });
       setCategories(response.data);
     } catch (error) {
       console.error(error);
@@ -69,7 +69,7 @@ const EditNews = () => {
 
   const fetchNews = async () => {
     try {
-      const response = await axios.get(`http://localhost:3006/api/news/getNewsById?slugs=${slugs}`, { withCredentials: true });
+      const response = await axios.get(`/api/news/getNewsById?slugs=${slugs}`, { withCredentials: true });
       const news = response.data.data;
       setTitle(news.title);
       setDetails(news.details);
@@ -89,17 +89,17 @@ const EditNews = () => {
       news.url ? setUrl(news.url) : setUrl(`http://localhost:3000/news/${news.slug}`)
       setChangeFreq(news.changeFreq)
       setPriority(news.priority)
-      const categoryResponse = await axios.get(`http://localhost:3006/api/news/getSpecificCategory?categoryId=${news.categories}`, { withCredentials: true });
+      const categoryResponse = await axios.get(`/api/news/getSpecificCategory?categoryId=${news.categories}`, { withCredentials: true });
       const category = categoryResponse.data;
 
       setParentCategoryId(category._id);
 
-      const subCategoryResponse = await axios.get(`http://localhost:3006/api/news/getSpecificSubcategory?categoryId=${news.categories}&subCategoryId=${news.subcategories}`, { withCredentials: true });
+      const subCategoryResponse = await axios.get(`/api/news/getSpecificSubcategory?categoryId=${news.categories}&subCategoryId=${news.subcategories}`, { withCredentials: true });
       const subCategory = subCategoryResponse.data;
 
       setSubCategoryId(subCategory._id);
 
-      const subSubCategoryResponse = await axios.get(`http://localhost:3006/api/news/getSpecificSubSubcategory?categoryId=${news.categories}&subCategoryId=${news.subcategories}&subSubCategoryId=${news.subSubcategories}`, { withCredentials: true });
+      const subSubCategoryResponse = await axios.get(`/api/news/getSpecificSubSubcategory?categoryId=${news.categories}&subCategoryId=${news.subcategories}&subSubCategoryId=${news.subSubcategories}`, { withCredentials: true });
       const subSubCategory = subSubCategoryResponse.data;
 
       setSubSubCategoryId(subSubCategory._id);
@@ -142,7 +142,7 @@ const EditNews = () => {
       combinedAlts.forEach((a) => {
         formData.append(`alt`, a);
       })
-      const response = await axios.put(`http://localhost:3006/api/news/updateNews?slugs=${slugs}`, formData, {
+      const response = await axios.put(`/api/news/updateNews?slugs=${slugs}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },
@@ -191,7 +191,7 @@ useEffect(() => {
 
   const handleDeleteInitialPhoto = (e, photoFilename, index) => {
     e.preventDefault();
-    axios.delete(`http://localhost:3006/api/news/${slugs}/image/${photoFilename}/${index}`, { withCredentials: true })
+    axios.delete(`/api/news/${slugs}/image/${photoFilename}/${index}`, { withCredentials: true })
       .then(response => {
         const updatedPhotos = initialPhotos.filter(photo => photo !== photoFilename);
         setInitialPhotos(updatedPhotos);
@@ -336,7 +336,7 @@ useEffect(() => {
           {initialPhotos.map((photo, index) => (
             <div key={index} className="relative w-56">
               <img
-                src={`http://localhost:3006/api/image/download/${photo}`}
+                src={`/api/image/download/${photo}`}
                 alt={`Photo ${index + 1}`}
                 className="w-56 h-32 object-cover"
               />

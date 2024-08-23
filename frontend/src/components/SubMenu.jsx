@@ -7,7 +7,7 @@ const Submenu = ({ submenu, onMouseLeave, setShowMenu }) => {
   const defaultImage = submenu[0].image;
   const [currentImage, setCurrentImage] = useState(defaultImage);
   const [isHovered, setIsHovered] = useState(false);
-
+   console.log(submenu)
   const handleMouseEnter = (index) => {
     if (!isHovered) {
       console.log("Submenu item hovered, changing image:", submenu[index].image);
@@ -43,7 +43,7 @@ const Submenu = ({ submenu, onMouseLeave, setShowMenu }) => {
             >
               Learn More
             </NavLink>
-            <img src={rndmenu} alt="Service Image" className="h-32 w-auto" />
+            <img src={`/api/logo/download/${submenu[submenu.length - 1].image}`} alt="Service Image" className="h-32 w-auto" />
           </div>
         </div>
       </div>
@@ -52,12 +52,13 @@ const Submenu = ({ submenu, onMouseLeave, setShowMenu }) => {
           <div
             key={index}
             className="group px-4 py-2 cursor-pointer hover:text-orange-600"
-            onMouseEnter={() => handleMouseEnter(index)}
-            onMouseLeave={handleMouseLeaveItem}
+
           >
             <NavLink 
               to={item.path} 
               onClick={(e) => handleClick(e, item.path)}
+              onMouseEnter={() => handleMouseEnter(index)}
+              onMouseLeave={handleMouseLeaveItem}
             >
               <span className="font-bold group-hover:text-orange-600">{item.label}</span>
               <p className="text-gray-500 text-sm group-hover:text-orange-600">{item.subtext}</p>
@@ -66,8 +67,9 @@ const Submenu = ({ submenu, onMouseLeave, setShowMenu }) => {
           </div>
         ))}
       </div>
-      <div className="flex-none w-1/3 bg-cover" style={{ backgroundImage: `url(${currentImage})` }} />
-    </div>
+      <div className="flex-none w-1/3 ">
+        <img src={`/api/logo/download/${currentImage}`} alt="Hovered Image" className="object-cover" />
+      </div>    </div>
   );
 };
 

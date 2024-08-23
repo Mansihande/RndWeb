@@ -42,7 +42,7 @@ const EditPageContent = () => {
 
   const fetchPageContent = async () => {
     try {
-      const response = await axios.get(`http://localhost:3006/api/pageContent/getPageContentById?id=${pageContentId}`, { withCredentials: true });
+      const response = await axios.get(`/api/pageContent/getPageContentById?id=${pageContentId}`, { withCredentials: true });
       const pageContent = response.data;
    
       setTitle(pageContent.title);
@@ -77,7 +77,7 @@ const EditPageContent = () => {
         formData.append(`alt`, a);
       })
 
-      const response = await axios.put(`http://localhost:3006/api/pageContent/updatePageContent?id=${pageContentId}`, formData, {
+      const response = await axios.put(`/api/pageContent/updatePageContent?id=${pageContentId}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },
@@ -112,7 +112,7 @@ const EditPageContent = () => {
 
   const handleDeleteInitialPhoto = (e, photoFilename,index) => {
     e.preventDefault();
-    axios.delete(`http://localhost:3006/api/pageContent/${pageContentId}/image/${photoFilename}/${index}`, { withCredentials: true })
+    axios.delete(`/api/pageContent/${pageContentId}/image/${photoFilename}/${index}`, { withCredentials: true })
     .then(response => {
       const updatedPhotos = initialPhotos.filter(photo => photo !== photoFilename);
       setInitialPhotos(updatedPhotos);
@@ -185,7 +185,7 @@ const EditPageContent = () => {
           {initialPhotos.map((photo, index) => (
             <div key={index} className="relative w-56">
               <img
-                src={`http://localhost:3006/api/image/download/${photo}`}
+                src={`/api/image/download/${photo}`}
                 alt={`Photo ${index + 1}`}
                 className="w-56 h-32 object-cover"
               />

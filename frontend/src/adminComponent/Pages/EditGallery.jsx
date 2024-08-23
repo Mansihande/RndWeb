@@ -13,7 +13,7 @@ const EditGalleryForm = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('http://localhost:3006/api/gallery/getCategory', { withCredentials: true });
+      const response = await axios.get('/api/gallery/getCategory', { withCredentials: true });
       setCategories(response.data);
     } catch (error) {
       console.error(error);
@@ -27,11 +27,11 @@ const EditGalleryForm = () => {
 
   const fetchGallery = async () => {
     try {
-      const response = await axios.get(`http://localhost:3006/api/gallery/getGalleryById?id=${id}`, { withCredentials: true });
+      const response = await axios.get(`/api/gallery/getGalleryById?id=${id}`, { withCredentials: true });
       const gallery = response.data;
       setAlt(gallery.alt);
       setCategoryId(gallery.categories);
-      setPreviewImage(`http://localhost:3006/api/gallery/download/${gallery.images}`); // Set the preview image URL
+      setPreviewImage(`/api/gallery/download/${gallery.images}`); // Set the preview image URL
 
     } catch (error) {
       console.error(error);
@@ -48,7 +48,7 @@ const EditGalleryForm = () => {
         formData.append('images', image);
       }
 
-      const response = await axios.put(`http://localhost:3006/api/gallery/updateGallery?id=${id}`, formData, {
+      const response = await axios.put(`/api/gallery/updateGallery?id=${id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },

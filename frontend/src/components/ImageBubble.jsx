@@ -8,7 +8,7 @@ const ImageBubble = ({ homeHero }) => {
   useEffect(() => {
     const fetchPhotos = async () => {
       try {
-        const photosResponse = await axios.get('http://localhost:3006/api/homehero/photo', {
+        const photosResponse = await axios.get('/api/homehero/photo', {
           withCredentials: true,
         });
 
@@ -26,7 +26,7 @@ const ImageBubble = ({ homeHero }) => {
 
   const fetchPhoto = async (photoName) => {
     try {
-      const response = await axios.get(`http://localhost:3006/api/image/download/${photoName}`, {
+      const response = await axios.get(`/api/image/download/${photoName}`, {
         responseType: 'blob',
         withCredentials: true,
       });

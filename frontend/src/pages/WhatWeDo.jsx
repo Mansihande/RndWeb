@@ -8,7 +8,6 @@ import HowRndHelp from '../components/WhatWeDo/HowRndHelp'
 import BookAcall from '../components/BookAcall'
 import ServiceGrid from '../components/OurServices'
 import GlobalSolution from '../components/GlobalSolution'
-import Footer from '../components/Footer'
 
 export default function WhatWeDo() {
   const serviceGridRef = useRef(null);
@@ -26,7 +25,7 @@ export default function WhatWeDo() {
         <ServiceGrid />
       </div>
  <GlobalSolution/>
- <Footer/>
+
  </div>
   )
 }

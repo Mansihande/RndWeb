@@ -18,10 +18,10 @@ export default function CraftLeft() {
     const fetchData = async () => {
       try {
         const slug = location.pathname.split('/').filter(Boolean).pop();
-        const response = await axios.get(`http://localhost:3006/api/serviceDetails/front/${slug}`, { withCredentials: true });
+        const response = await axios.get(`/api/serviceDetails/front/${slug}`, { withCredentials: true });
         const data = response.data.data[1]; // Access the first item in the data array
         setService(data);
-        setVideoUrl(`http://localhost:3006/api/video/download/${data.video}`);
+        setVideoUrl(`/api/video/download/${data.video}`);
       } catch (error) {
         console.error("Error fetching service data:", error);
       }

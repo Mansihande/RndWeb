@@ -4,7 +4,7 @@ const PageHeadingSchema = new mongoose.Schema({
   pageType: {
     type: String,
     required: true,
-    enum: ['product','designProcess','package', 'service', 'news', 'testimonial', 'banner', 'faq', 'ourStaff','gallery','partner','achievement','inquiry','career','missionvision','corevalue','aboutcompany','qualityControl','infrastructure']
+    enum: ['product','designProcess','package','counter' ,'service','howItWorks', 'news', 'testimonial', 'banner', 'faq', 'ourStaff','gallery','partner','achievement','inquiry','career','missionvision','corevalue','aboutcompany','qualityControl','infrastructure']
   },
   heading: {
     type: String,

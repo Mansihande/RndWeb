@@ -39,7 +39,7 @@ const NewProductForm = () => {
 
     const fetchCategories = async () => {
         try {
-            const response = await axios.get('http://localhost:3006/api/product/getall', { withCredentials: true });
+            const response = await axios.get('/api/product/getall', { withCredentials: true });
             setCategories(response.data);
         } catch (error) {
             console.error(error);
@@ -48,7 +48,7 @@ const NewProductForm = () => {
 
     const fetchBenefits = async () => {
         try {
-            const response = await axios.get('http://localhost:3006/api/benefits/getBenefits', { withCredentials: true });
+            const response = await axios.get('/api/benefits/getBenefits', { withCredentials: true });
             setBenefits(response.data);
         } catch (error) {
             console.error(error);
@@ -60,7 +60,7 @@ const NewProductForm = () => {
         try {
             const formData = new FormData();
             formData.append('title', title);
-            formData.append('details', details);
+            formData.append('price', details);
             formData.append('status', status);
             formData.append('slug', slug);
             formData.append('metatitle', metatitle);
@@ -86,7 +86,7 @@ const NewProductForm = () => {
             formData.append('priority', priority);
             formData.append('changeFreq', changeFreq);
 
-            const response = await axios.post('http://localhost:3006/api/product/insertProduct', formData, {
+            const response = await axios.post('/api/product/insertProduct', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 },
@@ -304,14 +304,16 @@ const NewProductForm = () => {
             </div>
             <div className="mb-4">
                 <label htmlFor="details" className="block font-semibold mb-2">
-                    Description
+                    Price
                 </label>
-                <ReactQuill
+
+                  <input
+                    type="number"
                     id="details"
                     value={details}
-                    onChange={(value) => setDetails(value)}
-                    modules={modules}
-                    className=""
+                    onChange={(e) => setDetails(e.target.value)}
+                    className="w-full p-2 border rounded focus:outline-none"
+                    required
                 />
             </div>
             <div className="mt-8">

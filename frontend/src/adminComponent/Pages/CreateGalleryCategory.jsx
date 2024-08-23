@@ -28,7 +28,7 @@ const NewCategoryForm = () => {
                 formData.append("photo", photo);
             }
 
-            const url = 'http://localhost:3006/api/gallery/createCategory';
+            const url = '/api/gallery/createCategory';
             const response = await axios.post(url, formData, { withCredentials: true });
 
             setCategory("");

@@ -7,6 +7,7 @@ const cron = require('node-cron');
 const {exportAndBackupAllCollectionsmonthly} = require("./controller/Backup")
 require('dotenv').config();
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
 const app = express();
 
@@ -58,6 +59,14 @@ const packages = require('./routes/plan')
 const designProcess = require("./routes/designProcess")
 const content = require("./routes/content")
 // Middleware
+const submenulisting = require("./routes/submenu")
+
+
+// Increase body size limit for JSON requests
+app.use(bodyParser.json({ limit: '50mb' })); // Adjust the size limit as needed
+
+// Increase body size limit for URL-encoded requests
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.json());
 
 app.use(cookieParser());
@@ -78,6 +87,13 @@ cron.schedule('59 23 31 * *', () => {
 });
 
 
+
+
+// app.use(express.static(path.join(__dirname, 'build')));
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'build', 'index.html'));
+//   });
+  
 
 // Static file serving
 app.use('/uploads', serveStatic(path.join(__dirname, 'uploads')));
@@ -139,6 +155,7 @@ app.use("/api/serviceImages",serviceImages)
 app.use("/api/packages",packages)
 app.use("/api/designProcess",designProcess)
 app.use("/api/content",content)
+app.use("/api/submenulisting",submenulisting)
 // Start server
 const port = process.env.PORT || 3006;
 app.listen(port, () => {

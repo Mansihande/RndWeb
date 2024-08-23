@@ -23,7 +23,7 @@ const MainContent = () => {
       <div className='bg-[#F7F4EE]'>
       <div className="container mx-auto px-4 md:px-6 lg:px-8 xl:px-10 mt-24 sm:mt-36 md:mt-48 text-center relative bg-[#F7F4EE] pb-14">
         <h1 className="text-4xl md:text-5xl font-serif font-bold mb-6">
-          Discover a more <span className="text-orange-500">efficient design solution</span>
+          Discover a more <span className="text-[#f3ca0d]">efficient design solution</span>
         </h1>
         <p className="text-lg md:text-xl text-gray-700 leading-relaxed mx-8 text-justify">
           Our subscription model offers a sustainable solution for businesses to regularly update

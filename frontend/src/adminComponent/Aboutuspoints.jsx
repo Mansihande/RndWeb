@@ -89,7 +89,7 @@ const AboutUsPoints = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3006/api/aboutusPoints/getPoints`, { withCredentials: true });
+      const response = await axios.get(`/api/aboutusPoints/getPoints`, { withCredentials: true });
       const pointsWithIds = response.data.map((point, index) => ({
         ...point,
         id: index + 1,
@@ -104,7 +104,7 @@ const AboutUsPoints = () => {
 
   const deletePoint = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:3006/api/aboutusPoints/deletePoints?id=${id}`, { withCredentials: true });
+      const response = await axios.delete(`/api/aboutusPoints/deletePoints?id=${id}`, { withCredentials: true });
       fetchData();
     } catch (error) {
       console.error(error);

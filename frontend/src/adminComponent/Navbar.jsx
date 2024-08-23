@@ -15,7 +15,7 @@ export default function Navbar({ toggleSidebar }) {
     useEffect(() => {
         const fetchAdminProfile = async () => {
             try {
-                const response = await axios.get('http://localhost:3006/api/admin/adminprofile', {
+                const response = await axios.get('/api/admin/adminprofile', {
                     withCredentials: true,
                 });
                 setAdmin(response.data.admin);
@@ -61,7 +61,7 @@ export default function Navbar({ toggleSidebar }) {
                         <div className="flex items-center gap-2" ref={menuRef}>
                             <span>{admin.firstname} {admin.lastname}</span>
                             <div className="relative">
-                                <img src={`http://localhost:3006/api/logo/download/${admin.photo}`} className="text-gray-500 cursor-pointer w-8 h-8 rounded-full " onClick={toggleMenu} />
+                                <img src={`/api/logo/download/${admin.photo}`} className="text-gray-500 cursor-pointer w-8 h-8 rounded-full " onClick={toggleMenu} />
                                 {isMenuOpen && (
                                     <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded shadow-md">
                                         <ul className="py-1">

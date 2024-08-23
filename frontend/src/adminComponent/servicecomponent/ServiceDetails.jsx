@@ -52,7 +52,7 @@ const ServicesTable = ({ categoryId }) => {
         Cell: ({ value }) => {
           const firstImage = Array.isArray(value) && value.length > 0 ? value[0] : null;
           return firstImage ? (
-            <img src={`http://localhost:3006/api/image/download/${firstImage}`} alt="Service" className="w-32 h-20 object-cover" />
+            <img src={`/api/image/download/${firstImage}`} alt="Service" className="w-32 h-20 object-cover" />
           ) : null;
         },
         disableSortBy: true,
@@ -111,7 +111,7 @@ const ServicesTable = ({ categoryId }) => {
   const fetchData = async (pageIndex) => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3006/api/serviceDetails/getServiceDetails?categoryId=${categoryId}&page=${pageIndex + 1}`, { withCredentials: true });
+      const response = await axios.get(`/api/serviceDetails/getServiceDetails?categoryId=${categoryId}&page=${pageIndex + 1}`, { withCredentials: true });
       const servicesWithIds = response.data.data.map((service, index) => ({
         ...service,
         id: pageIndex * pageSize + index + 1,
@@ -127,7 +127,7 @@ const ServicesTable = ({ categoryId }) => {
 
   const deleteService = async (id) => {
     try {
-      await axios.delete(`http://localhost:3006/api/serviceDetails/deleteServiceDetail?id=${id}`, { withCredentials: true });
+      await axios.delete(`/api/serviceDetails/deleteServiceDetail?id=${id}`, { withCredentials: true });
       toast.success("Service deleted successfully.");
       fetchData(0);
     } catch (error) {

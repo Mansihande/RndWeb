@@ -33,7 +33,7 @@ const TrustedSection = () => {
   const secondCard = data[1];
 
   return (
-    <div className="flex flex-wrap justify-center gap-8 p-8 bg-gray-100 relative  mt-20">
+    <div className="flex flex-wrap justify-center gap-8 p-8  relative  mt-20">
       {/* First Card */}
       {firstCard && (
         <div className={`relative rounded-lg max-w-xl ${firstCard.background} p-4 md:p-8 h-auto`}>

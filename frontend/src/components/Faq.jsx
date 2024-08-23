@@ -13,7 +13,7 @@ const FAQ = () => {
 
   useEffect(() => {
     // Fetch FAQ data
-    axios.get('http://localhost:3006/api/faq/getFAQWebsite')
+    axios.get('/api/faq/getFAQWebsite')
       .then((response) => {
         setFaqs(response.data.data);
         setLoading(false);
@@ -24,7 +24,7 @@ const FAQ = () => {
       });
 
     // Fetch page heading and subheading
-    axios.get('http://localhost:3006/api/pageHeading/heading?pageType=faq')
+    axios.get('/api/pageHeading/heading?pageType=faq')
       .then((response) => {
         setHeading(response.data.heading);
         setSubheading(response.data.subheading);

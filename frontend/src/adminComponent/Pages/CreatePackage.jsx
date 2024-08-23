@@ -48,7 +48,7 @@ const NewPackageForm = () => {
     
     const fetchCategories = async () => {
         try {
-            const response = await axios.get('http://localhost:3006/api/services/getall', { withCredentials: true });
+            const response = await axios.get('/api/services/getall', { withCredentials: true });
             setCategories(response.data);
         } catch (error) {
             console.error(error);
@@ -71,7 +71,7 @@ const NewPackageForm = () => {
             formData.append('whatIsTheir', JSON.stringify(whatIsTheir));
             formData.append('whatIsNotTheir', JSON.stringify(whatIsNotTheir));
 
-            const response = await axios.post('http://localhost:3006/api/packages/insertPackage', formData, {
+            const response = await axios.post('/api/packages/insertPackage', formData, {
                 headers: {
                     'Content-Type': 'application/json' // Specify JSON content type
                 },

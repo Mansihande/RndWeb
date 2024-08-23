@@ -12,7 +12,7 @@ const Companies = () => {
         const slug = location.pathname.split('/').filter(Boolean).pop();
         const photoType = "company"; // Your logic for filtering the photoType
 
-        const response = await axios.get(`http://localhost:3006/api/serviceImages/front/${slug}/${photoType}`, { withCredentials: true });
+        const response = await axios.get(`/api/serviceImages/front/${slug}/${photoType}`, { withCredentials: true });
         setCompanies(response.data);
       } catch (error) {
         console.error("Error fetching company data:", error);
@@ -33,7 +33,7 @@ const Companies = () => {
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 place-items-center">
           {companies.map((company, index) => (
              <img
-             src={`http://localhost:3006/api/serviceImages/download/${company.images}`} // Ensure the correct path
+             src={`/api/serviceImages/download/${company.images}`} // Ensure the correct path
              alt={company.alt}
              className="object-cover rounded-3xl"
            />

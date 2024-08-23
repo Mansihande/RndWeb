@@ -28,11 +28,11 @@ const EditCategory = () => {
       let urls = "";
 
       if (categoryId && subCategoryId && subSubCategoryId) {
-        urls = `http://localhost:3006/api/news/getSpecificSubSubcategory?categoryId=${categoryId}&subCategoryId=${subCategoryId}&subSubCategoryId=${subSubCategoryId}`;
+        urls = `/api/news/getSpecificSubSubcategory?categoryId=${categoryId}&subCategoryId=${subCategoryId}&subSubCategoryId=${subSubCategoryId}`;
       } else if (categoryId && subCategoryId) {
-        urls = `http://localhost:3006/api/news/getSpecificSubcategory?categoryId=${categoryId}&subCategoryId=${subCategoryId}`;
+        urls = `/api/news/getSpecificSubcategory?categoryId=${categoryId}&subCategoryId=${subCategoryId}`;
       } else if (categoryId) {
-        urls = `http://localhost:3006/api/news/getSpecificCategory?categoryId=${categoryId}`;
+        urls = `/api/news/getSpecificCategory?categoryId=${categoryId}`;
       }
 
       try {
@@ -117,11 +117,11 @@ useEffect(() => {
     }
 
     if (categoryId && subCategoryId && subSubCategoryId) {
-      urls = `http://localhost:3006/api/news/updatesubsubcategory?categoryId=${categoryId}&subCategoryId=${subCategoryId}&subSubCategoryId=${subSubCategoryId}`;
+      urls = `/api/news/updatesubsubcategory?categoryId=${categoryId}&subCategoryId=${subCategoryId}&subSubCategoryId=${subSubCategoryId}`;
     } else if (categoryId && subCategoryId) {
-      urls = `http://localhost:3006/api/news/updateSubCategory?categoryId=${categoryId}&subCategoryId=${subCategoryId}`;
+      urls = `/api/news/updateSubCategory?categoryId=${categoryId}&subCategoryId=${subCategoryId}`;
     } else if (categoryId) {
-      urls = `http://localhost:3006/api/news/updateCategory?categoryId=${categoryId}`;
+      urls = `/api/news/updateCategory?categoryId=${categoryId}`;
     }
 
     try {
@@ -162,7 +162,7 @@ useEffect(() => {
         {(photo || currentPhoto) && (
           <div className="mt-2 w-56 relative group">
             <img
-              src={photo ? URL.createObjectURL(photo) : `http://localhost:3006/api/logo/download/${currentPhoto}`}
+              src={photo ? URL.createObjectURL(photo) : `/api/logo/download/${currentPhoto}`}
               alt={altText}
               className="h-32 w-56 object-cover"
             />

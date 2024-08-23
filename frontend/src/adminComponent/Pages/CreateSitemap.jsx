@@ -14,7 +14,7 @@ const SitemapForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3006/api/sitemap/createSitemap', {
+      const response = await axios.post('/api/sitemap/createSitemap', {
         url: urlInput,
         changeFreq: changefreqInput,
         priority: priorityInput,

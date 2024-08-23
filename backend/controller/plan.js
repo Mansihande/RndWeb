@@ -191,6 +191,65 @@ const getAllPackagesSlug = async (req, res) => {
   }
 };
 
+const getAllPackagesFront = async (req, res) => {
+  try {
+    // Fetch all categories
+    const categories = await ServiceCategory.find();
+
+    if (!categories.length) {
+      return res.status(404).json({ message: 'No categories found' });
+    }
+
+    // Initialize an object to hold the final structure
+    const result = {};
+
+    // Process each category
+    for (const category of categories) {
+      const categoryName = category.category;
+      result[categoryName] = {};
+
+      if (category.subCategories && category.subCategories.length > 0) {
+        // Category has subcategories
+        for (const subCategory of category.subCategories) {
+          const subCategoryName = subCategory.category;
+          const packages = await Package.find({ subcategories: subCategory._id });
+          
+          if (packages.length > 0) {
+            result[categoryName][subCategoryName] = packages;
+          }
+        }
+      } else {
+        // Category doesn't have subcategories
+        const packages = await Package.find({ categories: category._id });
+        
+        if (packages.length > 0) {
+          result[categoryName] = packages;
+        }
+      }
+    }
+
+    // Count total packages
+    const totalPackages = Object.values(result).reduce((total, cat) => {
+      if (Array.isArray(cat)) {
+        return total + cat.length;
+      } else {
+        return total + Object.values(cat).reduce((subTotal, subCat) => subTotal + subCat.length, 0);
+      }
+    }, 0);
+
+    res.status(200).json({
+      data: result,
+      total: totalPackages,
+    });
+
+  } catch (error) {
+    console.error("Error retrieving packages:", error);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+
+
 
 
 const getSinglePackage = async (req, res) => {
@@ -252,5 +311,5 @@ module.exports = {
   getAllPackages,
   getSinglePackage,
   getCategoryPackages,
-  getSubcategoryPackages,getAllPackagesSlug
+  getSubcategoryPackages,getAllPackagesSlug,getAllPackagesFront
 };

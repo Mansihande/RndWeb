@@ -60,7 +60,7 @@ const BenefitsTable = () => {
         accessor: "photo",
         Cell: ({ value }) => {
           const firstImage = Array.isArray(value) && value.length > 0 ? value[0] : null;
-          return firstImage ? <img src={`http://localhost:3006/api/benefits/download/${firstImage}`} alt="Benefit" className="w-32 h-20 object-cover" /> : null;
+          return firstImage ? <img src={`/api/benefits/download/${firstImage}`} alt="Benefit" className="w-32 h-20 object-cover" /> : null;
         },
         disableSortBy: true,
       },
@@ -99,7 +99,7 @@ const BenefitsTable = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3006/api/benefits/getBenefits`, { withCredentials: true });
+      const response = await axios.get(`/api/benefits/getBenefits`, { withCredentials: true });
       const benefitsWithIds = response.data.map((benefit, index) => ({
         ...benefit,
         id: index + 1,
@@ -114,7 +114,7 @@ const BenefitsTable = () => {
 
   const deleteBenefit = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:3006/api/benefits/deleteBenefit?id=${id}`, { withCredentials: true });
+      const response = await axios.delete(`/api/benefits/deleteBenefit?id=${id}`, { withCredentials: true });
 
       fetchData();
     } catch (error) {

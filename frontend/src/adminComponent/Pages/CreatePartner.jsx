@@ -45,7 +45,7 @@ const NewPartnerForm = () => {
       formData.append("status", status);
 
       const response = await axios.post(
-        "http://localhost:3006/api/partner/insertPartners",
+        "/api/partner/insertPartners",
         formData,
         {
           headers: {

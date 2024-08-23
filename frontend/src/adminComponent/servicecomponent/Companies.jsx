@@ -54,7 +54,7 @@ const Companies = ({ categoryId }) => {
         accessor: "images",
         Cell: ({ value }) => (
           <img
-            src={`http://localhost:3006/api/serviceImages/download/${value}`}
+            src={`/api/serviceImages/download/${value}`}
             alt="Company"
             className="h-20 w-32 object-cover"
           />
@@ -98,7 +98,7 @@ const Companies = ({ categoryId }) => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:3006/api/serviceImages/getGallery?categoryId=${categoryId}&photoType=${photoType}`,
+        `/api/serviceImages/getGallery?categoryId=${categoryId}&photoType=${photoType}`,
         { withCredentials: true }
       );
       const companiesWithIds = response.data.map((item, index) => ({
@@ -116,7 +116,7 @@ const Companies = ({ categoryId }) => {
   const deleteCompany = async (id) => {
     try {
       await axios.delete(
-        `http://localhost:3006/api/serviceImages/deleteGallery?id=${id}`,
+        `/api/serviceImages/deleteGallery?id=${id}`,
         { withCredentials: true }
       );
       fetchData(categoryId); // Refresh data after deletion

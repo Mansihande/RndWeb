@@ -70,7 +70,7 @@ const NewServiceForm = () => {
 
     const fetchCategories = async () => {
         try {
-            const response = await axios.get('http://localhost:3006/api/services/getall', { withCredentials: true });
+            const response = await axios.get('/api/services/getall', { withCredentials: true });
             setCategories(response.data);
         } catch (error) {
             console.error(error);
@@ -105,7 +105,7 @@ const NewServiceForm = () => {
                 formData.append(`alt`, photoAlts[index]);
             });
 
-            const response = await axios.post('http://localhost:3006/api/services/insertService', formData, {
+            const response = await axios.post('/api/services/insertService', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 },

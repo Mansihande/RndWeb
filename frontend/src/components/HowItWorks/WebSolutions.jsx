@@ -36,10 +36,10 @@ const WebSolution = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:3006/api/content/type/webSolution', { withCredentials: true });
+                const response = await axios.get('/api/content/type/webSolution', { withCredentials: true });
                 const data = response.data[0];
                 setWebSolutionData(data);
-                setVideoUrl(`http://localhost:3006/api/video/download/${data.video}`);
+                setVideoUrl(`/api/video/download/${data.video}`);
             } catch (error) {
                 console.error("Error fetching web solution data:", error);
             }
@@ -108,7 +108,7 @@ const WebSolution = () => {
                 {webSolutionData.subsections.map((item, index) => (
                             <div key={index} className="text-center space-y-4">
                                 <img
-                                    src={`http://localhost:3006/api/image/download/${item.photo}`}
+                                    src={`/api/image/download/${item.photo}`}
                                     alt={item.photoAlt}
                                     className="sm:w-28  sm:h-28 lg:w-32 lg:h-32 2xl:h-80 2xl:w-80  w-28 h-28  object-cover mx-auto"                                />
                                 <p className="lg:text-base text-sm font-semibold font-inter text-white" dangerouslySetInnerHTML={{ __html: item.description }}></p>

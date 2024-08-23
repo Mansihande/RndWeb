@@ -31,7 +31,7 @@ export default function Sidebar() {
   useEffect(() => {
     const fetchLogos = async () => {
       try {
-        const response = await axios.get('http://localhost:3006/api/logo', { withCredentials: true });
+        const response = await axios.get('/api/logo', { withCredentials: true });
         setLogo(response.data);
       } catch (error) {
         console.error(error);
@@ -97,6 +97,12 @@ export default function Sidebar() {
         { title: "News/Blogs", icon: <PiNewspaperClippingBold size={20} />, path: "/news" },
       ]
     },
+    {
+
+         title: "How It Works", icon: <PiNewspaperClippingBold size={20} />, path: "/howworks" 
+      
+    },
+
     {
       title: "Gallery", icon: <GrGallery size={20} />, submenu: [
         { title: "Categories", icon: <BiCategory size={20} />, path: "/GalleryCategory" },
@@ -176,7 +182,7 @@ export default function Sidebar() {
         <div className='font-bold text-white text-center pt-4 text-[20px] px-8'>
           {logo && logo.length > 0 && (
             <div>
-              <img src={`http://localhost:3006/api/logo/download/${logo[logo.length - 1].photo}`} alt="Logo" className="w-full h-auto" />
+              <img src={`/api/logo/download/${logo[logo.length - 1].photo}`} alt="Logo" className="w-full h-auto" />
             </div>
           )}
         </div>

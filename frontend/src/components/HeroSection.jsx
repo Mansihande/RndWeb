@@ -25,7 +25,7 @@ const HeroSection = ({ serviceGridRef }) => {
     // Fetch homeHero and photos data
     const fetchData = async () => {
       try {
-        const homeHeroResponse = await axios.get('http://localhost:3006/api/homehero', { withCredentials: true });
+        const homeHeroResponse = await axios.get('/api/homehero', { withCredentials: true });
 
         setHomeHero(homeHeroResponse.data[0]);  // Assuming you get an array, take the first item
 
@@ -82,21 +82,21 @@ const HeroSection = ({ serviceGridRef }) => {
               typeSpeed={100}
               backSpeed={60}
               loop
-              className="pl-2 text-[#F55F42] font-bold"
+              className="pl-2 text-[#f3ca0d] font-bold"
             />{' '}
             <br />
             {homeHero.heading.afterHighlight}
-            <span className="text-red-500">.</span>
+            <span className="text-[#f3ca0d]">.</span>
           </h1>
           <p
             className="text-lg lg:text-xl text-black-600 pt-4 z-0 text-center"
             dangerouslySetInnerHTML={{ __html: homeHero.paragraph.text }}
           />
           <button
-            className="relative mt-6 py-2 px-7 text-lg font-bold bg-red-500 text-white rounded-3xl overflow-hidden group"
+            className="relative mt-6 py-2 px-7 text-lg font-bold bg-[#f3ca0d] text-white rounded-3xl overflow-hidden group"
             onClick={scrollToServices}
           >
-            <span className="absolute inset-0 bg-gradient-to-r from-[#003b31] to-yellow-800 transform origin-left scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100" />
+            <span className="absolute inset-0 bg-gradient-to-r from-[#f3ca0d] to-yellow-800 transform origin-left scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100" />
             <span className="relative z-10">See our services</span>
           </button>
         </div>

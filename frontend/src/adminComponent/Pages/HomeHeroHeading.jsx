@@ -41,7 +41,7 @@ const HomeHeroForm = () => {
   useEffect(() => {
     const fetchHomeHeros = async () => {
       try {
-        const response = await axios.get('http://localhost:3006/api/homehero', { withCredentials: true });
+        const response = await axios.get('/api/homehero', { withCredentials: true });
         const data = response.data;
 
         // Populate state with fetched data
@@ -80,7 +80,7 @@ const HomeHeroForm = () => {
 
     try {
       // Update the HomeHero data
-      await axios.put(`http://localhost:3006/api/homehero/${homeHeroId}`, homeHeroData, { withCredentials: true });
+      await axios.put(`/api/homehero/${homeHeroId}`, homeHeroData, { withCredentials: true });
       notify();
     } catch (error) {
       console.error('Error updating HomeHero:', error);
@@ -101,7 +101,7 @@ const HomeHeroForm = () => {
     const textToRemove = highlightedTexts[index];
     try {
       // Call API to remove the highlighted text
-      await axios.delete(`http://localhost:3006/api/homehero/highlightedText/${homeHeroId}`, { data: { text: textToRemove }, withCredentials: true });
+      await axios.delete(`/api/homehero/highlightedText/${homeHeroId}`, { data: { text: textToRemove }, withCredentials: true });
       setHighlightedTexts(highlightedTexts.filter((_, i) => i !== index)); // Update local state
     } catch (error) {
       console.error('Error removing highlighted text:', error);
@@ -122,7 +122,7 @@ const HomeHeroForm = () => {
     const labelToRemove = labels[index];
     try {
       // Call API to remove the label
-      await axios.delete(`http://localhost:3006/api/homehero/label/${homeHeroId}`, { data: { label: labelToRemove }, withCredentials: true });
+      await axios.delete(`/api/homehero/label/${homeHeroId}`, { data: { label: labelToRemove }, withCredentials: true });
       setLabels(labels.filter((_, i) => i !== index)); // Update local state
     } catch (error) {
       console.error('Error removing label:', error);
@@ -143,7 +143,7 @@ const HomeHeroForm = () => {
     const circleToRemove = smallCircles[index];
     try {
       // Call API to remove the small circle
-      await axios.delete(`http://localhost:3006/api/homehero/smallCircle/${homeHeroId}`, { data: { color: circleToRemove.color }, withCredentials: true });
+      await axios.delete(`/api/homehero/smallCircle/${homeHeroId}`, { data: { color: circleToRemove.color }, withCredentials: true });
       setSmallCircles(smallCircles.filter((_, i) => i !== index)); // Update local state
     } catch (error) {
       console.error('Error removing small circle:', error);

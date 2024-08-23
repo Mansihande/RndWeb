@@ -13,7 +13,7 @@ function VerifyOTP({ onBack }) {
         e.preventDefault();
         setIsLoading(true);
         try {
-            await axios.post('http://localhost:3006/api/password/verifyOtp', { email, otp });
+            await axios.post('/api/password/verifyOtp', { email, otp });
             alert('OTP verified');
             navigate("/resetpassword")
         } catch (error) {

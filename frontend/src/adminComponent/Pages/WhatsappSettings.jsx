@@ -18,7 +18,7 @@ const WhatsAppSettingsForm = () => {
 
     const fetchWhatsAppSettings = async () => {
         try {
-            const response = await axios.get('http://localhost:3006/api/whatsappsettings/getwhatsappsettings');
+            const response = await axios.get('/api/whatsappsettings/getwhatsappsettings');
             setFormData(response.data); // Assuming response.data is an object with WhatsApp settings fields
         } catch (error) {
             console.error('Error fetching WhatsApp settings:', error);
@@ -33,7 +33,7 @@ const WhatsAppSettingsForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.put('http://localhost:3006/api/whatsappsettings/editwhatsappsettings', formData);
+            await axios.put('/api/whatsappsettings/editwhatsappsettings', formData);
             toast.success("Updated Successfully!")
         } catch (error) {
             console.error('Error updating WhatsApp settings:', error);

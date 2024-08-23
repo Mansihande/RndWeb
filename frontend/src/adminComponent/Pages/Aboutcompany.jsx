@@ -25,7 +25,7 @@ const VisionForm = () => {
 
     const fetchHeadings = async () => {
         try {
-            const response = await axios.get('http://localhost:3006/api/pageHeading/heading?pageType=aboutcompany', { withCredentials: true });
+            const response = await axios.get('/api/pageHeading/heading?pageType=aboutcompany', { withCredentials: true });
             const { heading, subheading } = response.data;
             setHeading(heading || '');
             setSubheading(subheading || '');
@@ -36,7 +36,7 @@ const VisionForm = () => {
 
     const saveHeadings = async () => {
         try {
-            await axios.put('http://localhost:3006/api/pageHeading/updateHeading?pageType=aboutcompany', {
+            await axios.put('/api/pageHeading/updateHeading?pageType=aboutcompany', {
                 pagetype: 'aboutcompany',
                 heading,
                 subheading,
@@ -76,7 +76,7 @@ const VisionForm = () => {
 
     const fetchAboutCompany = async () => {
         try {
-            const response = await axios.get('http://localhost:3006/api/aboutcompany/getAboutcompany', { withCredentials: true });
+            const response = await axios.get('/api/aboutcompany/getAboutcompany', { withCredentials: true });
             const mission = response.data.data || {};
             setTitle(mission.title || '');
             setDescription(mission.description || '');
@@ -109,7 +109,7 @@ const VisionForm = () => {
         })
 
         try {
-            await axios.put('http://localhost:3006/api/aboutcompany/updateAboutcompany', formData, { withCredentials: true });
+            await axios.put('/api/aboutcompany/updateAboutcompany', formData, { withCredentials: true });
             notify();
             setPhoto([])
             setPhotoAlts([])
@@ -149,7 +149,7 @@ const VisionForm = () => {
 
     const handleDeleteInitialPhoto = (e, photoFilename, index) => {
         e.preventDefault();
-        axios.delete(`http://localhost:3006/api/aboutcompany/image/${photoFilename}/${index}`, { withCredentials: true })
+        axios.delete(`/api/aboutcompany/image/${photoFilename}/${index}`, { withCredentials: true })
             .then(response => {
                 const updatedPhotos = initialPhotos.filter(photo => photo !== photoFilename);
                 setInitialPhotos(updatedPhotos);
@@ -226,7 +226,7 @@ const VisionForm = () => {
                         {initialPhotos.map((photo, index) => (
                             <div key={index} className="relative w-56">
                                 <img
-                                    src={`http://localhost:3006/api/image/download/${photo}`}
+                                    src={`/api/image/download/${photo}`}
                                     alt={`Photo ${index + 1}`}
                                     className="w-56 h-32 object-cover"
                                 />

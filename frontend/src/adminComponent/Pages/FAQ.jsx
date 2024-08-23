@@ -109,7 +109,7 @@ const FaqTable = () => {
   const fetchData = async (pageIndex) => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3006/api/faq/getFAQ?page=${pageIndex + 1}`, { withCredentials: true });
+      const response = await axios.get(`/api/faq/getFAQ?page=${pageIndex + 1}`, { withCredentials: true });
       const faqsWithIds = response.data.data.map((faqItem, index) => ({
         ...faqItem,
         id: pageIndex * pageSize + index + 1,
@@ -125,7 +125,7 @@ const FaqTable = () => {
 
   const deleteFaq = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:3006/api/faq/deleteFaq?id=${id}`, { withCredentials: true });
+      const response = await axios.delete(`/api/faq/deleteFaq?id=${id}`, { withCredentials: true });
 
       fetchData(pageIndex);
     } catch (error) {
@@ -139,7 +139,7 @@ const FaqTable = () => {
 
   const fetchHeadings = async () => {
     try {
-      const response = await axios.get('http://localhost:3006/api/pageHeading/heading?pageType=faq', { withCredentials: true });
+      const response = await axios.get('/api/pageHeading/heading?pageType=faq', { withCredentials: true });
       const { heading, subheading } = response.data;
       setHeading(heading || '');
       setSubheading(subheading || '');
@@ -150,7 +150,7 @@ const FaqTable = () => {
 
   const saveHeadings = async () => {
     try {
-      await axios.put('http://localhost:3006/api/pageHeading/updateHeading?pageType=faq', {
+      await axios.put('/api/pageHeading/updateHeading?pageType=faq', {
         pagetype: 'faq',
         heading,
         subheading,

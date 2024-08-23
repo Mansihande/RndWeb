@@ -59,7 +59,7 @@ const DesignProcess = ({ categoryId }) => {
         accessor: "image",
         Cell: ({ value }) => (
           <img
-            src={`http://localhost:3006/api/designProcess/download/${value}`}
+            src={`/api/designProcess/download/${value}`}
             alt="Company"
             className="h-20 w-32 object-cover"
           />
@@ -109,7 +109,7 @@ const DesignProcess = ({ categoryId }) => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:3006/api/designProcess/category?categoryId=${categoryId}`,
+        `/api/designProcess/category?categoryId=${categoryId}`,
         { withCredentials: true }
       );
       const packagesWithIds = response.data.data.map((item, index) => ({
@@ -128,7 +128,7 @@ const DesignProcess = ({ categoryId }) => {
   const deletePackage = async (id) => {
     try {
       await axios.delete(
-        `http://localhost:3006/api/designProcess/deleteDesignProcess?id=${id}`,
+        `/api/designProcess/deleteDesignProcess?id=${id}`,
         { withCredentials: true }
       );
       fetchData();
@@ -142,7 +142,7 @@ const DesignProcess = ({ categoryId }) => {
   // Fetch headings for the design process page
   const fetchHeadings = async () => {
     try {
-      const response = await axios.get('http://localhost:3006/api/pageHeading/heading?pageType=designProcess', { withCredentials: true });
+      const response = await axios.get('/api/pageHeading/heading?pageType=designProcess', { withCredentials: true });
       const { heading, subheading } = response.data;
       setHeading(heading || '');
       setSubheading(subheading || '');
@@ -155,7 +155,7 @@ const DesignProcess = ({ categoryId }) => {
   // Save updated headings
   const saveHeadings = async () => {
     try {
-      await axios.put('http://localhost:3006/api/pageHeading/updateHeading?pageType=designProcess', {
+      await axios.put('/api/pageHeading/updateHeading?pageType=designProcess', {
         pagetype: 'package',
         heading,
         subheading,
@@ -203,7 +203,7 @@ const DesignProcess = ({ categoryId }) => {
     formData.append('file', file);
 
     try {
-      const response = await axios.post('http://localhost:3006/api/upload', formData, { withCredentials: true });
+      const response = await axios.post('/api/upload', formData, { withCredentials: true });
       setMessage(response.data.message);
       notify(response.data.message);
       fetchData(); // Refresh data after upload

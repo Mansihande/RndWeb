@@ -34,7 +34,7 @@ const EditAboutUsPoints = () => {
   useEffect(() => {
     const fetchPointData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3006/api/aboutusPoints/getPointsbyId?id=${pointId}`,{ withCredentials: true });
+        const response = await axios.get(`/api/aboutusPoints/getPointsbyId?id=${pointId}`,{ withCredentials: true });
         const { title, description, status } = response.data;
       
         setTitle(title);
@@ -57,7 +57,7 @@ const EditAboutUsPoints = () => {
         status
       };
 
-      await axios.put(`http://localhost:3006/api/aboutusPoints/updatePoints?id=${pointId}`, pointData,{ withCredentials: true });
+      await axios.put(`/api/aboutusPoints/updatePoints?id=${pointId}`, pointData,{ withCredentials: true });
 
       // Clear the form fields after submission
       setTitle("");

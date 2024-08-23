@@ -42,7 +42,7 @@ const NewBenefitsForm = () => {
       });
 
       const response = await axios.post(
-        "http://localhost:3006/api/benefits/createBenefit",
+        "/api/benefits/createBenefit",
         formData,
         {
           headers: {

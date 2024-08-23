@@ -9,7 +9,7 @@ const {uploadLogo}=require("../middleware/logoUpload")
 router.post('/insertCounter',requireAuth,uploadLogo, counterController.createCounter);
 
 // Get all Counters
-router.get('/getCounter',requireAuth, counterController.getCounters);
+router.get('/getCounter', counterController.getCounters);
 
 // Get a single Counter by ID
 router.get('/getCounterById', requireAuth,counterController.getCounterById);
@@ -20,5 +20,4 @@ router.put('/updateCounter',requireAuth, uploadLogo,counterController.updateCoun
 
 // Delete a Counter by ID
 router.delete('/deleteCounter',requireAuth, counterController.deleteCounter);
-
 module.exports = router;

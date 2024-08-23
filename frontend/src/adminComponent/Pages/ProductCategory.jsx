@@ -23,7 +23,7 @@ const CategoryTable = () => {
         Cell: ({ row }) => (
           <div className="flex items-center gap-2  hover:text-blue-500 cursor-pointer"
             onClick={() => navigate(`/ProductCategory/editProductCategory/${row.original._id}`)}>
-            {row.original.photo && <img src={`http://localhost:3006/api/logo/download/${row.original.photo}`} alt={row.original.alt} className="w-6 h-6" />}
+            {row.original.photo && <img src={`/api/logo/download/${row.original.photo}`} alt={row.original.alt} className="w-6 h-6" />}
             {row.original.category}
           </div>
         ),
@@ -68,7 +68,7 @@ const CategoryTable = () => {
   const fetchCategories = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3006/api/product/getall`, { withCredentials: true });
+      const response = await axios.get(`/api/product/getall`, { withCredentials: true });
       const categoriesWithAutoIncrementId = response.data.map((category, index) => ({
         ...category,
         autoIncrementId: index + 1,
@@ -84,11 +84,11 @@ const CategoryTable = () => {
   const deleteCategory = async ({ id, categoryId, subCategoryId, subSubCategoryId }) => {
     let url = '';
     if (categoryId && subCategoryId && subSubCategoryId) {
-      url = `http://localhost:3006/api/product/deletesubsubcategory?categoryId=${categoryId}&subCategoryId=${subCategoryId}&subSubCategoryId=${subSubCategoryId}`;
+      url = `/api/product/deletesubsubcategory?categoryId=${categoryId}&subCategoryId=${subCategoryId}&subSubCategoryId=${subSubCategoryId}`;
     } else if (categoryId && subCategoryId) {
-      url = `http://localhost:3006/api/product/deletesubcategory?categoryId=${categoryId}&subCategoryId=${subCategoryId}`;
+      url = `/api/product/deletesubcategory?categoryId=${categoryId}&subCategoryId=${subCategoryId}`;
     } else {
-      url = `http://localhost:3006/api/product/deletecategory?id=${id}`;
+      url = `/api/product/deletecategory?id=${id}`;
     }
 
     try {
@@ -161,7 +161,7 @@ const CategoryTable = () => {
                       <React.Fragment key={subIndex}>
                         <tr className="border-b border-gray-300 hover:bg-gray-100 transition duration-150 ">
                           <td></td>
-                          <td className="py-2 px-8 flex gap-2 hover:text-blue-500 cursor-pointer" onClick={() => navigate(`/ProductCategory/editProductCategory/${row.original._id}/${subcategory._id}`)}><BsArrowReturnRight />{subcategory.photo && <img src={`http://localhost:3006/api/logo/download/${subcategory.photo}`} alt={subcategory.alt} className="w-6 h-6" />}<span>{subcategory.category}</span></td>
+                          <td className="py-2 px-8 flex gap-2 hover:text-blue-500 cursor-pointer" onClick={() => navigate(`/ProductCategory/editProductCategory/${row.original._id}/${subcategory._id}`)}><BsArrowReturnRight />{subcategory.photo && <img src={`/api/logo/download/${subcategory.photo}`} alt={subcategory.alt} className="w-6 h-6" />}<span>{subcategory.category}</span></td>
                           <td className="py-2 px-4">
                             <div className="flex gap-4">
                               <button className="text-blue-500 hover:text-blue-700 transition">
@@ -184,7 +184,7 @@ const CategoryTable = () => {
                         {subcategory.subSubCategory && subcategory.subSubCategory.map((subSubcategory, subSubIndex) => (
                           <tr key={subSubIndex} className="border-b border-gray-300 hover:bg-gray-100 transition duration-150 ">
                             <td></td>
-                            <td className="py-2 px-12 flex gap-2 hover:text-blue-500 cursor-pointer" onClick={() => navigate(`/ProductCategory/editProductCategory/${row.original._id}/${subSubcategory._id}`)} ><BsArrowReturnRight />{subSubcategory.photo && <img alt={subSubcategory.alt} src={`http://localhost:3006/api/logo/download/${subSubcategory.photo}`} className="w-6 h-6" />}<span>{subSubcategory.category}</span></td>
+                            <td className="py-2 px-12 flex gap-2 hover:text-blue-500 cursor-pointer" onClick={() => navigate(`/ProductCategory/editProductCategory/${row.original._id}/${subSubcategory._id}`)} ><BsArrowReturnRight />{subSubcategory.photo && <img alt={subSubcategory.alt} src={`/api/logo/download/${subSubcategory.photo}`} className="w-6 h-6" />}<span>{subSubcategory.category}</span></td>
                             <td className="py-2 px-4">
                               <div className="flex gap-4">
                                 <button className="text-blue-500 hover:text-blue-700 transition">

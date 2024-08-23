@@ -8,7 +8,6 @@ import ScrollSection from '../components/FirstAnimantion'
 import WhatYouGet from '../components/WhatYouGet'
 import BookAcall from '../components/BookAcall'
 import ServiceGrid from '../components/OurServices'
-import Footer from '../components/Footer'
 import GlobalSolution from '../components/GlobalSolution'
 import Faq from '../components/Faq'
 
@@ -36,9 +35,7 @@ export default function Homepage() {
    <Faq/>
    <PremiumTemplatesSection/>
    <GlobalSolution/>
-   <Footer/>
-   {/* <CraftLeft/> */}
-   {/* <ImageBubble/> */}
+
    </div>
   )
 }

@@ -23,14 +23,14 @@ const EditMenuListingForm = () => {
 
   const fetchMenuListing = async () => {
     try {
-      const response = await axios.get(`http://localhost:3006/api/menulisting/getMenulistingById?id=${id}`, { withCredentials: true });
+      const response = await axios.get(`/api/menulisting/getMenulistingById?id=${id}`, { withCredentials: true });
       const { count, menuListing } = response.data; // Assuming your response structure includes both count and menuListing
 
       setPagename(menuListing.pagename);
       setAlt(menuListing.alt);
       setPriority(menuListing.priority)
       setPhoto(menuListing.photo)
-      setCurrentPhoto(`http://localhost:3006/api/logo/download/${menuListing.photo}`); // Set current photo if available
+      setCurrentPhoto(`/api/logo/download/${menuListing.photo}`); // Set current photo if available
 
       // Update priority options based on count
       if (count > 0) {
@@ -55,7 +55,7 @@ const EditMenuListingForm = () => {
       }
       formData.append('priority', priority); 
 
-      const response = await axios.put(`http://localhost:3006/api/menulisting/updateMenulisting?id=${id}`, formData, {
+      const response = await axios.put(`/api/menulisting/updateMenulisting?id=${id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },

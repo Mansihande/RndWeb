@@ -43,7 +43,7 @@ const MissionForm = () => {
 
   const fetchMission = async () => {
     try {
-      const response = await axios.get('http://localhost:3006/api/mission/getMission', { withCredentials: true });
+      const response = await axios.get('/api/mission/getMission', { withCredentials: true });
       const mission = response.data.data || {};
       setTitle(mission.title || '');
       setDescription(mission.description || '');
@@ -76,7 +76,7 @@ const MissionForm = () => {
     });
 
     try {
-      await axios.put('http://localhost:3006/api/mission/updateMission', formData, { withCredentials: true });
+      await axios.put('/api/mission/updateMission', formData, { withCredentials: true });
       notify();
       setPhoto([]);
       setPhotoAlts([]);
@@ -115,7 +115,7 @@ const MissionForm = () => {
 
   const handleDeleteInitialPhoto = (e, photoFilename, index) => {
     e.preventDefault();
-    axios.delete(`http://localhost:3006/api/mission/image/${photoFilename}/${index}`, { withCredentials: true })
+    axios.delete(`/api/mission/image/${photoFilename}/${index}`, { withCredentials: true })
       .then(response => {
         const updatedPhotos = initialPhotos.filter((_, i) => i !== index);
         setInitialPhotos(updatedPhotos);
@@ -130,7 +130,7 @@ const MissionForm = () => {
 
   const fetchHeadings = async () => {
     try {
-      const response = await axios.get('http://localhost:3006/api/pageHeading/heading?pageType=missionvision', { withCredentials: true });
+      const response = await axios.get('/api/pageHeading/heading?pageType=missionvision', { withCredentials: true });
       const { heading, subheading } = response.data;
       setHeading(heading || '');
       setSubheading(subheading || '');
@@ -141,7 +141,7 @@ const MissionForm = () => {
 
   const saveHeadings = async () => {
     try {
-      await axios.put('http://localhost:3006/api/pageHeading/updateHeading?pageType=missionvision', {
+      await axios.put('/api/pageHeading/updateHeading?pageType=missionvision', {
         pagetype: 'missionvision',
         heading,
         subheading,
@@ -222,7 +222,7 @@ const MissionForm = () => {
             {initialPhotos.map((photo, index) => (
               <div key={index} className="relative w-56">
                 <img
-                  src={`http://localhost:3006/api/image/download/${photo}`}
+                  src={`/api/image/download/${photo}`}
                   alt={`Photo ${index + 1}`}
                   className="w-56 h-32 object-cover"
                 />

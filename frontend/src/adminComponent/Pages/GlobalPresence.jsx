@@ -29,7 +29,7 @@ const App = () => {
     useEffect(() => {
         const fetchCountries = async () => {
             try {
-                const response = await axios.get('http://localhost:3006/api/globalpresence/countries');
+                const response = await axios.get('/api/globalpresence/countries');
                 setCountries(response.data);
                 const countryNames = response.data.map(country => country.name);
                 setCountryOptions(countryNames);
@@ -43,7 +43,7 @@ const App = () => {
     useEffect(() => {
         const fetchLogos = async () => {
             try {
-                const response = await axios.get('http://localhost:3006/api/globalpresence/globalPresenceEntries');
+                const response = await axios.get('/api/globalpresence/globalPresenceEntries');
                 setLogos(response.data);
             } catch (error) {
                 console.error('Error fetching logos:', error);
@@ -65,7 +65,7 @@ const App = () => {
         formData.append('alt', altText);
 
         try {
-            await axios.post('http://localhost:3006/api/globalpresence/addGlobalPresence', formData, {
+            await axios.post('/api/globalpresence/addGlobalPresence', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -76,7 +76,7 @@ const App = () => {
             setDescription('');
             setAltText('');
 
-            const response = await axios.get('http://localhost:3006/api/globalpresence/globalPresenceEntries');
+            const response = await axios.get('/api/globalpresence/globalPresenceEntries');
             setLogos(response.data);
         } catch (error) {
             console.error('Error adding logo:', error);
@@ -94,7 +94,7 @@ const App = () => {
 
     const handleDeleteLogo = async (id) => {
         try {
-            await axios.delete(`http://localhost:3006/api/globalpresence/deleteGlobalPresence?id=${id}`, {
+            await axios.delete(`/api/globalpresence/deleteGlobalPresence?id=${id}`, {
                 withCredentials: true
             });
 
@@ -215,7 +215,7 @@ const App = () => {
                         country && (
                             <Marker key={logo._id} position={country.latlng} icon={createCustomIcon(<FaMapMarkerAlt size={32} color="red" />)}>
                                 <Popup minWidth={100}>
-                                    <img src={`http://localhost:3006/api/logo/download/${logo.photo}`} alt={logo.alt} className="w-24 h-18" />
+                                    <img src={`/api/logo/download/${logo.photo}`} alt={logo.alt} className="w-24 h-18" />
                                     <p className='font-semibold font-serif'>{logo.country}</p>
                                     <p>{logo.description}</p>
                                     <button

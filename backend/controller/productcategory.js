@@ -34,28 +34,40 @@ const insertCategory = async (req, res) => {
 
 const insertSubCategory = async (req, res) => {
   const { categoryId } = req.query;
-  const { category,alt,slug, metatitle, metadescription, metakeywords, metacanonical, metalanguage, metaschema, otherMeta, url, priority, changeFreq } = req.body;
-
+  const { category, alt, slug, metatitle, metadescription, metakeywords, metacanonical, metalanguage, metaschema, otherMeta, url, priority, changeFreq } = req.body;
 
   try {
+    // Find the category by its ID
     const categoryDoc = await ProductCategory.findById(categoryId);
     if (!categoryDoc) {
       return res.status(404).json({ message: 'Category not found' });
     }
 
+    // Check if the subcategory already exists
     const existingSubCategory = categoryDoc.subCategories.find((subCat) => subCat.category === category);
     if (existingSubCategory) {
       return res.status(400).json({ message: 'Subcategory already exists' });
     }
 
-    categoryDoc.subCategories.push({  category,alt,photo,slug, metatitle, metadescription, metakeywords, metacanonical, metalanguage, metaschema, otherMeta, url, priority, changeFreq});
+    // Handle the photo upload if there's a file in the request
+    let photo = null;
+    if (req.file) {
+      photo = req.file.filename; // Assuming you're using multer for handling file uploads
+    }
+
+    // Push the new subcategory to the category document
+    categoryDoc.subCategories.push({ category, alt, photo, slug, metatitle, metadescription, metakeywords, metacanonical, metalanguage, metaschema, otherMeta, url, priority, changeFreq });
+
+    // Save the updated document
     await categoryDoc.save();
 
     res.status(201).json(categoryDoc);
   } catch (error) {
+    console.error('Error inserting subcategory:', error);
     res.status(500).json({ message: 'Server error', error });
   }
 };
+
 
 const insertSubSubCategory = async (req, res) => {
   const { categoryId, subCategoryId } = req.query;
@@ -218,7 +230,7 @@ const updatesubsubcategory = async (req, res) => {
 
 const deletecategory = async (req, res) => {
   const { id } = req.query;
-
+  console.log(id)
   try {
     // Find the category by its ID
     const category = await ProductCategory.findById(id);

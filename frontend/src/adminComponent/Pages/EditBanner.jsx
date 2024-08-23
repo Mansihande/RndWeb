@@ -50,7 +50,7 @@ const EditBanner = () => {
 
   const fetchPriorityOptions = async (section) => {
     try {
-      const response = await axios.get(`http://localhost:3006/api/banner/getCountBySection?section=${section}`, { withCredentials: true });
+      const response = await axios.get(`/api/banner/getCountBySection?section=${section}`, { withCredentials: true });
       const count = response.data;
       if (count > 0) {
         const options = Array.from({ length: count}, (_, i) => i + 1);
@@ -71,7 +71,7 @@ const EditBanner = () => {
   useEffect(() => {
     const fetchBannerData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3006/api/banner/getBannerById?id=${bannerId}`, { withCredentials: true });
+        const response = await axios.get(`/api/banner/getBannerById?id=${bannerId}`, { withCredentials: true });
         const bannerData = response.data.data;
         setSection(bannerData.section);
         setTitle(bannerData.title);
@@ -112,7 +112,7 @@ const EditBanner = () => {
       });
   
       // Construct the endpoint URL with section as a query parameter
-      const endpoint = `http://localhost:3006/api/banner/updateBanner?id=${bannerId}`;
+      const endpoint = `/api/banner/updateBanner?id=${bannerId}`;
   
       // Make the PUT request
       const response = await axios.put(endpoint, formData, {
@@ -157,7 +157,7 @@ const EditBanner = () => {
 
   const handleDeleteInitialPhoto = (e, photoFilename, index) => {
     e.preventDefault();
-    axios.delete(`http://localhost:3006/api/banner/${bannerId}/image/${photoFilename}/${index}`, { withCredentials: true })
+    axios.delete(`/api/banner/${bannerId}/image/${photoFilename}/${index}`, { withCredentials: true })
       .then(response => {
         const updatedPhotos = initialPhotos.filter(photo => photo !== photoFilename);
         setInitialPhotos(updatedPhotos);
@@ -232,7 +232,7 @@ const EditBanner = () => {
             <div key={index} className="w-56 relative">
              <div className="relative">
              <img
-                src={`http://localhost:3006/api/image/download/${photo}`}
+                src={`/api/image/download/${photo}`}
                 alt={`Photo ${index + 1}`}
                 className="w-56 h-32 object-cover"
               />

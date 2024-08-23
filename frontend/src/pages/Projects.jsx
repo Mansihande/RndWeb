@@ -4,7 +4,6 @@ import Marquee from '../components/Project/Marquee'
 import ProjectsSection from '../components/Project/ProjectSection'
 import PremiumTemplatesSection from '../components/PrimiumTemplateSection'
 import GlobalSolution from '../components/GlobalSolution'
-import Footer from '../components/Footer'
 
 export default function Projects() {
   return (
@@ -14,7 +13,7 @@ export default function Projects() {
    <ProjectsSection/>
    <PremiumTemplatesSection/>
    <GlobalSolution/>
-   <Footer/>
+
    </div>
   )
 }

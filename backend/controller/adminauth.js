@@ -62,8 +62,11 @@ const loginAdmin = async (req, res) => {
 
     const token = createToken(admin._id);
     res.cookie('jwt', token, {
-      httpOnly: true,
+      httpOnly: false,
+      sameSite: 'None', // Set SameSite attribute to None
+      secure: false // Ensure the cookie is sent over HTTPS
     });
+    
 
     return res.status(200).json({ success: true, admin: admin._id, token: token });
   } catch (error) {

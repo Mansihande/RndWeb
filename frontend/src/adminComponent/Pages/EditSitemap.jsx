@@ -18,19 +18,19 @@ const EditSitemap = () => {
         let response;
 
         if (type === 'product-category') {
-          response = await axios.get(`http://localhost:3006/api/product/fetchCategoryUrlPriorityFreqById?id=${sitemapId}`, { withCredentials: true });
+          response = await axios.get(`/api/product/fetchCategoryUrlPriorityFreqById?id=${sitemapId}`, { withCredentials: true });
         } else if (type === 'products') {
-          response = await axios.get(`http://localhost:3006/api/product/fetchUrlPriorityFreqById?id=${sitemapId}`, { withCredentials: true });
+          response = await axios.get(`/api/product/fetchUrlPriorityFreqById?id=${sitemapId}`, { withCredentials: true });
         } else if (type === 'service-category') {
-          response = await axios.get(`http://localhost:3006/api/services/fetchCategoryUrlPriorityFreqById?id=${sitemapId}`, { withCredentials: true });
+          response = await axios.get(`/api/services/fetchCategoryUrlPriorityFreqById?id=${sitemapId}`, { withCredentials: true });
         } else if (type === 'service') {
-          response = await axios.get(`http://localhost:3006/api/services/fetchUrlPriorityFreqById?id=${sitemapId}`, { withCredentials: true });
+          response = await axios.get(`/api/services/fetchUrlPriorityFreqById?id=${sitemapId}`, { withCredentials: true });
         } else if (type === 'news-category') {
-          response = await axios.get(`http://localhost:3006/api/news/fetchCategoryUrlPriorityFreqById?id=${sitemapId}`, { withCredentials: true });
+          response = await axios.get(`/api/news/fetchCategoryUrlPriorityFreqById?id=${sitemapId}`, { withCredentials: true });
         } else if (type === 'new') {
-          response = await axios.get(`http://localhost:3006/api/news/fetchUrlPriorityFreqById?id=${sitemapId}`, { withCredentials: true });
+          response = await axios.get(`/api/news/fetchUrlPriorityFreqById?id=${sitemapId}`, { withCredentials: true });
         } else if (type === 'data') {
-          response = await axios.get(`http://localhost:3006/api/sitemap/fetchUrlPriorityFreqById?id=${sitemapId}`, { withCredentials: true });
+          response = await axios.get(`/api/sitemap/fetchUrlPriorityFreqById?id=${sitemapId}`, { withCredentials: true });
         }
 
         const { url, changeFreq, priority } = response.data;
@@ -57,19 +57,19 @@ const EditSitemap = () => {
       let endpoint;
 
       if (type === 'productcategory') {
-        endpoint = `http://localhost:3006/api/product/editCategoryUrlPriorityFreq?id=${sitemapId}`;
+        endpoint = `/api/product/editCategoryUrlPriorityFreq?id=${sitemapId}`;
       } else if (type === 'product') {
-        endpoint = `http://localhost:3006/api/product/editUrlPriorityFreq?id=${sitemapId}`;
+        endpoint = `/api/product/editUrlPriorityFreq?id=${sitemapId}`;
       } else if (type === 'servicecategory') {
-        endpoint = `http://localhost:3006/api/services/editCategoryUrlPriorityFreq?id=${sitemapId}`;
+        endpoint = `/api/services/editCategoryUrlPriorityFreq?id=${sitemapId}`;
       } else if (type === 'services') {
-        endpoint = `http://localhost:3006/api/services/editUrlPriorityFreq?id=${sitemapId}`;
+        endpoint = `/api/services/editUrlPriorityFreq?id=${sitemapId}`;
       } else if (type === 'newscategory') {
-        endpoint = `http://localhost:3006/api/news/editCategoryUrlPriorityFreq?id=${sitemapId}`;
+        endpoint = `/api/news/editCategoryUrlPriorityFreq?id=${sitemapId}`;
       } else if (type === 'news') {
-        endpoint = `http://localhost:3006/api/news/editUrlPriorityFreq?id=${sitemapId}`;
+        endpoint = `/api/news/editUrlPriorityFreq?id=${sitemapId}`;
       } else if (type === 'data') {
-        endpoint = `http://localhost:3006/api/sitemap/editUrlPriorityFreq?id=${sitemapId}`;
+        endpoint = `/api/sitemap/editUrlPriorityFreq?id=${sitemapId}`;
       }
 
       await axios.put(endpoint, sitemapData, { withCredentials: true });

@@ -16,7 +16,7 @@ const GoogleSettingsForm = () => {
 
     const fetchGoogleSettings = async () => {
         try {
-            const response = await axios.get('http://localhost:3006/api/googlesettings/getGoogleSettings');
+            const response = await axios.get('/api/googlesettings/getGoogleSettings');
             setFormData({
                 headerscript: response.data.headerscript || '', 
                 bodyscript: response.data.bodyscript || '' 
@@ -34,7 +34,7 @@ const GoogleSettingsForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.put('http://localhost:3006/api/googlesettings/updateGoogleSettings', formData); // Assuming '1' is the ID
+            await axios.put('/api/googlesettings/updateGoogleSettings', formData); // Assuming '1' is the ID
             toast.success("Updated Successfully!")
         } catch (error) {
             console.error('Error updating Google settings:', error);

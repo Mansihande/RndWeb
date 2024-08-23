@@ -7,7 +7,7 @@ export default function WeAreExpert() {
   useEffect(() => {
     const fetchExperts = async () => {
       try {
-        const response = await axios.get(`http://localhost:3006/api/content/type/weareexpertsin`, { withCredentials: true });
+        const response = await axios.get(`/api/content/type/weareexpertsin`, { withCredentials: true });
         const expertData = response.data;
 
         if (expertData.length > 0) {
@@ -18,7 +18,7 @@ export default function WeAreExpert() {
             subsections.map(async (expert) => {
               try {
                 const imageResponse = await axios.get(
-                  `http://localhost:3006/api/image/download/${expert.photo}`,
+                  `/api/image/download/${expert.photo}`,
                   { responseType: 'blob' }
                 );
                 const imageUrl = URL.createObjectURL(imageResponse.data);

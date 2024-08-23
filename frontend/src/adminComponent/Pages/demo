@@ -1,181 +1,161 @@
-import React, { useState, useEffect } from "react";
-import { IoMdClose, IoMdFunnel } from "react-icons/io";
-import axios from 'axios';
-import { useLocation } from 'react-router-dom';
-import { FaCheck } from "react-icons/fa6";
-import { RxCross2 } from "react-icons/rx";
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import flames from "../images/flames.png";
+import rndlogo from "../images/rndlogo.png";
+import Submenu from "./SubMenu";
+import MobileMenu from "./MobileMenu";
 
-const PricingSection = () => {
-  const [selectedPages, setSelectedPages] = useState("1-5 pages");
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [service, setService] = useState({});
-  const location = useLocation();
+const Navbar = () => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [submenuTimeout, setSubmenuTimeout] = useState(null);
+  const [isSubmenuOpen, setIsSubmenuOpen] = useState(false);
+  const [currentSubmenu, setCurrentSubmenu] = useState(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const ref = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const slug = location.pathname.split('/').filter(Boolean).pop();
-        const response = await axios.get(`http://localhost:3006/api/packages/front/${slug}`, { withCredentials: true });
-        console.log("API Response:", response.data);
-
-        // Normalize keys to match pageOptions
-        const normalizedService = {};
-        Object.keys(response.data.data.subcategories).forEach(key => {
-          const normalizedKey = key.trim(); // Trim any extra spaces
-          normalizedService[normalizedKey] = response.data.data.subcategories[key];
-        });
-
-        setService(normalizedService);
+        const response = await fetch("http://localhost:3006/api/menulisting/fetchMenuWithSubmenus");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const result = await response.json();
+        setData(result);
+        setLoading(false);
       } catch (error) {
-        console.error("Error fetching service data:", error);
+        setError(error.message);
+        setLoading(false);
       }
     };
 
     fetchData();
-  }, [location.pathname]);
+  }, []);
 
-  // Ensure keys are consistent with the API data
-  const pageOptions = Object.keys(service);
+  const handleMouseEnter = useCallback(
+    (submenu) => {
+      clearTimeout(submenuTimeout);
+      setIsSubmenuOpen(true);
+      setCurrentSubmenu(submenu);
+    },
+    [submenuTimeout]
+  );
 
-  const filteredItems = service[selectedPages] || [];
-  console.log("Filtered Items:", filteredItems);
+  const handleMouseLeave = useCallback(() => {
+    const timeout = setTimeout(() => {
+      closeSubmenu();
+    }, 300);
+    setSubmenuTimeout(timeout);
+  }, []);
 
-  // Helper function to parse JSON strings to arrays
-  const parseJsonArray = (jsonArray) => {
-    try {
-      return JSON.parse(jsonArray);
-    } catch {
-      return [];
+  const handleSubmenuMouseEnter = () => {
+    clearTimeout(submenuTimeout);
+    setIsSubmenuOpen(true);
+  };
+
+  const handleSubmenuMouseLeave = () => {
+    handleMouseLeave();
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen((prev) => !prev);
+  };
+
+  const handleMobileSubmenuToggle = (link) => {
+    if (link.label === "Services" && link.submenu) {
+      setIsSubmenuOpen((prev) => !prev);
+    } else {
+      setIsMobileMenuOpen(false);
     }
   };
 
+  const closeSubmenu = () => {
+    setIsSubmenuOpen(false);
+    setCurrentSubmenu(null);
+  };
+
+  const handleClick = (path) => {
+    closeSubmenu();
+    navigate(path);
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
-    <div className="flex flex-col items-center justify-center relative bg-white overflow-hidden">
-      {/* Mobile Filter Button */}
-      <button
-        className="sm:hidden mt-20 mx-0 w-auto flex items-center justify-start px-4 py-2 text-lg font-inter focus:outline-none bg-[#F55F42] text-white rounded-lg"
-        onClick={() => setIsFilterOpen(!isFilterOpen)}
-        aria-expanded={isFilterOpen}
-        aria-label="Toggle filter"
-      >
-        <IoMdFunnel className="mr-2" />
-        Filter
-      </button>
-
-      {/* Page Filter Section */}
-      <div className="mt-10 sm:mt-20 w-full px-6 sm:w-3/4  ">
-        <div className="sm:flex flex-wrap gap-4 mb-6 hidden">
-          {pageOptions.map((option) => (
-            <button
-              key={option}
-              onClick={() => setSelectedPages(option)}
-              className={`px-4 py-2 text-lg font-inter focus:outline-none ${
-                selectedPages === option
-                  ? "bg-[#F55F42] text-white rounded-lg"
-                  : "text-gray-800 border border-gray-300 rounded-lg"
-              }`}
-            >
-              {option}
-            </button>
-          ))}
+    <div className="w-full fixed z-10">
+      <nav className="bg-white border-b border-gray-200 xl:mx-12 rounded-b-lg shadow-lg xl:block flex flex-row-reverse">
+        <div className="bg-[#333] text-white text-center py-1 flex justify-center font-bold text-md xl:flex hidden">
+          {/* Assuming data.latestNews is available in your API response */}
+          {data.latestNews}{" "}
+          <img src={flames} alt="fire" className="h-6 w-auto" />
         </div>
-
-        {isFilterOpen && (
-          <div className="sm:hidden fixed inset-0 bg-white z-50 p-4">
-            <button
-              className="absolute top-4 right-4 text-gray-800 text-3xl"
-              onClick={() => setIsFilterOpen(false)}
-              aria-label="Close filter"
-            >
-              <IoMdClose />
-            </button>
-            <div className="flex flex-col space-y-4 mt-10">
-              {pageOptions.map((option) => (
-                <button
-                  key={option}
-                  onClick={() => {
-                    setSelectedPages(option);
-                    setIsFilterOpen(false);
-                  }}
-                  className={`px-4 py-2 text-lg font-inter focus:outline-none ${
-                    selectedPages === option
-                      ? "bg-[#F55F42] text-white rounded-lg"
-                      : "text-gray-800 border border-gray-300 rounded-lg"
-                  }`}
+        <div className="container mx-auto px-4 flex justify-between items-center">
+          <div className="lg:hidden" ref={ref}>
+            <MobileMenu
+              isMobileMenuOpen={isMobileMenuOpen}
+              toggleMobileMenu={toggleMobileMenu}
+              data={data}
+              handleMobileSubmenuToggle={handleMobileSubmenuToggle}
+              isSubmenuOpen={isSubmenuOpen}
+            />
+          </div>
+          <div className="flex items-center space-x-8">
+            <NavLink to="/">
+              <img src={rndlogo} alt="Rnd logo" className="h-12 my-3" />
+            </NavLink>
+          </div>
+          <div className="hidden lg:flex items-center space-x-12">
+            {data.map((menu) => (
+              <div key={menu._id} className="relative group">
+                <NavLink
+                  to={menu.pagename}
+                  className="text-gray-700 hover:text-green-700"
+                  onClick={() => handleClick(menu.pagename)}
+                  onMouseEnter={() => handleMouseEnter(menu.submenus)}
+                  onMouseLeave={handleMouseLeave}
                 >
-                  {option}
-                </button>
-              ))}
-              <button
-                className="px-4 py-2 text-lg font-inter mt-4 bg-[#F55F42] text-white rounded-lg"
-                onClick={() => setIsFilterOpen(false)}
-              >
-                Close
-              </button>
-            </div>
+                  {menu.pagename}
+                </NavLink>
+                {isSubmenuOpen && currentSubmenu && (
+                  <div
+                    onMouseEnter={handleSubmenuMouseEnter}
+                    onMouseLeave={handleSubmenuMouseLeave}
+                  >
+                    <Submenu submenu={currentSubmenu} onMouseLeave={closeSubmenu} setShowMenu={closeSubmenu} />
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+          <div className="lg:flex items-center space-x-4">
+            {/* Assuming authLinks is part of the API response */}
+            {data.authLinks && data.authLinks.map((link) => (
+              <NavLink key={link.path} to={link.path} className="text-gray-800 font-bold hover:text-[#f3ca0d] hidden lg:block">
+                {link.label}
+              </NavLink>
+            ))}
+          </div>
+        </div>
+        {isSubmenuOpen && currentSubmenu && (
+          <div
+            onMouseEnter={handleSubmenuMouseEnter}
+            onMouseLeave={handleSubmenuMouseLeave}
+          >
+            <Submenu submenu={currentSubmenu} onMouseLeave={closeSubmenu} setShowMenu={closeSubmenu} />
           </div>
         )}
-      </div>
-
-      {/* Pricing Details Section */}
-      <div className="mt-10 sm:mt-20 mb-10 w-full px-6 sm:w-3/4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
-          {filteredItems.length > 0 ? (
-            filteredItems.map((item) => {
-              const whatYouGet = parseJsonArray(item.whatYouGet[0]);
-              const whatIsTheir = parseJsonArray(item.whatIsTheir[0]);
-              const whatIsNotTheir = parseJsonArray(item.whatIsNotTheir[0]);
-
-              return (
-                <div key={item._id} className="bg-white border border-gray-300 rounded-lg p-6 mb-4">
-                  <h3 className="text-2xl font-bold mb-2">{item.title}</h3>
-                  <p className="text-lg text-gray-600 mb-2">Price: ${item.price}</p>
-                  <div className="mb-2">
-                    <strong>What You Get:</strong>
-                    <ul className="list-disc list-inside">
-                      {whatYouGet.length ? (
-                        whatYouGet.map((feature, index) => (
-                          <li key={index}>{feature}</li>
-                        ))
-                      ) : (
-                        <li>No details available</li>
-                      )}
-                    </ul>
-                  </div>
-                  <div className="mb-2">
-                    <strong>Details:</strong>
-                    <ul className="list-disc list-inside">
-                      {whatIsTheir.length ? (
-                        whatIsTheir.map((detail, index) => (
-                          <li key={index}>{detail}</li>
-                        ))
-                      ) : (
-                        <li>No details available</li>
-                      )}
-                    </ul>
-                  </div>
-                  <div className="mb-2">
-                    <strong>What Is Not Included:</strong>
-                    <ul className="list-disc list-inside">
-                      {whatIsNotTheir.length ? (
-                        whatIsNotTheir.map((exclusion, index) => (
-                          <li key={index}>{exclusion}</li>
-                        ))
-                      ) : (
-                        <li>No exclusions listed</li>
-                      )}
-                    </ul>
-                  </div>
-                </div>
-              );
-            })
-          ) : (
-            <p className="text-gray-600">No items available for the selected option.</p>
-          )}
-        </div>
-      </div>
+      </nav>
     </div>
   );
 };
 
-export default PricingSection;
+export default Navbar;

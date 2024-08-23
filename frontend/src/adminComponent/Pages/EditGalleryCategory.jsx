@@ -12,7 +12,7 @@ const EditCategory = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const url = `http://localhost:3006/api/gallery/getCategoryById?id=${id}`;
+      const url = `/api/gallery/getCategoryById?id=${id}`;
 
       try {
         const response = await axios.get(url, { withCredentials: true });
@@ -52,7 +52,7 @@ const EditCategory = () => {
       formData.append("photo", currentPhoto);
     }
 
-    const url = `http://localhost:3006/api/gallery/updateCategory?id=${id}`;
+    const url = `/api/gallery/updateCategory?id=${id}`;
     try {
       await axios.put(url, formData, { withCredentials: true });
       navigate("/GalleryCategory");
@@ -91,7 +91,7 @@ const EditCategory = () => {
         {(photo || currentPhoto) && (
           <div className="mt-2 relative w-56 group">
             <img
-              src={photo ? URL.createObjectURL(photo) : `http://localhost:3006/api/logo/download/${currentPhoto}`}
+              src={photo ? URL.createObjectURL(photo) : `/api/logo/download/${currentPhoto}`}
               alt={altText}
               className="h-32 w-56 object-cover"
             />

@@ -23,7 +23,7 @@ const EditHeader = () => {
 
   const fetchHeader = async () => {
     try {
-      const response = await axios.get('http://localhost:3006/api/header/getHeader', { withCredentials: true });
+      const response = await axios.get('/api/header/getHeader', { withCredentials: true });
       const header = response.data;
 
       // Set values, or default to empty strings if undefined or null
@@ -33,7 +33,7 @@ const EditHeader = () => {
       
       // Set preview photo only if photo is available
       if (header.photo) {
-        setPreviewPhoto(`http://localhost:3006/api/header/download/${header.photo}`);
+        setPreviewPhoto(`/api/header/download/${header.photo}`);
       } else {
         setPreviewPhoto("");
       }
@@ -64,7 +64,7 @@ const EditHeader = () => {
         formData.append(key, headerData[key]);
       }
 
-      const response = await axios.put('http://localhost:3006/api/header/updateHeader', formData, {
+      const response = await axios.put('/api/header/updateHeader', formData, {
         withCredentials: true,
         headers: {
           'Content-Type': 'multipart/form-data' // Ensure multipart/form-data headers

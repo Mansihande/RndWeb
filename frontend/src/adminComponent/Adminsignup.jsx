@@ -71,7 +71,7 @@ function AdminSignup() {
                 formData.append('photo', photo);
             }
 
-            await axios.post('http://localhost:3006/api/admin/register', formData, {
+            await axios.post('/api/admin/register', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

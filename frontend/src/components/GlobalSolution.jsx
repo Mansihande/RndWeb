@@ -7,7 +7,7 @@ const GlobalSolution = () => {
   useEffect(() => {
     const fetchGlobalSolution = async () => {
       try {
-        const response = await axios.get(`http://localhost:3006/api/content/type/globalsolution`, { withCredentials: true });
+        const response = await axios.get(`/api/content/type/globalsolution`, { withCredentials: true });
         const solutionData = response.data[0];
 
         if (solutionData) {
@@ -18,7 +18,7 @@ const GlobalSolution = () => {
             subsections.map(async (language) => {
               try {
                 const imageResponse = await axios.get(
-                  `http://localhost:3006/api/image/download/${language.photo}`,
+                  `/api/image/download/${language.photo}`,
                   { responseType: 'blob' }
                 );
                 const imageUrl = URL.createObjectURL(imageResponse.data);
@@ -47,7 +47,7 @@ const GlobalSolution = () => {
   if (!globalSolution) return null; // Return null or a loader while the data is being fetched
 
   return (
-    <section className="relative bg-[#114038] overflow-hidden mt-5 ">
+    <section className="relative bg-[#333] overflow-hidden mt-5 ">
       {/* Shape Divider */}
       <div className="absolute inset-x-0 top-0 py-0">
         <svg

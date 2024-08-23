@@ -32,7 +32,7 @@ const FAQForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3006/api/faq/insertFAQ', {
+      const response = await axios.post('/api/faq/insertFAQ', {
         question,
         answer,
         status,

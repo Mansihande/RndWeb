@@ -8,7 +8,6 @@ import WebSolution from '../components/HowItWorks/WebSolutions'
 import WhatYouGet from '../components/WhatYouGet'
 import BookAcall from '../components/BookAcall'
 import ServiceGrid from '../components/OurServices'
-import Footer from '../components/Footer'
 import GlobalSolution from '../components/GlobalSolution'
 import Faq from '../components/Faq'
 
@@ -25,7 +24,7 @@ export default function HowItWorks() {
     <WhatYouGet/>
    <BookAcall/>
    <GlobalSolution/>
-   <Footer/>
+ 
     </div>
   )
 }

@@ -23,19 +23,19 @@ const EditMetaDetails = () => {
       try {
         let response;
         if (type === 'product-category') {
-          response = await axios.get(`http://localhost:3006/api/product/fetchCategoryUrlmetaById?id=${metaId}`, { withCredentials: true });
+          response = await axios.get(`/api/product/fetchCategoryUrlmetaById?id=${metaId}`, { withCredentials: true });
         } else if (type === 'products') {
-          response = await axios.get(`http://localhost:3006/api/product/fetchUrlmetaById?id=${metaId}`, { withCredentials: true });
+          response = await axios.get(`/api/product/fetchUrlmetaById?id=${metaId}`, { withCredentials: true });
         } else if (type === 'service-category') {
-          response = await axios.get(`http://localhost:3006/api/services/fetchCategoryUrlmetaById?id=${metaId}`, { withCredentials: true });
+          response = await axios.get(`/api/services/fetchCategoryUrlmetaById?id=${metaId}`, { withCredentials: true });
         } else if (type === 'service') {
-          response = await axios.get(`http://localhost:3006/api/services/fetchUrlmetaById?id=${metaId}`, { withCredentials: true });
+          response = await axios.get(`/api/services/fetchUrlmetaById?id=${metaId}`, { withCredentials: true });
         } else if (type === 'news-category') {
-          response = await axios.get(`http://localhost:3006/api/news/fetchCategoryUrlmetaById?id=${metaId}`, { withCredentials: true });
+          response = await axios.get(`/api/news/fetchCategoryUrlmetaById?id=${metaId}`, { withCredentials: true });
         } else if (type === 'new') {
-          response = await axios.get(`http://localhost:3006/api/news/fetchUrlmetaById?id=${metaId}`, { withCredentials: true });
+          response = await axios.get(`/api/news/fetchUrlmetaById?id=${metaId}`, { withCredentials: true });
         } else if (type === 'data') {
-          response = await axios.get(`http://localhost:3006/api/sitemap/fetchSitemapById?id=${metaId}`);
+          response = await axios.get(`/api/sitemap/fetchSitemapById?id=${metaId}`);
         }
 
         const { url, metatitle, metadescription, metalanguage, metakeywords, metacanonical, metaschema, otherMeta } = response.data;
@@ -73,19 +73,19 @@ const EditMetaDetails = () => {
       let endpoint;
 
       if (type === 'productcategory') {
-        endpoint = `http://localhost:3006/api/product/editCategoryUrlmeta?id=${metaId}`;
+        endpoint = `/api/product/editCategoryUrlmeta?id=${metaId}`;
       } else if (type === 'product') {
-        endpoint = `http://localhost:3006/api/product/editUrlmeta?id=${metaId}`;
+        endpoint = `/api/product/editUrlmeta?id=${metaId}`;
       } else if (type === 'servicecategory') {
-        endpoint = `http://localhost:3006/api/services/editCategoryUrlmeta?id=${metaId}`;
+        endpoint = `/api/services/editCategoryUrlmeta?id=${metaId}`;
       } else if (type === 'services') {
-        endpoint = `http://localhost:3006/api/services/editUrlmeta?id=${metaId}`;
+        endpoint = `/api/services/editUrlmeta?id=${metaId}`;
       } else if (type === 'newscategory') {
-        endpoint = `http://localhost:3006/api/news/editCategoryUrlmeta?id=${metaId}`;
+        endpoint = `/api/news/editCategoryUrlmeta?id=${metaId}`;
       } else if (type === 'news') {
-        endpoint = `http://localhost:3006/api/news/editUrlmeta?id=${metaId}`;
+        endpoint = `/api/news/editUrlmeta?id=${metaId}`;
       } else if (type === 'data') {
-        endpoint = `http://localhost:3006/api/sitemap/updateSitemapById?id=${metaId}`;
+        endpoint = `/api/sitemap/updateSitemapById?id=${metaId}`;
       }
 
       await axios.put(endpoint, metaDetailsData, { withCredentials: true });

@@ -70,7 +70,7 @@ const CorevalueTable = () => {
         accessor: "photo",
         Cell: ({ value }) => {
           const firstImage = Array.isArray(value) && value.length > 0 ? value[0] : null;
-          return firstImage ? <img src={`http://localhost:3006/api/image/download/${firstImage}`} alt="Core Value" className="w-32 h-20 object-cover" /> : null;
+          return firstImage ? <img src={`/api/image/download/${firstImage}`} alt="Core Value" className="w-32 h-20 object-cover" /> : null;
         },
         disableSortBy: true,
       },
@@ -130,7 +130,7 @@ const CorevalueTable = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3006/api/corevalue/getCorevalue`, { withCredentials: true });
+      const response = await axios.get(`/api/corevalue/getCorevalue`, { withCredentials: true });
       const corevaluesWithIds = response.data.data.map((corevalue, index) => ({
         ...corevalue,
         id: index + 1,
@@ -145,7 +145,7 @@ const CorevalueTable = () => {
 
   const deleteCorevalue = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:3006/api/corevalue/deleteCorevalue?id=${id}`, { withCredentials: true });
+      const response = await axios.delete(`/api/corevalue/deleteCorevalue?id=${id}`, { withCredentials: true });
       fetchData();
     } catch (error) {
       console.error(error);
@@ -168,7 +168,7 @@ const CorevalueTable = () => {
 
   const fetchHeadings = async () => {
     try {
-      const response = await axios.get('http://localhost:3006/api/pageHeading/heading?pageType=corevalue', { withCredentials: true });
+      const response = await axios.get('/api/pageHeading/heading?pageType=corevalue', { withCredentials: true });
       const { heading, subheading } = response.data;
       setHeading(heading || '');
       setSubheading(subheading || '');
@@ -179,7 +179,7 @@ const CorevalueTable = () => {
 
   const saveHeadings = async () => {
     try {
-      await axios.put('http://localhost:3006/api/pageHeading/updateHeading?pageType=corevalue', {
+      await axios.put('/api/pageHeading/updateHeading?pageType=corevalue', {
         pagetype: 'corevalue',
         heading,
         subheading,

@@ -153,6 +153,76 @@ exports.getSingleImage = async (req, res) => {
 };
 
 
+
+exports.getAllPackagesFront = async (req, res) => {
+    try {
+      // Fetch all categories
+      const categories = await ServiceCategory.find();
+  
+      if (!categories.length) {
+        return res.status(404).json({ message: 'No categories found' });
+      }
+  
+      // Initialize an object to hold the final structure
+      const result = {};
+  
+      // Process each category
+      for (const category of categories) {
+        const categoryName = category.category;
+        result[categoryName] = { images: [] };
+  
+        // Find images related to the category
+        const images = await ServiceImage.find({
+          categoryId: category._id, // Ensure you have this field in ServiceImage
+          photoType: 'project'
+        });
+  
+        if (images.length > 0) {
+          result[categoryName].images = images.map(image => image); // Assuming the image has a 'url' field
+        }
+      }
+  
+      // Calculate the total number of images
+      const totalImages = Object.values(result).reduce((total, cat) => total + cat.images.length, 0);
+  
+      res.status(200).json({
+        data: result,
+        total: totalImages,
+      });
+  
+    } catch (error) {
+      console.error("Error retrieving packages:", error);
+      res.status(500).json({ message: 'Server error', error: error.message });
+    }
+  };
+  
+
+  exports.getAllCompanyImages = async (req, res) => {
+    try {
+      // Fetch all images where the photoType is 'company'
+      const companyImages = await ServiceImage.find({
+        photoType: 'company'
+      });
+  
+      if (!companyImages.length) {
+        return res.status(404).json({ message: 'No company images found' });
+      }
+  
+      // Calculate the total number of company images
+      const totalImages = companyImages.length;
+  
+      res.status(200).json({
+        data: companyImages,
+        total: totalImages,
+      });
+  
+    } catch (error) {
+      console.error("Error retrieving company images:", error);
+      res.status(500).json({ message: 'Server error', error: error.message });
+    }
+  };
+  
+
 // Download an image
 exports.downloadImage = (req, res) => {
     const { filename } = req.params;

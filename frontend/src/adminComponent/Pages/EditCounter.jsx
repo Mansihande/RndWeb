@@ -16,7 +16,7 @@ const EditCounterForm = () => {
   useEffect(() => {
     const fetchCounter = async () => {
       try {
-        const response = await axios.get(`http://localhost:3006/api/counter/getCounterById?id=${id}`, { withCredentials: true });
+        const response = await axios.get(`/api/counter/getCounterById?id=${id}`, { withCredentials: true });
         const counter = response.data;
         setTitle(counter.title);
         setNo(counter.no);
@@ -57,7 +57,7 @@ const EditCounterForm = () => {
     }
 
     try {
-      await axios.put(`http://localhost:3006/api/counter/updateCounter?id=${id}`, formData, { withCredentials: true });
+      await axios.put(`/api/counter/updateCounter?id=${id}`, formData, { withCredentials: true });
       navigate('/counter');
     } catch (error) {
       console.error(error);
@@ -135,7 +135,7 @@ const EditCounterForm = () => {
         {(photo || currentPhoto) && (
           <div className="mt-2 w-56 relative group">
             <img
-              src={photo ? URL.createObjectURL(photo) : `http://localhost:3006/api/logo/download/${currentPhoto}`}
+              src={photo ? URL.createObjectURL(photo) : `/api/logo/download/${currentPhoto}`}
               alt={altText}
               className="h-32 w-56 object-cover"
             />

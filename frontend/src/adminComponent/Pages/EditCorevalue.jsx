@@ -41,7 +41,7 @@ const EditCoreValue = () => {
 
     const fetchCoreValue = async () => {
         try {
-            const response = await axios.get(`http://localhost:3006/api/corevalue/getCoreValueById?id=${id}`, { withCredentials: true });
+            const response = await axios.get(`/api/corevalue/getCoreValueById?id=${id}`, { withCredentials: true });
             const coreValue = response.data;
             setTitle(coreValue.title);
             setDescription(coreValue.description);
@@ -72,7 +72,7 @@ const EditCoreValue = () => {
                 formData.append('alt', a);
             });
 
-            const response = await axios.put(`http://localhost:3006/api/corevalue/updateCorevalue?id=${id}`, formData, {
+            const response = await axios.put(`/api/corevalue/updateCorevalue?id=${id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 },
@@ -106,7 +106,7 @@ const EditCoreValue = () => {
 
     const handleDeleteInitialPhoto = (e, photoFilename, index) => {
         e.preventDefault();
-        axios.delete(`http://localhost:3006/api/corevalue/${id}/image/${photoFilename}/${index}`, { withCredentials: true })
+        axios.delete(`/api/corevalue/${id}/image/${photoFilename}/${index}`, { withCredentials: true })
             .then(response => {
                 const updatedPhotos = initialPhotos.filter(photo => photo !== photoFilename);
                 setInitialPhotos(updatedPhotos);
@@ -160,7 +160,7 @@ const EditCoreValue = () => {
                     {initialPhotos.map((photo, index) => (
                         <div key={index} className="relative w-56">
                             <img
-                                src={`http://localhost:3006/api/image/download/${photo}`}
+                                src={`/api/image/download/${photo}`}
                                 alt={`Photo ${index + 1}`}
                                 className="w-56 h-32 object-cover"
                             />

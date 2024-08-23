@@ -93,7 +93,7 @@ const ScrollSection = () => {
   
       svgs.forEach((svg, index) => {
         gsap.set(svg, {
-          opacity: 1,
+          opacity: 0,
           scale: 0,
           position: "fixed",
           top: "50%",
@@ -147,7 +147,7 @@ const ScrollSection = () => {
   };
 
   const animateSvg = (index, svg) => {
-    gsap.set(svg, { opacity: 0, scale: 1 }); // Ensure it's hidden initially
+    gsap.set(svg, { opacity: 0, scale: 0 }); // Ensure it's hidden initially
 
     // Kill any existing ScrollTrigger associated with the svg
     const existingTrigger = ScrollTrigger.getById(`svg-animation-${index}`); // Use a unique ID for each SVG animation
@@ -257,7 +257,7 @@ const ScrollSection = () => {
         ref={(el) => (descriptionRefs.current[0] = el)}
         className="description mb-1 pl-6 lg:pl-32"
       >
-        <h2 className="text-lg text-orange-400 pb-6">
+        <h2 className="text-lg text-[#e4d500] pb-6">
           The flexibility you need
         </h2>
         <h3 className="text-3xl lg:text-5xl font-bold pb-6">
@@ -271,7 +271,7 @@ const ScrollSection = () => {
         </p>
         <div className="flex flex-col pb-3">
           <div className="flex items-center gap-3">
-            <span className="bg-white px-2 py-2 rounded-full border border-red-400 shadow-lg">
+            <span className="bg-white px-2 py-2 rounded-full border border-[#e4d500] shadow-lg">
               🖥️
             </span>
             <p className="text-lg lg:text-2xl"> Websites</p>
@@ -307,7 +307,7 @@ const ScrollSection = () => {
         ref={(el) => (descriptionRefs.current[1] = el)}
         className="description mb-1 pl-6 lg:pl-32 pt-32 lg:pt-80"
       >
-        <h2 className="text-lg text-orange-400 pb-6">
+        <h2 className="text-lg text-[#e4d500] pb-6">
           The flexibility you need
         </h2>
         <h3 className="text-3xl lg:text-5xl font-bold pb-6">
@@ -365,7 +365,7 @@ const ScrollSection = () => {
         ref={(el) => (descriptionRefs.current[2] = el)}
         className="description mb-1 pl-6 lg:pl-32 pt-32 lg:pt-80"
       >
-        <h2 className="text-lg text-orange-400 pb-6">
+        <h2 className="text-lg text-[#e4d500] pb-6">
           The flexibility you need
         </h2>
         <h3 className="text-3xl lg:text-5xl font-bold pb-6">
@@ -379,7 +379,7 @@ const ScrollSection = () => {
         </p>
         <div className="flex flex-col pb-3">
           <div className="flex items-center gap-3">
-            <span className="bg-white px-2 py-2 rounded-full border border-red-400 shadow-lg">
+            <span className="bg-white px-2 py-2 rounded-full border border-[#e4d500] shadow-lg">
               🖥️
             </span>
             <p className="text-lg lg:text-2xl"> Websites</p>
@@ -423,7 +423,7 @@ const ScrollSection = () => {
         ref={(el) => (descriptionRefs.current[3] = el)}
         className="description mb-1 pl-6 lg:pl-32 pt-32 lg:pt-80"
       >
-        <h2 className="text-lg text-orange-400 pb-6">
+        <h2 className="text-lg text-[#e4d500] pb-6">
           The flexibility you need
         </h2>
         <h3 className="text-3xl lg:text-5xl font-bold pb-6">

@@ -54,7 +54,7 @@ const PageContentTable = () => {
         accessor: "photo",
         Cell: ({ value }) => {
           const firstImage = Array.isArray(value) && value.length > 0 ? value[0] : null;
-          return firstImage ? <img src={`http://localhost:3006/api/image/download/${firstImage}`} alt="News" className="h-20 w-32 object-cover" /> : null;
+          return firstImage ? <img src={`/api/image/download/${firstImage}`} alt="News" className="h-20 w-32 object-cover" /> : null;
         },
         disableSortBy: true,
       },
@@ -99,7 +99,7 @@ const PageContentTable = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3006/api/pageContent/getPagecontent`, { withCredentials: true });
+      const response = await axios.get(`/api/pageContent/getPagecontent`, { withCredentials: true });
 
       const pageContentWithIds = response.data.map((contentItem, index) => ({
         ...contentItem,
@@ -115,7 +115,7 @@ const PageContentTable = () => {
 
   const deletePageContent = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:3006/api/pageContent/deletePagecontent?id=${id}`, { withCredentials: true });
+      const response = await axios.delete(`/api/pageContent/deletePagecontent?id=${id}`, { withCredentials: true });
 
       fetchData();
     } catch (error) {

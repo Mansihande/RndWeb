@@ -43,7 +43,7 @@ const NewCoreValueForm = () => {
       });
       formData.append('status', status);
 
-      const response = await axios.post('http://localhost:3006/api/corevalue/createCoreValue', formData, {
+      const response = await axios.post('/api/corevalue/createCoreValue', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

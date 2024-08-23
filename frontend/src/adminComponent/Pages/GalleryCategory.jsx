@@ -24,7 +24,7 @@ const CategoryTable = () => {
         Cell: ({ row }) => (
           <div className="flex items-center gap-2 hover:text-blue-500 cursor-pointer"
             onClick={() => navigate(`/GalleryCategory/editGalleryCategory/${row.original._id}`)}>
-            {row.original.photo && <img src={`http://localhost:3006/api/logo/download/${row.original.photo}`} alt={row.original.alt} className="w-6 h-6" />}
+            {row.original.photo && <img src={`/api/logo/download/${row.original.photo}`} alt={row.original.alt} className="w-6 h-6" />}
             {row.original.category}
           </div>
         ),
@@ -69,7 +69,7 @@ const CategoryTable = () => {
   const fetchCategories = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3006/api/gallery/getCategory`, { withCredentials: true });
+      const response = await axios.get(`/api/gallery/getCategory`, { withCredentials: true });
       const categoriesWithAutoIncrementId = response.data.map((category, index) => ({
         ...category,
         autoIncrementId: index + 1,
@@ -83,7 +83,7 @@ const CategoryTable = () => {
   };
 
   const deleteCategory = async ({ id }) => {
-    const url = `http://localhost:3006/api/gallery/deleteCategory?id=${id}`;
+    const url = `/api/gallery/deleteCategory?id=${id}`;
     try {
       await axios.delete(url, { withCredentials: true });
       fetchCategories();

@@ -34,7 +34,7 @@ const EditFAQ = () => {
   useEffect(() => {
     const fetchFAQData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3006/api/faq/getFAQById?id=${faqId}`,{ withCredentials: true });
+        const response = await axios.get(`/api/faq/getFAQById?id=${faqId}`,{ withCredentials: true });
         const { question, answer, status } = response.data.data;
         setQuestion(question);
         setAnswer(answer);
@@ -56,7 +56,7 @@ const EditFAQ = () => {
         status
       };
 
-      await axios.put(`http://localhost:3006/api/faq/updateFAQ?id=${faqId}`, faqData,{ withCredentials: true });
+      await axios.put(`/api/faq/updateFAQ?id=${faqId}`, faqData,{ withCredentials: true });
 
       // Clear the form fields after submission
       setQuestion("");

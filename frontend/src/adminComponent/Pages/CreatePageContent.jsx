@@ -76,7 +76,7 @@ const NewPageContentForm = () => {
                 formData.append(`photo`, photo);
                 formData.append(`alt`, photoAlts[index]);
             });
-            const response = await axios.post('http://localhost:3006/api/pageContent/insertPageContent', formData, {
+            const response = await axios.post('/api/pageContent/insertPageContent', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
